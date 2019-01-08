@@ -1,0 +1,212 @@
+@font-face {
+    font-family: ek_mukta_bold;
+    src: url('assets/_req/fonts_images/fonts/Ek_Mukta/EkMukta-Bold.ttf');
+}
+
+@font-face {
+    font-family: ek_mukta_eLight;
+    src: url('assets/_req/fonts_images/fonts/Ek_Mukta/EkMukta-ExtraLight.ttf');
+}
+
+@font-face {
+    font-family: ek_mukta;
+    src: url('assets/_req/fonts_images/fonts/Ek_Mukta/EkMukta-Regular.ttf');
+}
+
+@font-face {
+    font-family: hind;
+    src: url('../../_req/fonts_images/fonts/Hind/Hind-Regular.ttf');
+}
+
+@font-face {
+    font-family: hind_light;
+    src: url('../../_req/fonts_images/fonts/Hind/Hind-Light.ttf');
+}
+
+@font-face {
+    font-family: hind_semi;
+    src: url('assets/_req/fonts_images/fonts/Hind/Hind-Semibold.ttf');
+}
+
+body{
+  background: #f9f9f9;
+}
+
+a {
+  text-decoration: none; /* no underline */
+}
+
+.container-fluid{
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+  background: #f9f9f9;
+}
+
+
+/* _the_button >> */
+._the_button{
+  border: 1px solid #fff;
+  border-bottom: 1px solid #dfdfdf;
+  font-family: sans-serif;
+  cursor: pointer;
+  font-weight: 200;
+  text-align: center;
+  padding: 5px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 1px 1px #dfdfdf;
+  color: #808080;
+  background: -moz-linear-gradient(top, #ededed, #ffffff);
+  background: -webkit-linear-gradient(top, #ededed, #ffffff);
+  background: -ms-linear-gradient(top, #ededed, #ffffff);
+  background: -o-linear-gradient(top, #ededed, #ffffff);
+  background: linear-gradient(to top, #ededed, #ffffff);
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Likely future */
+}
+
+._the_button:active{
+  border: 1px solid #dfdfdf;
+  border-bottom: 1px solid #fff;
+  background: -moz-linear-gradient(bottom, #ededed, #ffffff);
+  background: -webkit-linear-gradient(bottom, #ededed, #ffffff);
+  background: -ms-linear-gradient(bottom, #ededed, #ffffff);
+  background: -o-linear-gradient(bottom, #ededed, #ffffff);
+  background: linear-gradient(to bottom, #ededed, #ffffff);
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Likely future */
+}
+/* <</ _the_button */
+
+/* g_button >> */
+
+._g_button{
+    text-align: center;
+    cursor: pointer;
+    padding: 5px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+._blue{
+    border: 1px solid #2185c5;
+    color: #2185c5;
+}
+
+._green{
+  border: 1px solid #609415;
+  color: #609415;
+}
+
+._orange{
+  color: #e0a716;
+  border: 1px solid #e0a716;
+}
+
+._red{
+    border: 1px solid #ff6d69;
+    color: #ff6d69;
+}
+
+._default{
+  border: 1px solid #7e7e7e;
+  color: #7e7e7e;
+}
+
+._g_button:hover{
+  box-shadow: 1px 1px 3px #a29f9f;
+}
+._g_button:active{
+  box-shadow: -1px 0px 2px #a29f9f;
+}
+
+
+._success_msg{
+  color: #609415;
+}
+
+._info_msg{
+  color: #2185c5;
+}
+
+._warning_msg{
+  color: #e0a716;
+}
+
+._error_msg{
+  color: #ff6d69;
+}
+
+._green_back{
+  background: #2ac671;
+  border-radius: 4px;
+  color: #fff;
+}
+
+._blue_back{
+  background: #3771bd;
+  border-radius: 4px;
+  color: #fff;
+}
+
+._orange_back{
+  /*background: #f48c38;*/
+  background: #f48c38;
+  border-radius: 4px;
+  color: #fff;
+}
+
+._red_back{
+  background: #df1919;
+  border-radius: 4px;
+  color: #fff;
+}
+
+._default_back{
+  font-family: hind_light;
+  border-radius: 4px;
+  color: #7e7e7e;
+}
+
+
+._g1_input{
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  border: 1px solid #c1c1c1;
+  border-radius: 4px;
+}
+
+
+
+._g1_input_editable{
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  padding-bottom: 0px;
+  border: none;
+  border-bottom: 1px solid #f9f9f9;
+  color: #423e3e;
+  border-radius: 2px;
+  resize: vertical;
+}
+
+._g1_input_editable:disabled{
+  color: #000;
+}
+
+._g1_input:focus{
+  outline-width: 0px;
+  box-shadow: 0px 0px 2px #59b4db;
+  border: 1px solid #59b4db;
+}

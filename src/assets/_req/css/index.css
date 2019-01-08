@@ -1,0 +1,71 @@
+/* new index specifics >> */
+
+._sign_in_canvas{
+  height: auto;
+  padding: 70px 0px 70px 0px;
+  background: #7ec654;
+}
+
+._index_main_msg{
+  font-family: hind;
+  font-size: 2.2em;
+  color: #fff;
+  text-align: center;
+  margin: 10px 0px 10px 0px;
+}
+
+._index_sub_msg{
+  padding: 5px;
+  margin: 10px 0px 10px 0px;
+  font-family: hind_light;
+  font-size: 1.4em;
+  color: #fff;
+  text-align: center;
+  border-top: 1px solid #fff;
+}
+
+._login_canvas, ._signup_canvas{
+  padding: 10px;
+  margin: 20px 0px 20px 0px;
+  background: #f9f9f9;
+  border-radius: 4px;
+  box-shadow: 0px 0px 4px #7e7e7e;
+  font-family: hind;
+  font-size: 1.2em;
+}
+
+
+._more_description_canvas{
+  height: auto;
+  padding: 50px 0px 50px 0px;
+  background: #54aac6;
+
+  font-family: hind;
+  font-size: 2.2em;
+  color: #fff;
+}
+
+
+._description_msg{
+  margin: 20px 0px 20px 0px;
+}
+
+._navb{
+  height: 40px;
+  background: #fff;
+  padding: 5px 0px 0px 10px;
+  box-shadow: 0px 2px 2px #7e7e7e;
+}
+
+._know_title{
+  height: inherit;
+  padding: 5px 10px 0px 10px;
+  font-family: hind_light;
+  font-size: 1.8em;
+  color: #7e7e7e;
+}
+
+._more_description_content{
+  font-size: 0.6em;
+  font-family: hind_light;
+}

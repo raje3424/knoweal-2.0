@@ -1,0 +1,360 @@
+._go_back_button{
+  position: relative;
+  font-family: hind_semi;
+  font-size:0.8em;
+  cursor: pointer;
+}
+
+/* <</ glass */
+
+
+._navb{
+  height: 40px;
+  background: #fff;
+  padding: 5px 0px 5px 10px;
+  box-shadow: 0px 2px 2px #7e7e7e;
+}
+
+._know_title{
+  height: inherit;
+  font-family: hind_light;
+  font-size: 1.6em;
+  color: #7e7e7e;
+}
+
+._margin_top_5{
+  margin-top: 5px;
+}
+
+._margin_bottom_5{
+  margin-bottom: 5px;
+}
+._nav_tile{
+  font-size: 1.2em;
+  font-family: hind_light;
+  cursor: pointer;
+  color: #7e7e7e;
+}
+
+._nav_tile:hover{
+  font-family: hind_semi;
+  color: #404040;
+}
+
+._nav_tile_selected{
+  font-family: hind_semi;
+  color: #404040;
+}
+
+._nav_tile_logout{
+  margin-top: 5px;
+  font-size: 1em;
+  font-family: hind_light;
+  cursor: pointer;
+}
+
+._main_content_canvas{
+  padding: 50px 0px 0px 0px;
+}
+
+._nav_row{
+  background: #fff;
+}
+
+._switchBtn_canvas{
+  padding: 15px 0px 0px 0px;
+}
+
+._contentSwitchPanel, ._contentSwitchPanel_Select{
+  font-family: hind_light;
+  font-size: 1.2em;
+  margin: 5px 15px 10px 0px;
+  padding: 0px 10px 0px 10px;
+}
+
+._contentSwitchPanel:hover, ._contentSwitchPanel_Select:hover{
+  font-family: hind_semi;
+  cursor: pointer;
+}
+
+._contentSwitchPanel_Select{
+  font-family: hind_semi;
+  color: #fff;
+  box-shadow: 0px 0px 2px #fff;
+  border-radius: 4px;
+  color: #57c26b;
+}
+
+
+/* lib >> */
+
+._lib_panel{
+  height: 295px;
+  margin: 5px 0px 5px 0px;
+  background: #fff;
+  border-radius: 4px;
+  background-image: url('../../../_req/fonts_images/images/default_content_cover/content_cover_d.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-origin: border-box;
+  background-position: center;
+}
+
+._lib_panel:hover{
+  border: 0px solid #59b4db;
+  box-shadow: 0px 0px 5px #7e7e7e;
+}
+
+._pack_details{
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  padding: 5px;
+  border-radius: 4px;
+
+  background: rgba(255,255,255,0.8);
+  background: -moz-linear-gradient(top, rgba(255,255,255,0.8) 0%, rgba(246,246,246,0.89) 47%, rgba(237,237,237,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,0.8)), color-stop(47%, rgba(246,246,246,0.89)), color-stop(100%, rgba(237,237,237,1)));
+  background: -webkit-linear-gradient(top, rgba(255,255,255,0.8) 0%, rgba(246,246,246,0.89) 47%, rgba(237,237,237,1) 100%);
+  background: -o-linear-gradient(top, rgba(255,255,255,0.8) 0%, rgba(246,246,246,0.89) 47%, rgba(237,237,237,1) 100%);
+  background: -ms-linear-gradient(top, rgba(255,255,255,0.8) 0%, rgba(246,246,246,0.89) 47%, rgba(237,237,237,1) 100%);
+  background: linear-gradient(to bottom, rgba(255,255,255,0.8) 0%, rgba(246,246,246,0.89) 47%, rgba(237,237,237,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=0 );
+
+}
+
+._pack_name{
+  text-align: right;
+  color: #4e4e4e;
+  font-family: hind_semi;
+  font-size: 1.8em;
+  cursor: pointer;
+}
+
+._pack_author{
+  text-align: right;
+  padding: 5px 0px 5px;
+  color: #7e7e7e;
+  font-family: hind;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+/* pur pack viewer >> */
+
+._tbl_o_content{
+
+}
+
+._tbloc_title{
+  color: #7e7e7e;
+  font-family: hind_light;
+  font-size: 1.1em;
+  padding: 5px;
+  border-bottom: 1px solid #c1c1c1;
+}
+
+._tbloc_content{
+  padding: 5px 0px 5px 0px;
+}
+
+._tbloc_point_canvas{
+    margin: 5px 0px 5px 0px;
+}
+
+._tbloc_point{
+  font-family: hind;
+  font-size: 1.1em;
+  color: #7e7e7e;
+  padding: 0px 5px 0px 5px;
+}
+
+._tbloc_point:hover{
+  cursor: pointer;
+  font-family: hind_light;
+  color: #2185c5;
+  font-size: 1.4em;
+}
+
+._tbloc_point_active{
+  cursor: pointer;
+  font-family: hind_light;
+  color: #2185c5;
+  font-size: 1.4em;
+  padding: 0px 5px 0px 5px;
+}
+
+._content_canvas{
+  background: #fff;
+  box-shadow: 0px 0px 2px #c1c1c1;
+  border-radius: 4px;
+}
+
+._no_back{
+  background: none;
+  box-shadow: none;
+  border-radius: none;
+}
+
+._view_packName{
+  font-size: 2.4em;
+  font-family: hind_light;
+}
+
+._view_packAuthoe{
+  font-size: 1.6em;
+  font-family: hind_light;
+}
+
+._view_packDescription{
+  font-family: hind;
+  font-size: 1.1em;
+}
+
+._text_content{
+  padding: 5px 5px 5px 5px;
+}
+
+/* question >> */
+
+._given_question_canvas{
+  background: #fff;
+  border-radius: 4px;
+  max-width: 600px;
+  box-shadow: 0px 0px 1px #7e7e7e;
+  margin: 10px 0px 20px 0px;
+  font-family: hind;
+}
+
+._solved_correct{
+  box-shadow: 0px 0px 2px #1fad60;
+}
+
+._solver_wrong{
+  box-shadow: 0px 0px 2px #df1919;
+}
+
+._given_question_canvas:hover{
+  box-shadow: 0px 0px 4px #7e7e7e;
+  border-radius: 4px;
+}
+
+._question_content{
+  padding: 10px 10px 5px 10px;
+  font-family: hind_semi;
+  font-size: 1.3em;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+._answer_content, ._answer_content_v{
+  font-family: hind;
+  font-size: 1.1em;
+  cursor: pointer;
+  padding: 10px;
+}
+
+._answer_content:hover{
+  background: #1fad60;
+  color: #fff;
+}
+
+._correct_ans{
+  background: #1fad60;
+  color: #fff;
+}
+
+._the_ans_stat{
+  padding: 10px 0px 5px 5px;
+  margin: 10px 0px 5px 0px;
+  border-top: 1px solid #c1c1c1;
+}
+
+/* <</ question and list */
+
+/* <</ pur pack viewer */
+
+/* galss >> */
+
+.the_glass{
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  position: fixed;
+  background: rgba(244, 211, 211, 0.06);
+}
+
+._back_white{
+  background: #fff;
+}
+
+._content_back_button{
+  font-size: 1.1em;
+  margin: 0px 0px 10px 0px;
+}
+
+._content_back_button_canvas{
+  cursor: pointer;
+  margin: 0px 10px 0px 0px;
+}
+
+._content_options_button{
+  font-size: 1em;
+  font-family: hind;
+  padding: 0px 5px 0px 5px;
+  cursor: pointer;
+  margin: 0px 10px 0px 5px;
+}
+
+._content_options_button:hover{
+  font-size: 1em;
+}
+
+
+/* user profile >> */
+
+
+.lbl{
+  margin: 0px 50px 0px 0px;
+}
+
+._profile_info_msg{
+  font-family: hind_semi;
+}
+
+._profile_ec_noti{
+  font-family: hind_semi;
+  background: #f48c38;
+  border-radius: 40px;
+  color: #fff;
+  padding: 0px 5px 0px 5px;
+}
+
+/* <</ user profile */
+
+/* create package >> */
+
+._create_package_canvas{
+
+}
+
+._package_maker_canvas{
+  padding: 10px;
+  margin: 20px 0px 20px 0px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0px 0px 4px #7e7e7e;
+  font-family: hind;
+  font-size: 1.2em;
+}
+
+._package_maker_step{
+  font-size: 1.2em;
+  border-bottom: 1px solid #c1c1c1;
+  padding: 5px 5px 10px 10px;
+  margin: 0px 0px 5px 0px;
+}
+
+._package_maker_io{
+  padding: 5px 0px 5px 0px;
+}
+/* <</ create package */

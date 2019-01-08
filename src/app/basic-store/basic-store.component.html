@@ -1,0 +1,42 @@
+<div class="_main_content_canvas">
+  <div class="col-xs-12 col-sm-1"></div>
+  <div class="col-xs-12 col-sm-10">
+    <div class="row _nav_row"> <!-- nav >> -->
+      <div class="col-xs-12">
+        <div class="col-xs-12 col-sm-6 _switchBtn_canvas">
+          <span class="_g_button _green_back _contentSwitchPanel" id="_switch_v_con" (click)="createPackage()">
+            Create
+          </span>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <input type="text" class="_g1_input" placeholder="Search" [(ngModel)]="searchThing"/>
+        </div>
+      </div>
+    </div> <!-- <</ nav -->
+
+    <div class="row _lib_content">
+
+      <div class="row" style="margin-top: 10px;">
+
+        <div class="col-xs-12 col-sm-3" ng-repeat="pkgs in pkgData | filter:searchThing">
+          <div class="col-xs-12 _lib_panel">
+            <div class="row">
+              <div class="_pack_details">
+                <div class="_pack_name" (click)="viewPackages(pkgs.package_id)">
+                  {{pkgs.package_name}}
+                </div>
+                <div class="_pack_author" (click)="viewPackages(pkgs.package_id)">
+                  by {{pkgs.author_name}}
+                </div>
+                <div class="col-xs-12 _success_msg _the_button" (click)="getPackage(pkgs.package_id)" ng-hide="buyHide" ng-controller="checkIfPur_Controller">
+                  00 Buy
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-1"></div>
+</div>

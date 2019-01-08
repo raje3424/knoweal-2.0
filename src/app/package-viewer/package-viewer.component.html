@@ -1,0 +1,51 @@
+<div class="_main_content_canvas" style="margin-bottom: 40px;">
+  <div class="col-xs-12 col-sm-1"></div>
+  <div class="col-xs-12 col-sm-10">
+
+    <div class="row">
+
+      <div class="col-xs-12 col-sm-3"> <!-- content nav >> -->
+        <div class="_tbl_o_content">
+          <div class="_tbloc_title">
+            <h3>packName</h3>
+          </div>
+          <div class="_tbloc_content">
+            <div class="_tbloc_point_canvas">
+              <span class="_tbloc_point_active" ng-class="info_Desc_class" ng-click="content_view_switch = 'packDInfo';">by author_name</span>
+            </div>
+            <div class="_tbloc_point_canvas">
+              <div class="_g_button _green_back" (click)="getPackage(package_id)" ng-hide="libButtonHF">
+                Buy
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> <!-- <</ content nav -->
+
+      <div class="col-xs-12 col-sm-9">
+        <div class="row _content_back_button">
+          <div class="col-xs-12">
+            <span (click)="goBackFunction()" class="_content_back_button_canvas _default_back"><span class="_go_back_button glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back to Stream</span>
+          </div>
+        </div>
+
+        <!-- info n description >> -->
+        <div class="col-xs-12 _content_canvas">
+          <div class="row _text_content">
+            <div class="col-xs-12" id="pkg_msg" ng-hide="lib_pur_title">
+              <div class="row _green_back_border _mst_title">
+                Content already in your Library :)
+              </div>
+            </div>
+          </div>
+          <div class="row _view_packDescription _text_content">
+            <div class="lead">description</div>
+            <hr/>
+            packDescription
+          </div>
+        </div> <!-- <</ info n description -->
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-1"></div>
+</div>

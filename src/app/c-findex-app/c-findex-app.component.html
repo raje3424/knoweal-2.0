@@ -1,0 +1,150 @@
+
+  <nav class="navbar navbar-fixed-top">
+    <div class="col-xs-12">
+      <div class="row _navb">
+        <span class="_know_title">Knoweal</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="row _sign_in_canvas">
+    <div class="col-xs-12 col-sm-1 col-md-2 col-lg-4"></div>
+    <div class="col-xs-12 col-sm-10 col-md-8 col-lg-4">
+
+      <div class="row">
+        <div class="col-xs-12 _index_main_msg">
+          Knowledge is worth sharing.
+        </div>
+        <div class="col-xs-12 _index_sub_msg">
+          A platform for Learning, Sharing and Earning.
+        </div>
+      </div>
+
+      <div [ngSwitch]="logSiFlag">
+        <!-- login signup canvas >> -->
+
+        <div class="row _login_canvas" *ngSwitchCase="'login'">
+          <div class="col-xs-12">
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <input type="email" class="_g1_input" placeholder="Email" [(ngModel)]="logEmail"/>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <input type="password" class="_g1_input" placeholder="Password" [(ngModel)]="logPass"/>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="row">
+              <div class="col-xs-8">
+                <div class="col-xs-12 _g_button _green_back" (click)="loginFunc(logEmail,logPass)">
+                  Sign in
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <div class="col-xs-12 _g_button _blue_back" (click)="logSiFunc('register')">
+                  Register
+                  <!-- <a href="spark.php">spark</a> -->
+                </div>
+              </div>
+            </div>
+            <div class="row" ng-class="logInmsg_class" style="margin-top: 10px; text-align: center;">
+              {{loginMsg}}
+            </div>
+          </div>
+        </div>
+
+        <div class="row _signup_canvas" *ngSwitchCase="'signup'">
+          <div class="col-xs-12">
+            <div class="row">
+              <div class="col-xs-12">
+                <input type="email" class="_g1_input" placeholder="Email" [(ngModel)]="siEmail"/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <input type="password" class="_g1_input" placeholder="Password" [(ngModel)]="siPass">
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <input type="password" class="_g1_input" placeholder="Confirm Password" [(ngModel)]="siCoPass">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="row">
+              <div class="col-xs-8">
+                <div class="col-xs-12 _g_button _blue_back" (click)="register(siEmail, siPass, siCoPass)">
+                  Register
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <div class="col-xs-12 _g_button _orange_back" (click)="logSiFunc('login')">
+                  x
+                </div>
+              </div>
+            </div>
+            <div class="row" ng-class="signmsg_class" style="margin-top: 10px; text-align: center;">
+              {{signMsg}}
+            </div>
+          </div>
+        </div>
+      </div> <!-- << login signup canvas -->
+    </div>
+    <div class="col-xs-12 col-sm-1 col-md-2 col-lg-1"></div>
+  </div>
+
+  <div class="row _more_description_canvas">
+    <div class="col-xs-12 col-sm-1 col-md-2 col-lg-1"></div>
+    <div class="col-xs-12 col-sm-10 col-md-8 col-lg-10">
+      <div class="row _description_msg">
+        <div class="col-xs-12 col-sm-8">
+          Place where you can share your knowledge and even earn while doing so...
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-1 col-md-2 col-lg-1"></div>
+  </div>
+  <div class="row _more_description_canvas" style="background:#9754c6;">
+    <div class="col-xs-12 col-sm-1 col-md-2 col-lg-1"></div>
+    <div class="col-xs-12 col-sm-10 col-md-8 col-lg-10">
+      <div class="row _description_msg">
+        <div class="col-xs-12 col-sm-offset-4 col-sm-8">
+          Place where you can learn and test your knowledge from any device and anywhere ...
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-1 col-md-2 col-lg-1"></div>
+  </div>
+  <div class="row _more_description_canvas" style="background:#7e7e7e;">
+    <div class="col-xs-12 col-sm-1 col-md-2 col-lg-1"></div>
+    <div class="col-xs-12 col-sm-10 col-md-8 col-lg-10">
+      <div class="row _description_msg">
+        <div class="col-xs-12 col-sm-8">
+          <div class="col-xs-12">
+            Coming Soon : for Enterprise and Educational Org.
+          </div>
+          <div class="col-xs-12 _more_description_content">
+            We understand that Enterprise and Org. needs are different from end users so we are working on the features for Enterprise and Educationl Orgs. <br/> Some cool features will be :
+            <ul>
+              <li>
+                Assessment tests.
+              </li>
+              <li>
+                Offline Content and Assessment Test.
+              </li>
+              <li>
+                User Account and Content Management.
+              </li>
+              <li>
+                More deeper analytics.
+              </li>
+              <li>
+                and many more ....
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-1 col-md-2 col-lg-1"></div>
+  </div>

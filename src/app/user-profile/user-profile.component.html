@@ -1,0 +1,68 @@
+
+<div class="row _main_content_canvas">
+  <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1"></div>
+  <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+    <div class="row">
+
+      <div class="col-xs-12 _content_canvas">
+
+        <div class="h3">
+          Namaste, <hr/>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 _margin_top_5">
+            <label > Full Name </label>
+            <input type="text" id="fullName" class="_g1_input _margin_bottom_5 _margin_top_5 _no_border_radis" placeholder="Full Name" [ngModel]="fullName" [disabled]="edit_flag"/>
+          </div>
+          <div class="col-xs-12 col-sm-4 _margin_top_5">
+            <label> Email </label>
+            <input type="text" id="email" class="_g1_input _margin_bottom_5 _margin_top_5 _no_border_radis" placeholder="Email" [disabled]="email_flag" [ngModel]="email"/>
+          </div>
+          <div class="col-xs-12 col-sm-4 _margin_top_5">
+            <label for="let gen of gender">Gender</label>
+              <div class="radio">
+                <div class="col-xs-12" style="margin-left: 5px;">
+                  <input id="male" type="radio" name="gender" value="male" [ngModel]="gender" [disabled]="edit_flag">
+                  <label class="lbl">Male</label>
+                  <input id="female" type="radio" name="gender" value="female" [ngModel]="gender" [disabled]="edit_flag">
+                  <label class="lbl">Female</label>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 _margin_top_5">
+            <div class="row">
+              <label class="col-xs-12"> Date Of Birth </label>
+            </div>
+            <div class="row">
+              <div class="col-xs-4">
+                <input type="text" placeholder="DD" class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis"  [disabled]="edit_flag"/>
+              </div>
+              <div class="col-xs-4">
+                <input type="text" placeholder="MM" class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis"  [disabled]="edit_flag"/>
+              </div>
+              <div class="col-xs-4">
+                <input type="text" placeholder="YYYY" class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis"  [disabled]="edit_flag"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <div class="row" style="margin-bottom: 20px;">
+          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 _profile_info_msg">
+            <p>
+              Keeping your profile info correct &amp; uptodate helps us give you best user experiance.
+            </p>
+          </div>
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div ng-class="buttonClass" class="_g_button" (click)="saupData()">
+              {{buttonOperation}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1"></div>
+</div>
