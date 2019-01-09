@@ -168,66 +168,67 @@ export class CFIndexAppComponent implements OnInit {
   //        }
 
 
-      register(siEmail, siPass, siCoPass){
-         if(this.siEmail){
-           if(this.siPass!="" || this.siCoPass!=""){
-             if(this.siPass == this.siCoPass){
-               let options = {
-                 "v_class": "palika",
-                 "v_function": "signup",
-                 "value": {
-                   "email": this.siEmail,
-                   "password": this.siPass
-                   }
-                 };
-                console.log("Signup options : ", options);
-                 this._service.postRequestWithObservable(options)
-                  .subscribe( res => {
-                    console.log(res);
-                    if(res.message == 'true'){
-                      localStorage.setItem('token', JSON.stringify(res.token));
-                      this.s_email_ioClass = "";
-                      this.s_pass_ioClass = "";
-                      this.loginMsg = "Preparing profile...";
-                      this.signmsg_class = "_success_msg";
-                      this._routes.navigate(['/userpro']);
-                      // setTimeout(function(){
-                      //
-            					// },"1000");
-                      //this._routes.navigate(['/userpro']);
-                    }else{
-                      if(res == "rfalse"){
-                        this.s_email_ioClass = "_error_input";
-                        this.signMsg = "Email already registered...";
-                        this.signmsg_class = "_error_msg";
-                      }
-                      else{
-                       this.s_email_ioClass = "_error_input";
-                       this.s_pass_ioClass = "_error_input";
-                       this.email_jio = "";
-                       this.email_cnf_jio = "";
-                       this.pass_jio = "";
-                       this.pass_cnf_jio = "";
-                       this.signMsg = "Error, please register again :| ";
-                       this.signmsg_class = "_warning_msg";
-                      }
-                  }
-                });
-               //this._routes.navigate(['/userpro']);
-             }else{
-              this.signMsg = "Password mismatch :( ";
-              this.pass_jio = "";
-              this.pass_cnf_jio = "";
-              this.s_pass_ioClass = "_warning_input";
-              this.signmsg_class = "_warning_msg";
-             }
-               // this.signMsg = "password do not match";
-          }
+  register(siEmail, siPass, siCoPass){
+    if(this.siEmail){
+      if(this.siPass!="" || this.siCoPass!=""){
+        if(this.siPass == this.siCoPass){
+          let options = {
+            "v_class": "palika",
+            "v_function": "signup",
+            "value": {
+              "email": this.siEmail,
+              "password": this.siPass
+              }
+            };
+          console.log("Signup options : ", options);
+            this._service.postRequestWithObservable(options)
+            .subscribe( res => {
+              console.log(res);
+              if(res.message == 'true'){
+                localStorage.setItem('token', JSON.stringify(res.token));
+                this.s_email_ioClass = "";
+                this.s_pass_ioClass = "";
+                this.loginMsg = "Preparing profile...";
+                this.signmsg_class = "_success_msg";
+                this._routes.navigate(['/userpro']);
+                // setTimeout(function(){
+                //
+                // },"1000");
+                //this._routes.navigate(['/userpro']);
+              }else{
+                if(res == "rfalse"){
+                  this.s_email_ioClass = "_error_input";
+                  this.signMsg = "Email already registered...";
+                  this.signmsg_class = "_error_msg";
+                }
+                else{
+                  this.s_email_ioClass = "_error_input";
+                  this.s_pass_ioClass = "_error_input";
+                  this.email_jio = "";
+                  this.email_cnf_jio = "";
+                  this.pass_jio = "";
+                  this.pass_cnf_jio = "";
+                  this.signMsg = "Error, please register again :| ";
+                  this.signmsg_class = "_warning_msg";
+                }
+            }
+          });
+          //this._routes.navigate(['/userpro']);
         }else{
-            console.log("Something is Blank !!! ");
-           this.signMsg = "Enter Password :| ";
-           this.s_pass_ioClass = "_error_input";
-           this.signmsg_class = "_warning_msg";
-          }
+        this.signMsg = "Password mismatch :( ";
+        this.pass_jio = "";
+        this.pass_cnf_jio = "";
+        this.s_pass_ioClass = "_warning_input";
+        this.signmsg_class = "_warning_msg";
         }
+          // this.signMsg = "password do not match";
+      }
+    }else{
+      console.log("Something is Blank !!! ");
+      this.signMsg = "Enter Password :| ";
+      this.s_pass_ioClass = "_error_input";
+      this.signmsg_class = "_warning_msg";
+    }
+  }
+
 }
