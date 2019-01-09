@@ -11,11 +11,12 @@
 
     public function EncodeToken($data){
       //echo "In jwtTokenSetter";
+
       $token = array(
-        "iat" => 1547027358,
+        "iat" => strtotime(date("Y-m-d H:i:s",time())),
         "data" => $data
       );
-      echo "\nKey is : ".$this->key."\n";
+      //echo "\nKey is : ".$this->key."\n";
       $jwt = JWT::encode($token, $this->key);
       //print_r($jwt);
       return $jwt;

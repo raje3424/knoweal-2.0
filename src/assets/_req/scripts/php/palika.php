@@ -132,19 +132,19 @@ class palika extends connector {
         $response['errMessage'] = "";
         $response['token'] = $jwt;
         //return $ans;
-        $return $response;
+        return $response;
       }else{
         //return "pfalse >> ".md5($value['password'])." :: ".$result['pass'];
         //return "pfalse";
         $response['response'] = "pfalse";
         $response['errMessage'] = "Password mismatch.";
-        $return $response;
+        return $response;
       }
     }else {
       //return "ufalse";
       $response['response'] = "ufalse";
       $response['errMessage'] = "Invalid Username !!!";
-      $return $response;
+      return $response;
     }
   }
 
