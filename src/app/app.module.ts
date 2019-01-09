@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { BasicStoreComponent } from './basic-store/basic-store.component';
@@ -17,6 +17,7 @@ import { UserHomeComponent } from './user-home/user-home.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { KnowelApiService } from './_service/knowel-api.service';
 import { AuthGuard } from './_guards/index';
+import { TokenInterceptorService } from './_service/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,13 @@ import { AuthGuard } from './_guards/index';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [KnowelApiService, AuthGuard],
+  providers: [KnowelApiService, AuthGuard, 
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule {
