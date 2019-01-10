@@ -41,7 +41,7 @@ export class CFIndexAppComponent implements OnInit {
 
   ngOnInit() {
     // reset login status
-    this._service.logout();
+    //this._service.logout();
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.activateRoute.snapshot.queryParams['returnUrl'] || '/';
@@ -110,9 +110,12 @@ export class CFIndexAppComponent implements OnInit {
                   localStorage.setItem('token', JSON.stringify(res.token));
                   this.loginMsg = "Loading profile...";
                   this.logInmsg_class = "_info_msg";
+                  setTimeout(function(){
+                  },"10000");
+                  this._routes.navigate(['/userhome']);
               }else {
                 this._routes.navigate(['/cfindex']);
-              } 
+              }
             });
           }
         }else{

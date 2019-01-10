@@ -18,7 +18,6 @@
       );
       //echo "\nKey is : ".$this->key."\n";
       $jwt = JWT::encode($token, $this->key);
-      //print_r($jwt);
       return $jwt;
 
     }
@@ -51,6 +50,8 @@
     }
 
     public function DecodeToken($token){
+      // get posted data
+    //  $data = json_decode(file_get_contents("php://input"));
       $jwt = isset($token) ? $token : "";
       if ($jwt) {
         try {
@@ -62,6 +63,10 @@
       }else{
         echo "Token is empty";
       }
+    }
+
+    public function destroy(){
+
     }
 
   }

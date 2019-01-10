@@ -15,7 +15,6 @@ import 'rxjs/Rx';
 
 export class KnowelApiService {
 
-    //url = "http://localhost:8888/hello.php";
     url = "http://localhost:8888/interface.php";
 
     constructor(private http:Http) { }
@@ -34,14 +33,21 @@ export class KnowelApiService {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('token', JSON.stringify(res));
             }
-
             return res;
         });
   }
 
+  //added by sarita
+  isLoggedIn() {
+    //let tok = localStorage.getItem('token');
+    console.log(localStorage.getItem('token'));
+   return !!localStorage.getItem('token');
+  }
+
   logout() {
       // remove user from local storage to log user out
-      localStorage.removeItem('currentUser');
+      localStorage.removeItem('token');
+      console.log("user removed");
   }
 
   fetchDataWithPollInterval(value): Observable<any>{

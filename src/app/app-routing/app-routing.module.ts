@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'packman',  component: PackageMarkerComponent},
   { path: 'packview', component: PackageViewerComponent},
   { path: 'purpack',  component: PurPackageViewerComponent},
-  { path: 'userhome', component: UserHomeComponent},
+  { path: 'userhome', component: UserHomeComponent, canActivate: [AuthGuard]},
   { path: 'userpro', component: UserProfileComponent}
 ];
 

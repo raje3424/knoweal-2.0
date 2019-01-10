@@ -124,6 +124,7 @@ class palika extends connector {
         $ans = $oSession->sessionEmailSetter($value['email']);*/
         $jwtObj = new jwtGenerator();
         $jwt = $jwtObj->EncodeToken(array('email'=>$value['email']));
+        //print_r($jwtObj.jwttoken);
         //print_r($jwt);
         //echo "\nToken is : ".$jwtObj->IsTokenValid($jwt)."\n";
         //$jwtObj->DecodeToken($jwt);

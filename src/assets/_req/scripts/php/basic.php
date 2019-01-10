@@ -4,7 +4,8 @@
 //include_once ("server.php");
 
 include_once ("serverConnector.php");
-include_once ("sessionConn.php");
+//include_once ("sessionConn.php");
+include_once ("jwtGenerator.php");
 
 class basic extends connector{
 
@@ -32,13 +33,18 @@ class basic extends connector{
     }
   }
 
-  private function getUserInstanceStatus(){
-     //console.log("in userinstance");
-    $query = "SELECT `info_flag` FROM `user_instance` WHERE `email` = ?";
-    $result = $this->query_db($query, md5($_SESSION['email']));
-    $result = mysqli_fetch_array($result);
-    $this->db_close();
-    return $result['info_flag'];
+  private function getUserInstanceStatus($value){
+    echo $value['token'];
+     $jwtObj = new jwtGenerator();
+     $jwt = $jwtObj->DecodeToken($value['token']);
+     return $jwt;
+     //print_r($jwt);
+    // print_r($jwtObj.$jwttoken);
+    // $query = "SELECT `info_flag` FROM `user_instance` WHERE `email` = ?";
+    // $result = $this->query_db($query, md5($_SESSION['email']));
+    // $result = mysqli_fetch_array($result);
+    // $this->db_close();
+    // return $result['info_flag'];
   }
 
   /* from here >> ! if want to cut ! << */
@@ -74,7 +80,7 @@ class basic extends connector{
   }
 
   private function getOuter(){
-    console.log("getouter");
+    //console.log("getouter");
     $osx = new sessionExr;
     $ret = $osx->destroy();
     return $ret;

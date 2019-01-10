@@ -11,6 +11,8 @@ include_once ("profile.php");
 class r_interface{
 
   public function userAdaptor($v_class, $v_funct, $v_value){
+    $headers = apache_request_headers();
+    //print_r($headers);
     //echo " Class >> ".$v_class." function >>".$v_funct;
     $object = $this->objectCreator();
     if (isset($object[$v_class])) {
@@ -30,7 +32,7 @@ class r_interface{
  }
 
 }
-  
+
   $data = json_decode(file_get_contents("php://input"), true);
   $or = new r_interface;
   //print_r($data);
