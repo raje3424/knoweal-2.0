@@ -72,10 +72,15 @@ export class CFIndexAppComponent implements OnInit {
   logSiFunc(logSi){
    if(logSi == 'register'){
      this.logSiFlag = "signup";
-     console.log('signup');
+      this.logEmail = '';
+      this.logPass = '';
+      this.loginMsg = '';
    }else if(logSi == "login"){
      this.logSiFlag = "login";
-     console.log('login');
+      this.siEmail = '';
+      this.siPass = '';
+      this.siCoPass = '';
+      this.signMsg = '';
    }
   }
 
@@ -95,10 +100,16 @@ export class CFIndexAppComponent implements OnInit {
         this._service.postRequestWithObservable(options)
           .subscribe( res => {
             console.log(res);
-              if(res.message == 'true'){
-                localStorage.setItem('token', JSON.stringify(res.token));
-                this.loginMsg = "Loading profile...";
-                this.logInmsg_class = "_info_msg";
+              if(res.response == 'ufalse'){
+                this.loginMsg = res.errMessage;
+                this.logInmsg_class = "_error_msg";
+              }else if(res.response == 'pfalse'){
+                this.loginMsg = res.errMessage;
+                this.logInmsg_class = "_error_msg";
+              }else if(res.response == 'true'){
+                  localStorage.setItem('token', JSON.stringify(res.token));
+                  this.loginMsg = "Loading profile...";
+                  this.logInmsg_class = "_info_msg";
               }else {
                 this._routes.navigate(['/cfindex']);
               } 
@@ -184,7 +195,7 @@ export class CFIndexAppComponent implements OnInit {
             this._service.postRequestWithObservable(options)
             .subscribe( res => {
               console.log(res);
-              if(res.message == 'true'){
+              if(res.response == 'true'){
                 localStorage.setItem('token', JSON.stringify(res.token));
                 this.s_email_ioClass = "";
                 this.s_pass_ioClass = "";
@@ -196,12 +207,19 @@ export class CFIndexAppComponent implements OnInit {
                 // },"1000");
                 //this._routes.navigate(['/userpro']);
               }else{
-                if(res == "rfalse"){
+                if(res.response == "rfalse"){
                   this.s_email_ioClass = "_error_input";
-                  this.signMsg = "Email already registered...";
+                  this.signMsg = res.errMessage;
                   this.signmsg_class = "_error_msg";
-                }
-                else{
+                }else if(res.response == "efalse"){
+                  this.s_email_ioClass = "_error_input";
+                  this.signMsg = res.errMessage;
+                  this.signmsg_class = "_error_msg";
+                }else if(res.response == "bfalse"){
+                  this.s_email_ioClass = "_error_input";
+                  this.signMsg = res.errMessage;
+                  this.signmsg_class = "_error_msg";
+                }else{
                   this.s_email_ioClass = "_error_input";
                   this.s_pass_ioClass = "_error_input";
                   this.email_jio = "";
@@ -215,11 +233,11 @@ export class CFIndexAppComponent implements OnInit {
           });
           //this._routes.navigate(['/userpro']);
         }else{
-        this.signMsg = "Password mismatch :( ";
-        this.pass_jio = "";
-        this.pass_cnf_jio = "";
-        this.s_pass_ioClass = "_warning_input";
-        this.signmsg_class = "_warning_msg";
+          this.signMsg = "Password mismatch :( ";
+          this.pass_jio = "";
+          this.pass_cnf_jio = "";
+          this.s_pass_ioClass = "_warning_input";
+          this.signmsg_class = "_warning_msg";
         }
           // this.signMsg = "password do not match";
       }
