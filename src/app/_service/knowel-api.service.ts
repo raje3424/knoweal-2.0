@@ -64,7 +64,7 @@ export class KnowelApiService {
   }
 
   postRequestWithObservable(value:any): Observable<any> {
-    let headers = new Headers({ 'Content-Type': 'application/json', "Accept": "text/plain" });
+    let headers = new Headers({ 'Content-Type': 'application/json', "Accept": "text/plain", 'Authorization': localStorage.getItem('token') });
     let options = new RequestOptions({ headers: headers });
     return this.http.post(this.url, value, options)
                 .map(this.extractData)
