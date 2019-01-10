@@ -22,17 +22,12 @@ profile_ec_noti_flag = false;
 constructor(private _routes: Router,private _service: KnowelApiService){ }
 
   ngOnInit() {
-    let token = localStorage.getItem('token');
 
     var options = {
       "v_class": "basic",
-      "v_function": "getUserInstanceStatus",
-      "value" : {
-          "token": token
-        }
+      "v_function": "getUserInstanceStatus"
       };
       console.log(options);
-      console.log(token);
       this._service.postRequestWithObservable(options)
          .subscribe( res => {
            console.log(res);
