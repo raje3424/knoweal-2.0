@@ -11,11 +11,8 @@
 **
 */
 
- //include ("serverConnector.php");
- //include("hello.php");
-
  include_once ("serverConnector.php");
- include_once ("sessionConn.php");
+ //include_once ("sessionConn.php");
  include_once ("jwtGenerator.php");
 
  require 'vendor/autoload.php';
@@ -25,8 +22,9 @@ use GuzzleHttp\Client;
 use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
 
 //include("PHPMailer-master/PHPMailerAutoload.php");
-//echo"palika";
+
 class palika extends connector {
+
   protected $response = array();
 
   public function userAdaptor($operation, $value){

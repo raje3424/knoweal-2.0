@@ -41,7 +41,7 @@ class r_interface{
   //print_r($data);
   $or->userAdaptor($data['v_class'], $data['v_function'], $data['value']);
 
-  // error_reporting( E_ALL );
-  // ini_set('display_errors', 1);
+  error_reporting( E_ALL );
+  ini_set('display_errors', 1);
 
 ?>

@@ -18,34 +18,39 @@ store_activeClass:any;
 //profile_ec_noti_flag:any;
 profile_ec_noti_flag = false;
 
-
 constructor(private _routes: Router,private _service: KnowelApiService){ }
 
   ngOnInit() {
+    let id = this._service.canActivate();
+    console.log(id);
+    //let token = localStorage.getItem('token');
 
     var options = {
       "v_class": "basic",
-      "v_function": "getUserInstanceStatus"
+      "v_function": "getUserInstanceStatus",
+      "value": {
+        "email": id
+        }
       };
       console.log(options);
       this._service.postRequestWithObservable(options)
-         .subscribe( res => {
+         .subscribe(res => {
            console.log(res);
-        // if (res != 'true') {
-        //  this.profile_noti = "!";
-        //  this.pro_acriveClass = "_nav_tile_selected";
-        //  this.lib_activeClass = "";
-        //  this.store_activeClass = "";
-        //  this.profile_ec_noti_flag = true;
-        //  this._routes.navigate(['/profile']);
-        // }else{
-        //  this.profile_noti = "";
-        //  this.pro_acriveClass = "";
-        //  this.lib_activeClass = "_nav_tile_selected";
-        //  this.store_activeClass = "";
-        //  this.profile_ec_noti_flag = false;
-        //  this._routes.navigate(['/library']);
-        // }
+        if (res == 0) {
+         this.profile_noti = "!";
+         this.pro_acriveClass = "_nav_tile_selected";
+         this.lib_activeClass = "";
+         this.store_activeClass = "";
+         this.profile_ec_noti_flag = true;
+         this._routes.navigate(['/userpro']);
+        }else{
+         this.profile_noti = "";
+         this.pro_acriveClass = "";
+         this.lib_activeClass = "_nav_tile_selected";
+         this.store_activeClass = "";
+         this.profile_ec_noti_flag = false;
+         this._routes.navigate(['/library']);
+        }
     });
   }
 
@@ -64,19 +69,7 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
     //logout function
     logOut(){
       this._service.logout();
-
-      // var options = {
-      //   "v_class": "basic",
-      //   "v_function": "getOuter"
-      // };
-      // console.log(options);
-       this._routes.navigate(['/cfindex']);
-      // this._service.postRequestWithObservable(options)
-      //    .subscribe( res => {
-      //   if(res == "true"){
-      //      this._routes.navigate(['/cfindex']);
-      //   }
-      // });
+      this._routes.navigate(['/cfindex']);
     }
 
 }

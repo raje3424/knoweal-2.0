@@ -18,11 +18,11 @@
         <div class="row _package_maker_io" hidden="infod_hideFlag">
           <div class="col-xs-12 col-sm-4">
             <label *ngFor="let pack of packName"> Package Name </label>
-            <input type="text" name="packName" [ngClass]="name_class" class="_g1_input ¸ _no_border_radis" placeholder="Package Name" [(ngModel)]="packName" [attr.disabled]="pkg_edit_flag"/>
+            <input type="text" name="packName" [ngClass]="name_class" class="_g1_input ¸ _no_border_radis" placeholder="Package Name" [(ngModel)]="packName" [Disabled]="pkg_edit_flag"/>
           </div>
           <div class="col-xs-12 col-sm-8">
             <label *ngFor="let desc of description"> Package Description </label>
-            <textarea name="description" Class="des_class _margin_bottom_5 _margin_top_5" class="_g1_input" placeholder="Give short description of your package here..." style="resize: none; height: 90px;" [(ngModel)]="packDescription" [attr.disabled]="pkg_edit_flag"></textarea>
+            <textarea name="description" Class="des_class _margin_bottom_5 _margin_top_5" class="_g1_input" placeholder="Give short description of your package here..." style="resize: none; height: 90px;" [(ngModel)]="packDescription" [Disabled]="pkg_edit_flag"></textarea>
           </div>
           <div class="col-xs-12">
             <div class="col-xs-12 col-sm-offset-8 col-sm-4 _g_button _blue_back" (click)="kido('notes_class')">
@@ -34,21 +34,21 @@
         <div class="row _package_maker_io" *ngIf="notes_hideFlag">
           <div class="col-xs-12 col-sm-12 _margin_top_5">
             <label *ngFor="let packn of packNotes">Package Notes</label>
-            <textarea name="packNotes" [ngClass]="note_class" class="_g1_input" placeholder="If you have some notes or tips you can share them here ..." style="height: 150px; resize: vertical" [(ngModel)]="packNotes" [attr.disabled]="pkg_edit_flag"></textarea>
+            <textarea name="packNotes" [ngClass]="note_class" class="_g1_input" placeholder="If you have some notes or tips you can share them here ..." style="height: 150px; resize: vertical" [(ngModel)]="packNotes" [Disabled]="pkg_edit_flag"></textarea>
           </div>
           <div class="col-xs-12">
             <div class="col-xs-2 col-sm-3 _g_button _warning_msg" (click)="kido('info_Desc_class')">
               Back
             </div>
-            <div class="col-xs-10 col-sm-offset-5 col-sm-4 _g_button _blue_back" (click)="addPackage()" hidden="pkgCreateButtonFlag">
+            <div class="col-xs-10 col-sm-offset-5 col-sm-4 _g_button _blue_back" (click)="addPackage()" [Hidden]="pkgCreateButtonFlag">
               Create Package
             </div>
 
             <div class="col-xs-3 col-sm-offset-3 col-sm-2">
-              <div class="_g_button _orange_back" ng-init="edit_label = 'Edit'" [attr.disabled]="editPackFlag" (click)="editSave_pack()" ng-show="pkgCreateButtonFlag"> edit_label </div>
+              <div class="_g_button _orange_back" ng-init="edit_label = 'Edit'" [Disabled]="editPackFlag" (click)="editSave_pack()" ng-show="pkgCreateButtonFlag"> edit_label </div>
             </div>
             <div class="col-xs-7 col-sm-4">
-              <div class="_g_button _green_back" [ngClass]="questions_class" (click)="kido('questions_class'); addQuestions()" [attr.disabled]="questionAddFlag" ng-show="pkgCreateButtonFlag">Add Question</div>
+              <div class="_g_button _green_back" [ngClass]="questions_class" (click)="kido('questions_class'); addQuestions()" [Disabled]="questionAddFlag" ng-show="pkgCreateButtonFlag">Add Question</div>
             </div>
           </div>
         </div>

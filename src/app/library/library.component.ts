@@ -19,23 +19,30 @@ own_conSelect:string;
 profile_noti:string;pro_acriveClass:string;lib_activeClass:string;
 boughtPackMsg:any;pur_pkgData:any;
 createPackMsg:any;own_pkgData:any;
-
+idAsEmail;
 constructor(private _routes: Router,private _service: KnowelApiService){ }
 
   ngOnInit() {
+      this.idAsEmail = this._service.canActivate();
+    //  this._service.postRequestWithObservable(Authorization).subscribe(res=>{
+    //   console.log(res);
+    // });
   }
 
   createPackage(){
     let options = {
       "v_class": "basic",
-      "v_function": "getIDFromSession"
+      "v_function": "getIDFromSession",
+      "value":{
+        "email":this.idAsEmail
+      }
     };
     console.log(options);
     this._service.postRequestWithObservable(options)
        .subscribe( res => {
       console.log(res);
-      if(res == "true"){
-        this._routes.navigate(['/createPackage']);
+      if(res == 1){
+        this._routes.navigate(['/packman']);
       }else{
         // create an alert to complete the profile >> ! <<
         this.profile_noti = "!";
@@ -118,5 +125,19 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
 
   viewOwnPackages(){
       this._routes.navigate(['/pur_package_viewer']);
+  }
+
+  navlib(){
+    this._routes.navigate(['/library']);
+  }
+
+  navpro(){
+    this._routes.navigate(['/userpro']);
+  }
+
+  //logout function
+  logOut(){
+    this._service.logout();
+    this._routes.navigate(['/cfindex']);
   }
 }

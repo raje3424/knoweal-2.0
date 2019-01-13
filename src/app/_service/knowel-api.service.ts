@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/Rx';
+import decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -79,5 +80,14 @@ export class KnowelApiService {
   private handleErrorObservable (error: Response | any) {
   //  console.error(error);
     return Observable.throw(error);
+  }
+
+   canActivate(){
+    const token = localStorage.getItem('token');
+    // decode the token to get its payload
+    const tokenPayload = decode(token);
+     //console.log(tokenPayload.data.email);
+    // console.log(tokenPayload);
+    return tokenPayload.data.email ;
   }
 }

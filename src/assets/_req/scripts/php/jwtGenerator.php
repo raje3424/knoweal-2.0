@@ -56,13 +56,15 @@
       if ($jwt) {
         try {
           $decoded = JWT::decode($jwt, $this->key, array('HS256'));
-          print_r($decoded);
+          //print_r($decoded);
+          return $decoded;
         }catch (Exception $e){
           echo "Token is invalid : ".$e->getMessage();
         }
       }else{
         echo "Token is empty";
       }
+
     }
 
     public function destroy(){

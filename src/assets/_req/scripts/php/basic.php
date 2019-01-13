@@ -1,13 +1,12 @@
 <?PHP
 
-//include("hello.php");
-//include_once ("server.php");
-
 include_once ("serverConnector.php");
 //include_once ("sessionConn.php");
 include_once ("jwtGenerator.php");
 
 class basic extends connector{
+
+  protected $response = array();
 
   public function userAdaptor($operation, $value){
     //echo "\nOperation >> ".$operation." << value >> ".$value['email'];
@@ -34,22 +33,26 @@ class basic extends connector{
   }
 
   private function getUserInstanceStatus($value){
-    echo $value['token'];
-     $jwtObj = new jwtGenerator();
-     $jwt = $jwtObj->DecodeToken($value['token']);
-     return $jwt;
-     //print_r($jwt);
-    // print_r($jwtObj.$jwttoken);
-    // $query = "SELECT `info_flag` FROM `user_instance` WHERE `email` = ?";
-    // $result = $this->query_db($query, md5($_SESSION['email']));
-    // $result = mysqli_fetch_array($result);
-    // $this->db_close();
-    // return $result['info_flag'];
+    $this->clearOldResponseData();
+    $query = "SELECT `info_flag` FROM `user_instance` WHERE `email` = ?";
+    $result = $this->query_db($query, md5($value['email']));
+    $result = mysqli_fetch_array($result);
+    $this->db_close();
+    return $result['info_flag'];
+
+    // $jwtObj = new jwtGenerator();
+    // $jwt = $jwtObj->DecodeToken($value['token']);
+    // $response['response'] = "info_flag";
+    // $response['errMessage'] = "";
+    // $response['token'] = $jwt;
+    //return $response;
+
   }
 
   /* from here >> ! if want to cut ! << */
 
   private function userProfileAdder($value){
+    $this->clearOldResponseData();
     $query = "INSERT INTO user_profile (full_name, email, dob, sex) VALUES(?, ?, ?, ?)";
     $result = $this->query_db($query, $value);
     $this->db_close();
@@ -60,35 +63,43 @@ class basic extends connector{
     }
   }
 
-  private function updateInstanceToO(){
+  private function updateInstanceToO($value){
+    $this->clearOldResponseData();
     $query = "UPDATE `user_instance` SET `info_flag` = 1 WHERE `email` = ?";
-    $result = $this->query_db($query, md5($_SESSION['email']));
+    $result = $this->query_db($query, md5($value['email']));
     $this->db_close();
     return $result;
   }
 
-  private function updateInstanceToX(){
+  private function updateInstanceToX($value){
+    $this->clearOldResponseData();
     $query = "UPDATE `user_instance` SET `info_flag` = 0 WHERE `email` = ?";
-    $result = $this->query_db($query, md5($_SESSION['email']));
+    $result = $this->query_db($query, md5($value['email']));
     $this->db_close();
     return $result;
   }
 
-  private function sessionEmailGetter(){
-    $osx = new sessionExr();
-    return $osx->getSessionEmail();
+  private function sessionEmailGetter($value){
+    $this->clearOldResponseData();
+    if ($value['email']!=""){
+      return true;
+    }else{
+      return false;
+    }
+    // $osx = new sessionExr();
+
   }
 
   private function getOuter(){
     //console.log("getouter");
-    $osx = new sessionExr;
-    $ret = $osx->destroy();
-    return $ret;
+    // $osx = new sessionExr;
+    // $ret = $osx->destroy();
+    // return $ret;
   }
 
-  private function isEmailSessionValid(){
-    if(isset($_SESSION['email'])){ //Here code Updated
-      if($_SESSION['email'] != null || $_SESSION['email'] != "" || $_SESSION['email'] != " "){
+  private function isEmailSessionValid($value){
+    if(isset($value['email'])){ //Here code Updated
+      if($value['email'] != null || $value['email'] != ""){
       return "true";
       }else{
         return "false";
@@ -106,12 +117,11 @@ class basic extends connector{
     }
   }
 
-  private function getUserId(){
-    console.log("getUserId");
+  private function getUserId($value){
     if($this->isEmailSessionValid()){
       if($this->db_connection() == "true"){
         $query = "SELECT `user_id` FROM `user_profile` WHERE `email`= ?";
-        $result = $this->query_db($query, $_SESSION['email']);
+        $result = $this->query_db($query, $value['email']);
         $result = mysqli_fetch_array($result);
         $this->db_close();
         $result = $result['user_id'];
@@ -124,18 +134,33 @@ class basic extends connector{
     return $result;
   }
 
-  private function setIDToSession($value){
-    $osx = new sessionExr;
-    $ret = $osx->sessionIDSetter($value);
-    return $ret;
+  // private function setIDToSession($value){
+  //   $osx = new sessionExr;
+  //   $ret = $osx->sessionIDSetter($value);
+  //   return $ret;
+  // }
+  //
+
+  private function getIDFromSession($value){
+    $this->clearOldResponseData();
+
+    if($value['email']!=""){
+      return true;
+    }else{
+      return false;
+    }
+    // $osx = new sessionExr;
+    // $ret = $osx->getSessionID();
+    // return $ret;
   }
 
-  private function getIDFromSession(){
-    $osx = new sessionExr;
-    $ret = $osx->getSessionID();
-    return $ret;
+  public function clearOldResponseData(){
+    unset($response);
+    $response = array();
   }
 
 }
+error_reporting( E_ALL );
+ini_set('display_errors', 1);
 
 ?>

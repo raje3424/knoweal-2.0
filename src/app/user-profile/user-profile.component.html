@@ -1,3 +1,36 @@
+<div class="container-fluid">
+<nav class="navbar navbar-fixed-top" ngOnInit="start_check();">
+  <div class="col-xs-12">
+    <div class="row _navb">
+      <div class="col-xs-12 col-sm-2 col-md-2 col-lg-3">
+        <span class="_know_title hidden-xs">Knoweal</span>
+      </div>
+      <div class="col-xs-12 col-sm-9 col-md-8 col-lg-6">
+        <div class="col-xs-3 _margin_top_5">
+          <a><span class="_nav_tile" ng-class="lib_activeClass" (click)="navlib();">Library</span></a>
+        </div>
+        <div class="col-xs-3 _margin_top_5">
+          <a><span class="_nav_tile" ng-class="store_activeClass" (click)="nav('store_activeClass')">Stream</span></a>
+        </div>
+        <div class="col-xs-3 _margin_top_5">
+          <a>
+            <span class="_profile_ec_noti" ng-show="profile_ec_noti_flag">{{profile_noti}}</span>
+            <span class="_nav_tile" ng-class="pro_acriveClass" (click)="navpro();">Profile </span>
+          </a>
+        </div>
+        <div class="col-xs-3 hidden-sm hidden-md hidden-lg _nav_tile_logout _error_msg">
+          <span (click)="logOut();" style="float: right;">Logout</span>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-1 col-md-2 col-lg-3">
+        <span (click)="logOut();" class="hidden-xs _nav_tile_logout _error_msg" style="float: right;">
+          Logout
+        </span>
+      </div>
+    </div>
+  </div>
+</nav>
+</div>
 
 <div class="row _main_content_canvas">
   <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1"></div>
@@ -11,20 +44,20 @@
         </div>
         <div class="row">
           <div class="col-xs-12 col-sm-4 _margin_top_5">
-            <label > Full Name </label>
-            <input type="text" id="fullName" class="_g1_input _margin_bottom_5 _margin_top_5 _no_border_radis" placeholder="Full Name" [ngModel]="fullName" [disabled]="edit_flag"/>
+            <label> Full Name </label>
+            <input type="text" id="fullName" class="_g1_input _margin_bottom_5 _margin_top_5 _no_border_radis" placeholder="Full Name" [(ngModel)]="fullName" [disabled]="edit_flag"/>
           </div>
           <div class="col-xs-12 col-sm-4 _margin_top_5">
             <label> Email </label>
-            <input type="text" id="email" class="_g1_input _margin_bottom_5 _margin_top_5 _no_border_radis" placeholder="Email" [disabled]="email_flag" [ngModel]="email"/>
+            <input type="text" id="email" class="_g1_input _margin_bottom_5 _margin_top_5 _no_border_radis" placeholder="Email" [disabled]="email_flag" [(ngModel)]="email"/>
           </div>
           <div class="col-xs-12 col-sm-4 _margin_top_5">
             <label for="let gen of gender">Gender</label>
               <div class="radio">
                 <div class="col-xs-12" style="margin-left: 5px;">
-                  <input id="male" type="radio" name="gender" value="male" [ngModel]="gender" [disabled]="edit_flag">
+                  <input id="male" type="radio" name="gender" value="male" [(ngModel)]="gender" [disabled]="edit_flag">
                   <label class="lbl">Male</label>
-                  <input id="female" type="radio" name="gender" value="female" [ngModel]="gender" [disabled]="edit_flag">
+                  <input id="female" type="radio" name="gender" value="female" [(ngModel)]="gender" [disabled]="edit_flag">
                   <label class="lbl">Female</label>
                 </div>
               </div>
@@ -37,13 +70,13 @@
             </div>
             <div class="row">
               <div class="col-xs-4">
-                <input type="text" placeholder="DD" class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis"  [disabled]="edit_flag"/>
+                <input type="text" placeholder="DD" class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis" [(ngModel)]="dd" [disabled]="edit_flag"/>
               </div>
               <div class="col-xs-4">
-                <input type="text" placeholder="MM" class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis"  [disabled]="edit_flag"/>
+                <input type="text" placeholder="MM" class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis" [(ngModel)]="mm" [disabled]="edit_flag"/>
               </div>
               <div class="col-xs-4">
-                <input type="text" placeholder="YYYY" class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis"  [disabled]="edit_flag"/>
+                <input type="text" placeholder="YYYY" class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis" [(ngModel)]="yy" [disabled]="edit_flag"/>
               </div>
             </div>
           </div>
