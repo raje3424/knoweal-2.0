@@ -9,10 +9,10 @@
       </div>
       <div class="col-xs-12 col-sm-9 col-md-8 col-lg-6">
         <div class="col-xs-3 _margin_top_5">
-          <a><span class="_nav_tile" ng-class="lib_activeClass" (click)="navlib();">Library</span></a>
+          <a><span class="_nav_tile" ngClass="lib_activeClass" (click)="navlib();">Library</span></a>
         </div>
         <div class="col-xs-3 _margin_top_5">
-          <a><span class="_nav_tile" ng-class="store_activeClass" (click)="nav('store_activeClass')">Stream</span></a>
+          <a><span class="_nav_tile" ngClass="store_activeClass" (click)="nav('store_activeClass')">Stream</span></a>
         </div>
         <div class="col-xs-3 _margin_top_5">
           <a>
@@ -38,7 +38,7 @@
   <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1"></div>
   <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
 
-    <div class="row _nav_row" ng-init="nav('pur')"> <!-- nav >> -->
+    <div class="row _nav_row" ngOnInit="nav('pur')"> <!-- nav >> -->
       <div class="col-xs-12">
         <div class="col-xs-12 col-sm-6 _switchBtn_canvas">
           <span class="_contentSwitchPanel" ngClass="pur_conSelect" (click)="nav('pur')">Purchased Content</span>
@@ -56,21 +56,21 @@
     <div class="row _lib_content">
       <div class="row" style="margin-top: 10px;" ng-show="poFlag"> <!-- purchased content lib >> -->
 
-        <div class="col-xs-12 col-sm-12" [Hidden]="boughtPackMsg">
+        <div class="col-xs-12 col-sm-12" *ngIf="boughtPackMsg">
           <p class="lead">
             You have not bought/ subscribed any package yet, <a style="cursor: pointer;">Lets Explore the package store now... :)</a>
           </p>
         </div>
 
-        <div class="col-xs-12 col-sm-3" ng-repeat="pkgs in pur_pkgData | filter:searchThing">
+        <div class="col-xs-12 col-sm-3" *ngFor="let pkgs of pur_pkgData">
           <div class="col-xs-12 _lib_panel">
             <div class="row">
               <div class="_pack_details">
                 <div class="_pack_name" (click)="viewPurPack()">
-                  pkgs.package_name
+                  {{pkgs.package_name}}
                 </div>
                 <div class="_pack_author" (click)="viewPurPack()">
-                  by pkgs.package_author
+                  by {{pkgs.package_author}}
                 </div>
                 <div class="col-xs-12 _success_msg _the_button" (click)="solveThePack()">
                   Solve
@@ -82,20 +82,20 @@
 
       </div> <!-- <</  purchased content lib -->
 
-      <div class="row" ng-init="createPackMsg = true" style="margin-top: 10px;" hidden="poFlag"> <!-- created lib >> -->
+      <div class="row" ngOnInit="createPackMsg = true" style="margin-top: 10px;" *ngIf="poFlag"> <!-- created lib >> -->
 
-        <div class="col-xs-12 col-sm-12" hidden="createPackMsg">
+        <div class="col-xs-12 col-sm-12" *ngIf="createPackMsg">
           <p class="lead">
             You have not created any package yet, <a style="cursor: pointer;"><span (click)="createPackage()">Lets create one... :)</span></a>
           </p>
         </div>
 
-        <div class="col-xs-12 col-sm-3" ng-repeat="pkgs in own_pkgData | filter:searchThing">
+        <div class="col-xs-12 col-sm-3" *ngFor="let pkgs of own_pkgData">
           <div class="col-xs-12 _lib_panel">
             <div class="row">
               <div class="_pack_details">
                 <div class="_pack_name" (click)="viewOwnPackages()">
-                  pkgs.package_name
+                  {{pkgs.package_name}}
                 </div>
               </div>
             </div>

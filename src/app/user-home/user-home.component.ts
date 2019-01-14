@@ -62,8 +62,28 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
       this._routes.navigate(['/userpro']);
     }
 
-     nav(){
-
+     nav(present){
+       switch (present) {
+             case 'lib_activeClass':
+                 this.pro_acriveClass = "";
+                 this.lib_activeClass = "_nav_tile_selected";
+                 this.store_activeClass = "";
+               break;
+             case 'pro_acriveClass':
+               this.pro_acriveClass = "_nav_tile_selected";
+               this.lib_activeClass = "";
+               this.store_activeClass = "";
+               break;
+             case 'store_activeClass':
+               this.pro_acriveClass = "";
+               this.lib_activeClass = "";
+               this.store_activeClass = "_nav_tile_selected";
+               break;
+             default:
+               this.pro_acriveClass = "";
+               this.lib_activeClass = "_nav_tile_selected";
+               this.store_activeClass = "";
+           }
      }
 
     //logout function

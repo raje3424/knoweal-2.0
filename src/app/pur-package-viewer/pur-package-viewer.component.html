@@ -74,24 +74,24 @@
                   <div class="row _given_question_canvas _margin_top_5 _margin_bottom_5" ng-repeat="x in theQestionList" id="">
                     <div id="questionListCanvas">
                       <div class="_question_content">
-                        x.question
+                        {{question}}
                       </div>
 
                       <div class="col-xs-12 col-sm-12 _margin_bottom_5">
                         <div class="row _answer_content _margin_top_5 _margin_bottom_5" ng-class="opt1Class"  (click)="opt1Class = '_correct_ans'; opt2Class = ''; opt3Class = ''; opt4Class = ''; x.anskey = x.opt1; getAnsCount()">
-                          x.opt1
+                          {{opt1}}
                         </div>
                         <div class="row _answer_content _margin_top_5 _margin_bottom_5" ng-class="opt2Class"  (click)="opt2Class = '_correct_ans'; opt1Class = ''; opt3Class = ''; opt4Class = ''; x.anskey = x.opt2; getAnsCount()">
-                          x.opt2
+                          {{opt2}}
                         </div>
                         <div class="row _answer_content _margin_top_5 _margin_bottom_5" ng-class="opt3Class"  (click)="opt3Class = '_correct_ans'; opt2Class = ''; opt4Class = ''; opt1Class = ''; x.anskey = x.opt3; getAnsCount()">
-                          x.opt3
+                          {{opt3}}
                         </div>
                         <div class="row _answer_content _margin_top_5 _margin_bottom_5" ng-class="opt4Class"  (click)="opt4Class = '_correct_ans'; opt2Class = ''; opt3Class = ''; opt1Class = ''; x.anskey = x.opt4; getAnsCount()">
-                          x.opt4
+                          {{opt4}}
                         </div>
                         <div class="_the_ans_stat">
-                        x.rkie
+                          {{rkie}}
                         </div>
                       </div>
                     </div>

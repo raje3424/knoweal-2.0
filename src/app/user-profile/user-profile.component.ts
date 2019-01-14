@@ -30,7 +30,7 @@ export class UserProfileComponent implements OnInit {
 
       let options = {
         "v_class": "basic",
-        "v_function": "getUserInstanceStatus"
+        "v_function": "getUserInstanceStatus",
         "value": {
           "email":this.idAsEmail
           }
@@ -48,7 +48,7 @@ export class UserProfileComponent implements OnInit {
             this._routes.navigate(['/userpro']);
             let options = {
               "v_class": "basic",
-              "v_function": "sessionEmailGetter"
+              "v_function": "sessionEmailGetter",
               "value": {
                 "email": this.idAsEmail
                 }
@@ -69,7 +69,7 @@ export class UserProfileComponent implements OnInit {
           }else{
             let options = {
               "v_class": "basic",
-              "v_function": "sessionEmailGetter"
+              "v_function": "sessionEmailGetter",
               "value": {
                 "email": this.idAsEmail
                 }
@@ -85,7 +85,7 @@ export class UserProfileComponent implements OnInit {
                 this.edit_flag = "true";
                 let options = {
                   "v_class": "profile",
-                  "v_function": "userProfileGetter"
+                  "v_function": "userProfileGetter",
                   "value" :{
                     "email":this.idAsEmail
                   }
@@ -115,6 +115,14 @@ export class UserProfileComponent implements OnInit {
   logOut(){
     this._service.logout();
     this._routes.navigate(['/cfindex']);
+  }
+
+  navlib(){
+    this._routes.navigate(['/library']);
+  }
+
+  navpro(){
+    this._routes.navigate(['/userpro']);
   }
 
   // checkvalu(fullName){
@@ -233,7 +241,7 @@ export class UserProfileComponent implements OnInit {
         });
       }
     }else{
-      console.log(">> not a valthis.idAsEmail arg for performing operation << ");
+      console.log(">> not a val this.idAsEmail arg for performing operation << ");
     }
    }
  }

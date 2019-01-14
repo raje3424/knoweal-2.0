@@ -11,10 +11,10 @@
           </div>
           <div class="_tbloc_content">
             <div class="_tbloc_point_canvas">
-              <span class="_tbloc_point_active" ng-class="info_Desc_class" ng-click="content_view_switch = 'packDInfo';">by author_name</span>
+              <span class="_tbloc_point_active" ngClass="info_Desc_class" (click)="content_view_switch = 'packDInfo';">by {{author_name}}</span>
             </div>
             <div class="_tbloc_point_canvas">
-              <div class="_g_button _green_back" (click)="getPackage(package_id)" ng-hide="libButtonHF">
+              <div class="_g_button _green_back" (click)="getPackage(package_id)" hidden="libButtonHF">
                 Buy
               </div>
             </div>
@@ -41,7 +41,7 @@
           <div class="row _view_packDescription _text_content">
             <div class="lead">description</div>
             <hr/>
-            packDescription
+            {{packDescription}}
           </div>
         </div> <!-- <</ info n description -->
       </div>

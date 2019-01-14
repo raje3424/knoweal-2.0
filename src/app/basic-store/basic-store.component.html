@@ -18,7 +18,7 @@
 
       <div class="row" style="margin-top: 10px;">
 
-        <div class="col-xs-12 col-sm-3" ng-repeat="pkgs in pkgData | filter:searchThing">
+        <div class="col-xs-12 col-sm-3" *ngFor="let pkgs of pkgData" >
           <div class="col-xs-12 _lib_panel">
             <div class="row">
               <div class="_pack_details">
@@ -28,7 +28,7 @@
                 <div class="_pack_author" (click)="viewPackages(pkgs.package_id)">
                   by {{pkgs.author_name}}
                 </div>
-                <div class="col-xs-12 _success_msg _the_button" (click)="getPackage(pkgs.package_id)" ng-hide="buyHide">
+                <div class="col-xs-12 _success_msg _the_button" (click)="getPackage(pkgs.package_id)" *ngIf="buyHide">
                   00 Buy
                 </div>
               </div>

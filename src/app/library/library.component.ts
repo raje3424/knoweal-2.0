@@ -36,7 +36,7 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
       "value":{
         "email":this.idAsEmail
       }
-    };
+    };  
     console.log(options);
     this._service.postRequestWithObservable(options)
        .subscribe( res => {
