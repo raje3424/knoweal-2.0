@@ -29,7 +29,7 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
       "v_class": "basic",
       "v_function": "getUserInstanceStatus",
       "value": {
-        "email": id
+        "token": localStorage.getItem('token')
         }
       };
       console.log(options);
