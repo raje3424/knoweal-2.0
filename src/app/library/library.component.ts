@@ -20,10 +20,12 @@ profile_noti:string;pro_acriveClass:string;lib_activeClass:string;
 boughtPackMsg:any;pur_pkgData:any;
 createPackMsg:any;own_pkgData:any;
 idAsEmail;
+
 constructor(private _routes: Router,private _service: KnowelApiService){ }
 
   ngOnInit() {
       this.idAsEmail = this._service.canActivate();
+      this.nav('pur');
     //  this._service.postRequestWithObservable(Authorization).subscribe(res=>{
     //   console.log(res);
     // });
@@ -36,7 +38,7 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
       "value":{
         "email":this.idAsEmail
       }
-    };  
+    };
     console.log(options);
     this._service.postRequestWithObservable(options)
        .subscribe( res => {
@@ -68,7 +70,6 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
         this.poFlag = !this.poFlag;
       }
     }
-
     if(this.pur_conSelect == "_contentSwitchPanel_Select"){
       if(this.purGFlag == false){
         this.getAllPurchasedPacks();

@@ -48,50 +48,31 @@ class palika extends connector {
     if($ifUser == "false"){
       $result = "";
       $simple_email = $value['email'];
-      //echo "Simple email >> ".$simple_email." ::";
       $value['email'] = md5($value['email']);
       $value['password'] = md5($value['password']);
       //echo $value['password'];
       $unq = uniqid();
       $value['veri_id'] = $unq;
-
       if($value['email'] != "" && $value['password'] != ""){
         $query = "INSERT INTO user_instance (email, pass, veri_id) VALUES(?, ?, ?)";
         //echo vsprintf( str_replace("?","'%s'",$query),$value);
         $result = $this->query_db($query, $value);
-        //echo"query executed";
-        //echo "Result :".$result;
         if($result == 1){
-          /*$oSession = new sessionExr();
-          $ans = $oSession->sessionEmailSetter($simple_email);*/
           $jwtObj = new jwtGenerator();
-          $jwt = $jwtObj->EncodeToken(array('email'=>$simple_email));
-          $this->spark($simple_email);
+          $jwt = $jwtObj->EncodeToken(array('email'=>$value['email']));
+          //$this->spark($simple_email);
+          $this->db_close();
           $response['response'] = "true";
           $response['errMessage'] = "";
           $response['token'] = $jwt;
-          //echo $ans;
-          //return $ans;
-          //echo "ANS >> ".$ans."::";
-          //if($ans == "true"){
-            //echo"if executed";
-            //$this->spark($simple_email);
-            // $file_con = file_get_contents("../../../conf_email.html");
-            // $file_con = str_replace("sent", $unq, $file_con);
-            // echo $this->spark($simple_email,$file_con);
-            //echo $this->sendVEmail($simple_email, $file_con);
-          //}else{
-            //echo "Ans  >> ".$ans." ::";
-            //echo $ans;
             return $response;
-          //}
         }else{
           //return "efalse";
           $response['response'] = "efalse";
           $response['errMessage'] = "Error inserting user.";
           return $response;
         }
-        $this->db_close();
+        ///$this->db_close();
       }else{
         //return "bfalse";
         $response['response'] = "bfalse";
@@ -108,7 +89,6 @@ class palika extends connector {
 
   public function login($value){
     //$this->db_connection();
-    //echo "in login function";
     $this->clearOldResponseData();
     $oBasic = new basic();
     $ifUser = $oBasic->userAdaptor('checkIfEmailExists', md5($value['email']));
@@ -133,8 +113,6 @@ class palika extends connector {
         //return $ans;
         return $response;
       }else{
-        //return "pfalse >> ".md5($value['password'])." :: ".$result['pass'];
-        //return "pfalse";
         $response['response'] = "pfalse";
         $response['errMessage'] = "Password mismatch.";
         return $response;
@@ -153,30 +131,27 @@ class palika extends connector {
   }
 
 
+  public function spark($simple_email){
+  $httpClient = new GuzzleAdapter(new Client());
+  $sparky = new SparkPost($httpClient, ['key'=>'c78d2fed5e21260e3007da448c7a5d0f14b03688']);
+  $sparky->setOptions(['async' => false]);
+  //$email= "$value['email']";
+  //echo $unq;
+  $results = $sparky->transmissions->post([
+    'options' => [
+      'sandbox' => false
+    ],
+    'content' => [
+      'from' => 'newsletters@mail.vidaa.in',
+      'subject' => 'Oh hey',
+      'html' => '<html><body><p>Testing SparkPost - the most awesomest email service!</p><p>Please verify your email using following link <a href="http://localhost:8888/conf_email.html?chavi=">link</a></p></body></html>'
+    ],
+    'recipients' => [
+      ['address' => ['email'=>$simple_email]]
+    ]
+  ]);
+ }
 
-  // $email = strval($value['email']);
-  //echo gettype($abc);
- //
- //  public function spark($simple_email){
- //  $httpClient = new GuzzleAdapter(new Client());
- //  $sparky = new SparkPost($httpClient, ['key'=>'c78d2fed5e21260e3007da448c7a5d0f14b03688']);
- //  $sparky->setOptions(['async' => false]);
- //  //$email= "$value['email']";
- //  echo $unq;
- //  $results = $sparky->transmissions->post([
- //    'options' => [
- //      'sandbox' => false
- //    ],
- //    'content' => [
- //      'from' => 'newsletters@mail.vidaa.in',
- //      'subject' => 'Oh hey',
- //      'html' => '<html><body><p>Testing SparkPost - the most awesomest email service!</p><p>Please verify your email using following link <a href="http://localhost:8888/conf_email.html?chavi=">link</a></p></body></html>'
- //    ],
- //    'recipients' => [
- //      ['address' => ['email'=>$simple_email]]
- //    ]
- //  ]);
- // }
 }
 
   error_reporting( E_ALL );

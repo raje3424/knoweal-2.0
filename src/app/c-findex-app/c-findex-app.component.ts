@@ -9,12 +9,14 @@ import { KnowelApiService } from '../_service/knowel-api.service';
 })
 
 export class CFIndexAppComponent implements OnInit {
+ data: Object;
+response:any;
   errorMessage: any;
   logSi: string;
   logSiFlag = 'login';
   email:any;
   pass:any;
-  data:any;
+
   logEmail:string;
   logPass:string;
   loginMsg:string;
@@ -197,13 +199,16 @@ export class CFIndexAppComponent implements OnInit {
           console.log("Signup options : ", options);
             this._service.postRequestWithObservable(options)
             .subscribe( res => {
-              console.log(res);
+               // this.data = res.json();
+              console.log(res.response);
+              console.log(res.token);
               if(res.response == 'true'){
                 localStorage.setItem('token', JSON.stringify(res.token));
                 this.s_email_ioClass = "";
                 this.s_pass_ioClass = "";
                 this.loginMsg = "Preparing profile...";
                 this.signmsg_class = "_success_msg";
+
                 this._routes.navigate(['/userpro']);
                 // setTimeout(function(){
                 //
