@@ -34,18 +34,20 @@ class basic extends connector{
 
   private function getUserInstanceStatus($value){
     $this->clearOldResponseData();
-    $query = "SELECT `info_flag` FROM `user_instance` WHERE `email` = ?";
-    $result = $this->query_db($query, md5($value['email']));
-    $result = mysqli_fetch_array($result);
-    $this->db_close();
-    return $result['info_flag'];
-
+    echo $value['token'];
     // $jwtObj = new jwtGenerator();
     // $jwt = $jwtObj->DecodeToken($value['token']);
-    // $response['response'] = "info_flag";
+    // //echo $jwt;
+    // $response['response'] = "true";
     // $response['errMessage'] = "";
     // $response['token'] = $jwt;
-    //return $response;
+    // return $response;
+
+    // $query = "SELECT `info_flag` FROM `user_instance` WHERE `email` = ?";
+    // $result = $this->query_db($query, md5($value['email']));
+    // $result = mysqli_fetch_array($result);
+    // $this->db_close();
+    // return $result['info_flag'];
 
   }
 
@@ -81,6 +83,10 @@ class basic extends connector{
 
   private function sessionEmailGetter($value){
     $this->clearOldResponseData();
+    $jwtObj = new jwtGenerator();
+    $jwt = $jwtObj->DecodeToken($value['token']);
+    echo $jwt;
+
     if ($value['email']!=""){
       return true;
     }else{

@@ -26,21 +26,20 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
 
-      this.idAsEmail = this._service.canActivate();
+      //this.idAsEmail = this._service.canActivate();
 
       let options = {
         "v_class": "basic",
         "v_function": "getUserInstanceStatus",
         "value": {
-          "email":this.idAsEmail
+          "token": localStorage.getItem('token')
           }
         };
         console.log(options);
         this._service.postRequestWithObservable(options)
            .subscribe( res => {
-          console.log(res);
-
-          if (res == 0) {
+          console.log(res.response);
+          if (res.response == 0) {
             this.profile_noti = "!";
             this.pro_acriveClass = "_active";
             this.lib_activeClass = "";
@@ -50,7 +49,7 @@ export class UserProfileComponent implements OnInit {
               "v_class": "basic",
               "v_function": "sessionEmailGetter",
               "value": {
-                "email": this.idAsEmail
+                "token": localStorage.getItem('token')
                 }
             };
             console.log(options);

@@ -125,65 +125,6 @@ response:any;
         }
     }
 
-  // loginFunc(logEmail,logPass){
-  //   console.log("email : "+logEmail+" | pass : "+logPass);
-  //     if(this.logEmail){
-  //       if(this.logPass){
-  //         let options = {
-  //           "v_class": "palika",
-  //           "v_function": "login",
-  //           "value": {
-  //             "email": this.logEmail,
-  //             "password": this.logPass
-  //             }
-  //           };
-  //          console.log(options);
-  //           this._service.postRequestWithObservable(options)
-  //            .subscribe( res => {
-  //              console.log(res);
-  //              if(res == 'true'){
-  //                this.loginMsg = "Loading profile...";
-  //                this.logInmsg_class = "_info_msg";
-  //                  let options = {
-  //                    "v_class": "basic",
-  //                    "v_function": "getUserId"
-  //                  };
-  //                }
-  //                console.log(options);
-  //                this._service.postRequestWithObservable(options)
-  //                 .subscribe( res => {
-  //                   console.log(res);
-  //                   if(res == 'true'){
-  //                     var options = {
-  //                           "v_class": "basic",
-  //                           "v_function": "setIDToSession",
-  //                           "value": this.logEmail
-  //                         };
-  //                   }
-  //                   console.log(options);
-  //                   this._service.postRequestWithObservable(options)
-  //                    .subscribe( res => {
-  //                      console.log(res);
-  //                      if(res == "true"){
-  //                              this._routes.navigate(['/userhome']);
-  //                              console.log("ID SET");
-  //                            }else{
-  //                              console.log("ID NOT SET"+res);
-  //                              this.loginMsg = "Profile Error ... Login again...";
-  //                              this.logInmsg_class = "_error_msg";
-  //                              this.username_io = "";
-  //                              this.password_io = "";
-  //                            }
-  //                    });
-  //                 });
-  //              });
-  //            }
-  //          }else{
-  //            console.log("Username or password is blank!");
-  //          }
-  //        }
-
-
   register(siEmail, siPass, siCoPass){
     if(this.siEmail){
       if(this.siPass!="" || this.siCoPass!=""){

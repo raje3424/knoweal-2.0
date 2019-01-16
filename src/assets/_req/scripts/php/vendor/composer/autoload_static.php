@@ -37,6 +37,10 @@ class ComposerStaticInit388c17a5143b4fc01353bfae5a80bc87
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
         ),
+        'F' => 
+        array (
+            'Firebase\\JWT\\' => 13,
+        ),
         'C' => 
         array (
             'Clue\\StreamFilter\\' => 18,
@@ -84,6 +88,10 @@ class ComposerStaticInit388c17a5143b4fc01353bfae5a80bc87
         'GuzzleHttp\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
+        'Firebase\\JWT\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
         ),
         'Clue\\StreamFilter\\' => 
         array (
