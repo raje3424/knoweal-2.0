@@ -104,8 +104,8 @@ class palika extends connector {
         $jwt = $jwtObj->EncodeToken(array('email'=>$value['email']));
         //print_r($jwtObj.jwttoken);
         //print_r($jwt);
-        //echo "\nToken is : ".$jwtObj->IsTokenValid($jwt)."\n";
-        //$jwtObj->DecodeToken($jwt);
+        /*echo "\nToken is : ".$jwtObj->IsTokenValid($jwt)."\n";
+        $jwtObj->DecodeToken($jwt);*/
         $this->db_close();
         $response['response'] = "true";
         $response['errMessage'] = "";

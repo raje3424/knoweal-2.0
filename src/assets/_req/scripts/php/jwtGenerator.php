@@ -47,7 +47,7 @@
          // if decode succeed, show user details
         try {
              // decode jwt
-            $decoded = JWT::decode($jwt, $this->private_key,  array $allowed_algs = array());
+            $decoded = JWT::decode($jwt, $this->private_key, array('HS256'));
             //print_r($decoded);
             return true;
             // set user property values here
@@ -82,24 +82,24 @@
       $jwt = isset($token) ? $token : "";
       if ($jwt) {
         try {
-          $decoded = \Firebase\JWT\JWT::decode($jwt,$this->private_key,  array $allowed_algs = array());
-
+          //$decoded = \Firebase\JWT\JWT::decode($jwt,$this->private_key, array('HS256'));
+          $decoded = JWT::decode($jwt, $this->private_key, array('HS256'));
           // $decoded = JWT::decode($jwt, $this->key, array('HS256'));
           //print_r($decoded);
-          echo json_encode(array(
-            "message" => "Access granted.",
-            "data" => $decoded->data
-        ));
-        //  return $decoded;
+        //   echo json_encode(array(
+        //     "message" => "Access granted.",
+        //     "data" => $decoded->data
+        // ));
+         return $decoded;
         }catch (Exception $e){
-          // $decoded = JWT::decode($jwt, $this->key, array('HS256'));
-          // return $decoded;
-          echo "Token is invalid : ".$e->getMessage();
+          echo "Decode Token is invalid : ".$e->getMessage();
+          return array();
         }
       }else{
         echo "Token is empty";
+        return array();
       }
-
+      //return $decoded;
     }
 
     public function destroy(){
@@ -128,7 +128,7 @@
     // Create JWT
     $jwt = $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
 
-    echo $jwt;
+    print_r($jwt);
     }
 
   }

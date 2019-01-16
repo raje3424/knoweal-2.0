@@ -34,20 +34,27 @@ class basic extends connector{
 
   private function getUserInstanceStatus($value){
     $this->clearOldResponseData();
-    echo $value['token'];
-    // $jwtObj = new jwtGenerator();
-    // $jwt = $jwtObj->DecodeToken($value['token']);
-    // //echo $jwt;
-    // $response['response'] = "true";
-    // $response['errMessage'] = "";
-    // $response['token'] = $jwt;
-    // return $response;
+    //echo $value['token'];
+    $jwtObj = new jwtGenerator();
+    $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
+    //print_r($jwt);
+    //echo $jwt['data']['email']; // working
+    if (isset($jwt)) {
+      $query = "SELECT `info_flag` FROM `user_instance` WHERE `email` = ?";
+      $result = $this->query_db($query, md5($jwt['data']['email']));
+      $result = mysqli_fetch_array($result);
+      $this->db_close();
+      //return $result['info_flag'];
+      $response['response'] = "true";
+      $response['errMessage'] = "";
+      $response['infoFlag'] = $result['info_flag'];
+      return $response;
+    }else{
+      $response['response'] = "false";
+      $response['errMessage'] = "Token is empty";
+      return $response;
+    }
 
-    // $query = "SELECT `info_flag` FROM `user_instance` WHERE `email` = ?";
-    // $result = $this->query_db($query, md5($value['email']));
-    // $result = mysqli_fetch_array($result);
-    // $this->db_close();
-    // return $result['info_flag'];
 
   }
 

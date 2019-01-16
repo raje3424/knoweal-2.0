@@ -22,7 +22,7 @@ class r_interface{
       // $object['jwt']->testing();
       if (isset($v_value['token'])) {
           //print_r($v_value);
-        if ($object['jwt']->DecodeToken($v_value['token'])) {
+        if ($object['jwt']->IsTokenValid(json_decode($v_value['token']))) {
           if (isset($object[$v_class])) {
             echo json_encode($object[$v_class]->userAdaptor($v_funct, $v_value));
           }
@@ -60,7 +60,6 @@ class r_interface{
   //echo " Class >> ".$data['v_class']." function >>".$data['v_function']." value >> ".$data['value'];
   //print_r($data);
   $or->userAdaptor($data['v_class'], $data['v_function'], $data['value']);
-
   error_reporting( E_ALL );
   ini_set('display_errors', 1);
 
