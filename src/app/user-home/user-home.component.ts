@@ -21,7 +21,7 @@ profile_ec_noti_flag = false;
 constructor(private _routes: Router,private _service: KnowelApiService){ }
 
   ngOnInit() {
-    let id = this._service.canActivate();
+    let id = this._service.getEmail();
     console.log(id);
     //let token = localStorage.getItem('token');
 
@@ -36,7 +36,7 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
       this._service.postRequestWithObservable(options)
          .subscribe(res => {
            console.log(res);
-        if (res == 0) {
+        if (res.response == "true" && res.infoFlag == "0") {
          this.profile_noti = "!";
          this.pro_acriveClass = "_nav_tile_selected";
          this.lib_activeClass = "";

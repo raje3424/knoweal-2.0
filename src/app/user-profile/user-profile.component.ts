@@ -26,7 +26,7 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
 
-      //this.idAsEmail = this._service.canActivate();
+      this.idAsEmail = this._service.getEmail();
 
       let options = {
         "v_class": "basic",
@@ -39,9 +39,10 @@ export class UserProfileComponent implements OnInit {
         this._service.postRequestWithObservable(options)
            .subscribe( res => {
           console.log(res.response);
-          if (res.response == 0) {
+          if (res.response == "true" && res.infoFlag == "0") {
             this.profile_noti = "!";
             this.pro_acriveClass = "_active";
+            this.buttonOperation = "Add Info"; // if not required remove it
             this.lib_activeClass = "";
             //this._routes.navigate(['#/profile']);
             this._routes.navigate(['/userpro']);
@@ -70,7 +71,7 @@ export class UserProfileComponent implements OnInit {
               "v_class": "basic",
               "v_function": "sessionEmailGetter",
               "value": {
-                "email": this.idAsEmail
+                "email": localStorage.getItem('token')
                 }
             };
             this._service.postRequestWithObservable(options)

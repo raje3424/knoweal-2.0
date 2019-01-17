@@ -82,7 +82,7 @@ export class KnowelApiService {
     return Observable.throw(error);
   }
 
-   canActivate(){
+  getEmail(){
     const token = localStorage.getItem('token');
     // decode the token to get its payload
     const tokenPayload = decode(token);
