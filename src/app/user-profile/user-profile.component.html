@@ -55,9 +55,9 @@
             <label for="let gen of gender">Gender</label>
               <div class="radio">
                 <div class="col-xs-12" style="margin-left: 5px;">
-                  <input id="male" type="radio" name="gender" value="male" [(ngModel)]="gender" *ngIf="edit_flag">
+                  <input id="male" type="radio" name="gender" value="male" [(ngModel)]="gender"[disabled]="edit_flag!='false'">
                   <label class="lbl">Male</label>
-                  <input id="female" type="radio" name="gender" value="female" [(ngModel)]="gender" [disabled]="edit_flag">
+                  <input id="female" type="radio" name="gender" value="female" [(ngModel)]="gender" [disabled]="edit_flag!='false'">
                   <label class="lbl">Female</label>
                 </div>
               </div>

@@ -81,6 +81,7 @@ export class UserProfileComponent implements OnInit {
                 this.email_flag = "true";
                 this.buttonClass = "_orange_back";
                 this.buttonOperation = "Edit";
+                //this.edit_flag.disabled ="false";
                 this.edit_flag = "true";
                 let options = {
                   "v_class": "profile",
@@ -179,6 +180,7 @@ export class UserProfileComponent implements OnInit {
       this.buttonClass = "_green_back";
       this.buttonOperation = "Save";
       this.edit_flag = "true";
+      this.edit_flag.disabled ="true";
     }else if(this.buttonOperation == "Save"){
       if(this.fullName == "" || this.email == "" || this.gender == "" || this.dd == "" || this.mm == "" || this.yy == ""){
         console.log("something is blank");
