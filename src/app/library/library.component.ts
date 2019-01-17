@@ -18,7 +18,8 @@ poFlag:any;create_ovp_flag:any;
 own_conSelect:string;
 profile_noti:string;pro_acriveClass:string;lib_activeClass:string;
 boughtPackMsg:any;pur_pkgData:any;
-createPackMsg:any;own_pkgData:any;
+createPackMsg:any = true;
+own_pkgData:any;
 idAsEmail;
 
 constructor(private _routes: Router,private _service: KnowelApiService){ }

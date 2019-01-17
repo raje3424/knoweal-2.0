@@ -54,7 +54,7 @@
     </div> <!-- <</ nav -->
 
     <div class="row _lib_content">
-      <div class="row" style="margin-top: 10px;" ng-show="poFlag"> <!-- purchased content lib >> -->
+      <div class="row" style="margin-top: 10px;" *ngIf="poFlag"> <!-- purchased content lib >> -->
 
         <div class="col-xs-12 col-sm-12" *ngIf="boughtPackMsg">
           <p class="lead">
@@ -82,7 +82,7 @@
 
       </div> <!-- <</  purchased content lib -->
 
-      <div class="row" ngOnInit="createPackMsg = true" style="margin-top: 10px;" *ngIf="poFlag"> <!-- created lib >> -->
+      <div class="row" style="margin-top: 10px;" *ngIf="poFlag"> <!-- created lib >> -->
 
         <div class="col-xs-12 col-sm-12" *ngIf="createPackMsg">
           <p class="lead">
