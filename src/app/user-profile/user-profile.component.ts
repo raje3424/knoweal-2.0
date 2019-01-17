@@ -26,8 +26,7 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
 
-      this.idAsEmail = this._service.getEmail();
-
+    //  this.idAsEmail = this._service.getEmail();
       let options = {
         "v_class": "basic",
         "v_function": "getUserInstanceStatus",
@@ -42,9 +41,8 @@ export class UserProfileComponent implements OnInit {
           if (res.response == "true" && res.infoFlag == "0") {
             this.profile_noti = "!";
             this.pro_acriveClass = "_active";
-            this.buttonOperation = "Add Info"; // if not required remove it
+            this.buttonOperation = "Add Info";
             this.lib_activeClass = "";
-            //this._routes.navigate(['#/profile']);
             this._routes.navigate(['/userpro']);
             let options = {
               "v_class": "basic",
@@ -56,9 +54,10 @@ export class UserProfileComponent implements OnInit {
             console.log(options);
             this._service.postRequestWithObservable(options)
                .subscribe( res => {
-                 console.log(res);
-              if(res != ""){
-                this.email = this.idAsEmail;
+                 console.log(res.response);
+                 //console.log(res.email);
+              if(res.response != ""){
+                this.email = res.email;
                 this.email_flag = "true";
                 this.buttonOperation = "Add Info";
                 this.buttonClass = "_blue_back";

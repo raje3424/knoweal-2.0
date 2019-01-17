@@ -91,15 +91,19 @@ class basic extends connector{
   private function sessionEmailGetter($value){
     $this->clearOldResponseData();
     $jwtObj = new jwtGenerator();
-    $jwt = $jwtObj->DecodeToken($value['token']);
-    echo $jwt;
-
-    if ($value['email']!=""){
-      return true;
-    }else{
-      return false;
-    }
-    // $osx = new sessionExr();
+    $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
+  //  echo $jwt['data']['email'];
+      if($jwt['data']['email']!="") {
+        $response['response'] = "true";
+        $response['errMessage'] = "";
+        $response['email'] = $jwt['data']['email'];
+        return $response;
+      }
+      else{
+        $response['response'] = "false";
+        $response['errMessage'] = "email not found";
+        return $response;
+      }
 
   }
 

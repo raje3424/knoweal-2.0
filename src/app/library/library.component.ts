@@ -24,7 +24,7 @@ idAsEmail;
 constructor(private _routes: Router,private _service: KnowelApiService){ }
 
   ngOnInit() {
-      this.idAsEmail = this._service.canActivate();
+      //this.idAsEmail = this._service.canActivate();
       this.nav('pur');
     //  this._service.postRequestWithObservable(Authorization).subscribe(res=>{
     //   console.log(res);
