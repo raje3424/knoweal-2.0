@@ -21,8 +21,8 @@ profile_ec_noti_flag = false;
 constructor(private _routes: Router,private _service: KnowelApiService){ }
 
   ngOnInit() {
-    let id = this._service.getEmail();
-    console.log(id);
+    //let id = this._service.getEmail();
+    //console.log(id);
     //let token = localStorage.getItem('token');
 
     var options = {

@@ -74,10 +74,23 @@ class basic extends connector{
 
   private function updateInstanceToO($value){
     $this->clearOldResponseData();
-    $query = "UPDATE `user_instance` SET `info_flag` = 1 WHERE `email` = ?";
-    $result = $this->query_db($query, md5($value['email']));
-    $this->db_close();
-    return $result;
+    $jwtObj = new jwtGenerator();
+    $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
+      //echo $jwt['data']['email'];
+    if(($jwt['data']['email'])!="") {
+      $query = "UPDATE `user_instance` SET `info_flag` = 1 WHERE `email` = ?";
+      $result = $this->query_db($query, md5($jwt['data']['email']));
+      $this->db_close();
+      $response['response'] = "true";
+      $response['errMessage'] = "";
+      $response['result'] = 1;
+      return $response;
+    }else{
+      $response['response'] = "false";
+      $response['errMessage'] = "instance update failed";
+      $response['result'] =$result;
+      return $response;
+    }
   }
 
   private function updateInstanceToX($value){
@@ -166,9 +179,6 @@ class basic extends connector{
     }else{
       return false;
     }
-    // $osx = new sessionExr;
-    // $ret = $osx->getSessionID();
-    // return $ret;
   }
 
   public function clearOldResponseData(){
