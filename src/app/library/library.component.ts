@@ -35,16 +35,16 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
   createPackage(){
     let options = {
       "v_class": "basic",
-      "v_function": "getIDFromSession",
+      "v_function": "sessionEmailGetter",
       "value":{
-        "email":this.idAsEmail
+        "token": localStorage.getItem('token')
       }
     };
     console.log(options);
     this._service.postRequestWithObservable(options)
        .subscribe( res => {
       console.log(res);
-      if(res == 1){
+      if(res.response == 'true'){
         this._routes.navigate(['/packman']);
       }else{
         // create an alert to complete the profile >> ! <<

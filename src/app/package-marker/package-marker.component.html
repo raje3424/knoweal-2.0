@@ -11,11 +11,11 @@
     <div class="col-xs-12 _create_package_canvas">
       <div class="col-xs-12 col-sm-offset-2 col-sm-8 _package_maker_canvas">
         <div class="row _package_maker_step">
-          Step {{step_count}} of 3 : step_info <br/>
+          Step {{step_count}} of 3 : {{step_info}} <br/>
           <span [ngClass]="whichMsg">{{messages}}</span>
         </div>
 
-        <div class="row _package_maker_io" hidden="infod_hideFlag">
+        <div class="row _package_maker_io" *ngIf="infod_hideFlag">
           <div class="col-xs-12 col-sm-4">
             <label *ngFor="let pack of packName"> Package Name </label>
             <input type="text" name="packName" [ngClass]="name_class" class="_g1_input ¸ _no_border_radis" placeholder="Package Name" [(ngModel)]="packName" [attr.Disabled]="pkg_edit_flag> 1 ? true : null"/>

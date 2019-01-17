@@ -18,7 +18,7 @@ export class PackageMarkerComponent implements OnInit {
   theQestionList = []; JSONtheQestionList;
   editPackFlag = "true";
   questionAddFlag = "true";
-  pkgCreateButtonFlag = false;
+  pkgCreateButtonFlag = "true";
    packID:string = "";
    packName:any;packNotes;packDescription;
    name_class;des_class;whichMsg;note_class;
@@ -36,9 +36,9 @@ export class PackageMarkerComponent implements OnInit {
    notes_class = "";
    questions_class = "";
 
-   infod_hideFlag = false;
-   notes_hideFlag = true;
-   question_hideFlag = true;
+   infod_hideFlag = true;
+   notes_hideFlag = false;
+   question_hideFlag = false;
 
   constructor(private _routes: Router,private _service: KnowelApiService){ }
 
@@ -99,8 +99,7 @@ export class PackageMarkerComponent implements OnInit {
             this.note_class = "";
             if(res == "true"){
               this.pkg_edit_flag = "true";
-              //this.pkgCreateButtonFlag = "true";
-              this.pkgCreateButtonFlag = true;
+              this.pkgCreateButtonFlag = "true";
               this.messages = "Package Added, Now you can add question to your package :)";
               this.whichMsg = "_success_msg";
               this.questionAddFlag = "";
@@ -134,7 +133,7 @@ export class PackageMarkerComponent implements OnInit {
           this.questionAddFlag = "true";
           this.edit_label = "Update";
         }else if (this.edit_label == "Update") {
-          this.pkg_edit_flag = "true";
+          this.pkg_edit_flag = true;
           this.edit_label = "Edit";
           this.questionAddFlag = "";
 
@@ -428,8 +427,7 @@ export class PackageMarkerComponent implements OnInit {
           this.messages = "There seems an Internal Error, please add question to package from library...";
           this.whichMsg = "_warning_msg";
           setTimeout(function(){
-              this._routes.navigate(['#/library']);
-            //window.location.assign("#/library");
+              this._routes.navigate(['/library']);
           }, 1500);
         }
       }

@@ -20,13 +20,14 @@ export class UserProfileComponent implements OnInit {
     yy:any;
     buttonClass:any;pro_acriveClass:string;lib_activeClass:string;
     edit_flag:any;profile_noti:string;email_flag:any;
-    idAsEmail;
+    idAsEmail;year_flag:any;
 
   constructor(private _routes: Router,private _service: KnowelApiService){ }
 
   ngOnInit() {
-
+     console.log(localStorage.getItem('token'));
     //  this.idAsEmail = this._service.getEmail();
+
       let options = {
         "v_class": "basic",
         "v_function": "getUserInstanceStatus",
@@ -38,6 +39,7 @@ export class UserProfileComponent implements OnInit {
         this._service.postRequestWithObservable(options)
            .subscribe( res => {
           console.log(res.response);
+
           if (res.response == "true" && res.infoFlag == 0) {
             this.profile_noti = "!";
             this.pro_acriveClass = "_active";
@@ -93,9 +95,9 @@ export class UserProfileComponent implements OnInit {
                 console.log(options);
                 this._service.postRequestWithObservable(options)
                    .subscribe( res => {
-                     console.log(res.fullName);
-                     console.log(res.sex);
-                     console.log(res.dob);
+                     // console.log(res.fullName);
+                     // console.log(res.sex);
+                     // console.log(res.dob);
                   this.fullName = res.fullName;
                   if(this.email != res.email){
                     // destroy session and logout
@@ -167,7 +169,7 @@ export class UserProfileComponent implements OnInit {
                if(res.result == 1){
                 this.buttonOperation = "Edit";
                 this.buttonClass = "_orange_back";
-                this.edit_flag = "true";
+                this.edit_flag = true;
                 this._routes.navigate(['/userhome']);
                 }else{
                 alert("There Seems some error in updating profile.. Please Try again");
@@ -179,8 +181,7 @@ export class UserProfileComponent implements OnInit {
     }else if(this.buttonOperation == "Edit"){
       this.buttonClass = "_green_back";
       this.buttonOperation = "Save";
-      this.edit_flag = "true";
-      this.edit_flag.disabled ="true";
+        this.year_flag = "false";
     }else if(this.buttonOperation == "Save"){
       if(this.fullName == "" || this.email == "" || this.gender == "" || this.dd == "" || this.mm == "" || this.yy == ""){
         console.log("something is blank");
@@ -202,7 +203,8 @@ export class UserProfileComponent implements OnInit {
            if(res.response == 'true'){
             this.buttonClass = "_orange_back";
             this.buttonOperation = "Edit";
-            this.edit_flag = "true";
+
+            // this.edit_flag = "true";
           }else{
             // give error >>
           }

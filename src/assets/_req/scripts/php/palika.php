@@ -59,7 +59,7 @@ class palika extends connector {
         $result = $this->query_db($query, $value);
         if($result == 1){
           $jwtObj = new jwtGenerator();
-          $jwt = $jwtObj->EncodeToken(array('email'=>$value['email']));
+          $jwt = $jwtObj->EncodeToken(array('email'=>$simple_email));
           //$this->spark($simple_email);
           $this->db_close();
           $response['response'] = "true";

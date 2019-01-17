@@ -48,6 +48,7 @@ class basic extends connector{
       $response['response'] = "true";
       $response['errMessage'] = "";
       $response['infoFlag'] = $result['info_flag'];
+
       return $response;
     }else{
       $response['response'] = "false";

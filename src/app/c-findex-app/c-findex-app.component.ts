@@ -155,12 +155,9 @@ response:any;
                 this.s_pass_ioClass = "";
                 this.loginMsg = "Preparing profile...";
                 this.signmsg_class = "_success_msg";
-
+                setTimeout(function(){  
+                },"1000");
                 this._routes.navigate(['/userpro']);
-                // setTimeout(function(){
-                //
-                // },"1000");
-                //this._routes.navigate(['/userpro']);
               }else{
                 if(res.response == "rfalse"){
                   this.s_email_ioClass = "_error_input";
