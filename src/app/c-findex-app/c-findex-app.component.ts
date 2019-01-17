@@ -39,6 +39,8 @@ response:any;
   returnUrl: string;
   error = '';
 
+  emailPattern: any = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
   constructor(private _routes: Router, private activateRoute: ActivatedRoute, private _service: KnowelApiService) { }
 
   ngOnInit() {
@@ -88,7 +90,7 @@ response:any;
 
   loginFunc(logEmail,logPass){
     console.log("email : "+logEmail+" | pass : "+logPass);
-    if(this.logEmail){
+    if(this.logEmail && this.emailPattern.test(this.logEmail)){
       if(this.logPass){
         let options = {
           "v_class": "palika",
@@ -119,15 +121,19 @@ response:any;
                 this._routes.navigate(['/cfindex']);
               }
             });
+          }else{
+            this.logInmsg_class = "_error_msg"
+            this.loginMsg = "Password is blank!";
           }
         }else{
-          console.log("Username or password is blank!");
+          this.logInmsg_class = "_error_msg"
+          this.loginMsg = "Enter valid email!";
         }
     }
 
   register(siEmail, siPass, siCoPass){
-    if(this.siEmail){
-      if(this.siPass!="" || this.siCoPass!=""){
+    if(this.siEmail && this.emailPattern.test(this.siEmail)){
+      if((this.siPass!="" && this.siPass != undefined) || (this.siCoPass!="" && this.siCoPass != undefined)){
         if(this.siPass == this.siCoPass){
           let options = {
             "v_class": "palika",
@@ -189,10 +195,15 @@ response:any;
           this.signmsg_class = "_warning_msg";
         }
           // this.signMsg = "password do not match";
+      }else{
+        console.log("Password is Blank !!! ");
+        this.signMsg = "Enter Password :| ";
+        this.s_pass_ioClass = "_error_input";
+        this.signmsg_class = "_warning_msg";
       }
     }else{
       console.log("Something is Blank !!! ");
-      this.signMsg = "Enter Password :| ";
+      this.signMsg = "Enter valid email :| ";
       this.s_pass_ioClass = "_error_input";
       this.signmsg_class = "_warning_msg";
     }
