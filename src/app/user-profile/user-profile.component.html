@@ -45,7 +45,7 @@
         <div class="row">
           <div class="col-xs-12 col-sm-4 _margin_top_5">
             <label> Full Name </label>
-            <input type="text" id="fullName" class="_g1_input _margin_bottom_5 _margin_top_5 _no_border_radis" placeholder="Full Name" [(ngModel)]="fullName" *ngIf="edit_flag"/>
+            <input type="text" id="fullName" class="_g1_input _margin_bottom_5 _margin_top_5 _no_border_radis" placeholder="Full Name" [(ngModel)]="fullName" [disabled]="edit_flag"/>
           </div>
           <div class="col-xs-12 col-sm-4 _margin_top_5">
             <label> Email </label>
@@ -57,7 +57,7 @@
                 <div class="col-xs-12" style="margin-left: 5px;">
                   <input id="male" type="radio" name="gender" value="male" [(ngModel)]="gender" *ngIf="edit_flag">
                   <label class="lbl">Male</label>
-                  <input id="female" type="radio" name="gender" value="female" [(ngModel)]="gender" *ngIf="edit_flag">
+                  <input id="female" type="radio" name="gender" value="female" [(ngModel)]="gender" [disabled]="edit_flag">
                   <label class="lbl">Female</label>
                 </div>
               </div>
@@ -70,13 +70,13 @@
             </div>
             <div class="row">
               <div class="col-xs-4">
-                <input type="text" placeholder="DD" class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis" [(ngModel)]="dd" *ngIf="edit_flag"/>
+                <input type="text" placeholder="DD" class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis" [(ngModel)]="dd" [disabled]="edit_flag"/>
               </div>
               <div class="col-xs-4">
-                <input type="text" placeholder="MM" class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis" [(ngModel)]="mm" *ngIf="edit_flag"/>
+                <input type="text" placeholder="MM" class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis" [(ngModel)]="mm" [disabled]="edit_flag"/>
               </div>
               <div class="col-xs-4">
-                <input type="text" placeholder="YYYY" class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis" [(ngModel)]="yy" *ngIf="edit_flag"/>
+                <input type="text" placeholder="YYYY" class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis" [(ngModel)]="yy" [disabled]="edit_flag"/>
               </div>
             </div>
           </div>
