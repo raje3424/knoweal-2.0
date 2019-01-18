@@ -436,14 +436,15 @@ export class PackageMarkerComponent implements OnInit {
 
 
   kido(present){
+    console.log(present);
     switch (present) {
       case 'info_Desc_class':
         this.info_Desc_class = "_tbloc_point_active";
         this.notes_class = "";
         this.questions_class = "";
-        this.infod_hideFlag = false;
-        this.notes_hideFlag = true;
-        this.question_hideFlag = true;
+        this.infod_hideFlag = true;
+        this.notes_hideFlag = false;
+        this.question_hideFlag = false;
         this.step_count = '1';
         this.step_info = 'Basic Package Information';
         break;
@@ -451,9 +452,9 @@ export class PackageMarkerComponent implements OnInit {
         this.info_Desc_class = "";
         this.notes_class = "_tbloc_point_active";
         this.questions_class = "";
-        this.infod_hideFlag = true;
-        this.notes_hideFlag = false;
-        this.question_hideFlag = true;
+        this.infod_hideFlag = false;
+        this.notes_hideFlag = true;
+        this.question_hideFlag = false;
         this.step_count = '2';
         this.step_info = 'Add Notes & Save Package';
         break;
@@ -461,9 +462,9 @@ export class PackageMarkerComponent implements OnInit {
         this.info_Desc_class = "";
         this.notes_class = "";
         this.questions_class = "_tbloc_point_active";
-        this.infod_hideFlag = true;
-        this.notes_hideFlag = true;
-        this.question_hideFlag = false;
+        this.infod_hideFlag = false;
+        this.notes_hideFlag = false;
+        this.question_hideFlag = true;
         this.step_count = '3';
         this.step_info = 'Add Questions to Package';
         break;
