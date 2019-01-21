@@ -58,12 +58,18 @@ class palika extends connector {
         //echo vsprintf( str_replace("?","'%s'",$query),$value);
         $result = $this->query_db($query, $value);
         if($result == 1){
+          //getting user id
+          // $query="SELECT user_id from user_profile WHERE email= $simple_email";
+          // $result = $this->query_db($query);
+          // echo $result;
+
+
           $jwtObj = new jwtGenerator();
           $jwt = $jwtObj->EncodeToken(array('email'=>$simple_email));
           //$this->spark($simple_email);
           $this->db_close();
           $response['response'] = "true";
-          $response['errMessage'] = "";
+          $response['errMessage'] = "new user added";
           $response['token'] = $jwt;
             return $response;
         }else{
@@ -98,10 +104,14 @@ class palika extends connector {
       $result = $this->query_db($query, $email);
       $result = mysqli_fetch_array($result);
       if($result['pass'] == substr(md5($value['password']), 0, 50)){
-        /*$oSession = new sessionExr();
-        $ans = $oSession->sessionEmailSetter($value['email']);*/
+        //getting user id
+        $query = "SELECT `user_id` from `user_profile` WHERE `email` = ?";
+        $getid = $this->query_db($query,$value['email']);
+        $getid=mysqli_fetch_array($getid);
+        //print_r($getid);
+        //echo $getid;
         $jwtObj = new jwtGenerator();
-        $jwt = $jwtObj->EncodeToken(array('email'=>$value['email']));
+        $jwt = $jwtObj->EncodeToken(array('email'=>$value['email'],'userid'=>$getid['user_id']));
         //print_r($jwtObj.jwttoken);
         //print_r($jwt);
         /*echo "\nToken is : ".$jwtObj->IsTokenValid($jwt)."\n";

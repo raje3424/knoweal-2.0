@@ -116,9 +116,9 @@ export class PackageMarkerComponent implements OnInit {
               };
               this._service.postRequestWithObservable(options)
                  .subscribe( res => {
-                console.log(res);
+                console.log(res.response);
                 // set this data to some global variable ...
-                this.packID = res;
+                this.packID = res.packID;
               });
 
             }else{

@@ -94,10 +94,15 @@ class library extends connector{
 //Add,Delete,Update,Select and related dependencies of Package
   private function addPackage($value){
     $this->clearOldResponseData();
+    $jwtObj = new jwtGenerator();
+    $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
+
     $end_date = date('Y-m-d H:i:s',strtotime('+1 years'));
+    $package_author = $jwt['data']['userid'];
+    //print_r($package_author);
     //$retVal = $this->insertBeforeKey($value, 'author_id', 'packNotes');
-    $retVal = array('packName'=>$value['packName'],'packNotes'=>$value['packNotes'],'packDescription'=>$value['packDescription'],'valid_till'=>$end_date);
-    $query = "INSERT INTO packages (package_name, package_note, description,valid_till) VALUES (?,?,?,?)";
+    $retVal = array('packName'=>$value['packName'],'packNotes'=>$value['packNotes'],'packDescription'=>$value['packDescription'],'package_author'=>$package_author,'valid_till'=>$end_date);
+    $query = "INSERT INTO packages (package_name, package_note, description,package_author,valid_till) VALUES (?,?,?,?,?)";
     $result = $this->query_db($query, $retVal);
     $this->db_close();
     //echo $result;
@@ -113,12 +118,18 @@ class library extends connector{
   }
 
   private function getRecentPackId($value){
+    $this->clearOldResponseData();
+    $jwtObj = new jwtGenerator();
+    $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
+    $val = array('package_name' =>$value['packName'] ,'package_author'=> $jwt['data']['userid'] );
     $query = "SELECT `package_id` FROM `packages` WHERE package_name = ? AND package_author = ?";
-    $value['authorId'] = $_SESSION['id'];
-    $result = $this->query_db($query, $value);
+    //$value['authorId'] = $jwt['data']['userid'];
+    $result = $this->query_db($query, $val);
     $result = mysqli_fetch_array($result);
     $this->db_close();
-    return $result['package_id'];
+    $response['response'] = "true";
+    $response['packID'] =$result['package_id'];
+    return $response;
   }
 
   private function updatePackage($value){
