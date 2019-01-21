@@ -99,7 +99,7 @@ export class PackageMarkerComponent implements OnInit {
             this.name_class = "";
             this.des_class = "";
             this.note_class = "";
-            if(res.response == "true"){
+            if(res == "true"){
               this.pkg_edit_flag = "true";
               this.pkgCreateButtonFlag = "true";
               this.messages = "Package Added, Now you can add question to your package :)";
