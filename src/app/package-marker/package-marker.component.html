@@ -56,15 +56,15 @@
         <div class="row _package_maker_io">
 
           <!-- question adder >> -->
-          <div class="col-xs-12 _content_canvas" hidden="question_hideFlag">
+          <div class="col-xs-12 _content_canvas" *ngIf="question_hideFlag">
 
             <!-- questions adder >> -->
-            <div id="_question_adder_canvas" hidden="{{questionAdderCanvas}}">
+            <div id="_question_adder_canvas">
               <div class="row">
 
                 <div class="col-xs-12 col-sm-12 _margin_top_5 _margin_bottom_5">
                   <div class="col-xs-12 col-sm-12 _question_ans_canvas">
-                    <label *ngFor="let que of newQuestion">Add new Question</label> <span *ngIf="questionAddErrorMsg" [ngClass]="q_whichMsg" id="theQestionMessage"> addQuestionMessage</span>
+                    <label *ngFor="let que of newQuestion">Add new Question</label> <span *ngIf="questionAddErrorMsg" [ngClass]="q_whichMsg" id="theQestionMessage"> {{addQuestionMessage}}</span>
                     <textarea class="_g1_input" placeholder="Write new question here ..." style="height: 60px; resize: vertical;" [(ngModel)]="question_IO" [ngClass]="question_IOClass"></textarea>
                   </div>
                   <div class="col-xs-12 col-sm-12 _question_ans_canvas">

@@ -18,7 +18,7 @@ export class PackageMarkerComponent implements OnInit {
   theQestionList = []; JSONtheQestionList;
   editPackFlag = "true";
   questionAddFlag = "true";
-  pkgCreateButtonFlag = "true";
+  pkgCreateButtonFlag: boolean = true;
    packID:string = "";
    packName:any;packNotes;packDescription;
    name_class;des_class;whichMsg;note_class;
@@ -101,7 +101,7 @@ export class PackageMarkerComponent implements OnInit {
             this.note_class = "";
             if(res.response == "true"){
               this.pkg_edit_flag = "true";
-              this.pkgCreateButtonFlag = "true";
+              this.pkgCreateButtonFlag = false;
               this.messages = "Package Added, Now you can add question to your package :)";
               this.whichMsg = "_success_msg";
               this.questionAddFlag = "";
