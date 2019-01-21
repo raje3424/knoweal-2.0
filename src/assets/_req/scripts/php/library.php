@@ -10,11 +10,11 @@
 ** ~~~
 **
 */
-include_once ("server.php");
-//include_once("serverConnector.php");
-//include_once ("sessionConn.php");
+include_once("serverConnector.php");
+include_once ("jwtGenerator.php");
 
-class library extends Server{
+class library extends connector{
+  protected $response = array();
 
   public function userAdaptor($operation, $value){
     if($value == "" || $value == " " || $value == NULL){
@@ -93,15 +93,22 @@ class library extends Server{
 
 //Add,Delete,Update,Select and related dependencies of Package
   private function addPackage($value){
-    $retVal = $this->insertBeforeKey($value, 'author_id', $_SESSION['id'], 'packNotes');
-    $query = "INSERT INTO packages (package_name, package_author, package_note, description) VALUES (?,?,?,?)";
+    $this->clearOldResponseData();
+    $end_date = date('Y-m-d H:i:s',strtotime('+1 years'));
+    //$retVal = $this->insertBeforeKey($value, 'author_id', 'packNotes');
+    $retVal = array('packName'=>$value['packName'],'packNotes'=>$value['packNotes'],'packDescription'=>$value['packDescription'],'valid_till'=>$end_date);
+    $query = "INSERT INTO packages (package_name, package_note, description,valid_till) VALUES (?,?,?,?)";
     $result = $this->query_db($query, $retVal);
     $this->db_close();
-    //$result = 1;
+    //echo $result;
     if($result == 1){
-      return "true";
+      $response['response'] = "true";
+      $response['errMessage'] = "";
+      return $response;
     }else{
-      return "false";
+      $response['response'] = "false";
+      $response['errMessage'] = "";
+      return $response;
     }
   }
 
@@ -447,8 +454,16 @@ class library extends Server{
     return $retVal;
   }
 
+  public function clearOldResponseData(){
+    unset($response);
+    $response = array();
+  }
+
+
 }
 
+
+error_reporting( E_ALL );
 
 
 /*

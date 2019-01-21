@@ -7,6 +7,7 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Autho
 include_once ("palika.php");
 include_once ("basic.php");
 include_once ("profile.php");
+include_once ("library.php");
 include_once ("jwtGenerator.php");
 
 class r_interface{
@@ -45,7 +46,8 @@ class r_interface{
      'profile' => new profile,
      'basic' => new basic,
      'palika' => new palika,
-     'jwt' => new jwtGenerator
+     'jwt' => new jwtGenerator,
+     'library'=> new library
    );
    return $objects;
  }

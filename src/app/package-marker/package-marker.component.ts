@@ -82,15 +82,17 @@ export class PackageMarkerComponent implements OnInit {
             this.messages += " is blank ]";
           }
         }else{
-          var options = {
+          let options = {
             "v_class": "library",
             "v_function": "addPackage",
             "value":{
+              "token": localStorage.getItem('token'),
               "packName": this.packName,
               "packNotes": this.packNotes,
               "packDescription": this.packDescription
             }
           };
+          console.log(options);
           this._service.postRequestWithObservable(options)
              .subscribe( res => {
             console.log(res);
@@ -108,6 +110,7 @@ export class PackageMarkerComponent implements OnInit {
                 "v_class": "library",
                 "v_function": "getRecentPackId",
                 "value":{
+                  "token": localStorage.getItem('token'),
                   "packName": this.packName
                 }
               };
@@ -171,6 +174,7 @@ export class PackageMarkerComponent implements OnInit {
               "v_class": "library",
               "v_function": "updatePackage",
               "value":{
+                "token": localStorage.getItem('token'),
                 "packName": this.packName,
                 "packNotes": this.packNotes,
                 "packDescription": this.packDescription,
@@ -250,6 +254,7 @@ export class PackageMarkerComponent implements OnInit {
               "v_class": "library",
               "v_function": "addQuestion",
               "value":{
+                "token": localStorage.getItem('token'),
                   "question": this.question_IO,
                   "opt1": this.optionA_IO,
                   "opt2": this.optionB_IO,
@@ -367,6 +372,7 @@ export class PackageMarkerComponent implements OnInit {
           "v_class": "library",
           "v_function": "updateQuestion",
           "value": {
+            "token": localStorage.getItem('token'),
             "question": this.x.question,
             "opt1": this.x.opt1,
             "opt2": this.x.opt2,
