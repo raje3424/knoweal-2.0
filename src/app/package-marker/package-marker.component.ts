@@ -266,7 +266,7 @@ export class PackageMarkerComponent implements OnInit {
             };
             this._service.postRequestWithObservable(options)
                .subscribe( res => {
-              if(res != "" && res > 0){
+              if(res.lid != "" && res.lid > 0){
                 //var question = {};
                 this.theQestionList.push({
                   "question": this.question_IO,
@@ -275,7 +275,7 @@ export class PackageMarkerComponent implements OnInit {
                   "opt3": this.optionC_IO,
                   "opt4": this.optionD_IO,
                   "anskey": this.theRightOption,
-                  "q_id": res
+                  "q_id": res.lid
                 });
                 if(this.theQestionList.length > 0){
                   //$("#showAllAddedQuestions").css("display", "block");

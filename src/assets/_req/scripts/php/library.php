@@ -28,13 +28,19 @@ class library extends connector{
   private function addQuestion($value){
     $val = array('question' => $value['question'],'opt1'=>$value['opt1'],'opt2'=>$value['opt2'],'opt3'=>$value['opt3'],'opt4'=>$value['opt4'],'anskey'=>$value['anskey'],'packID'=>$value['packID'] );
     $query = "INSERT INTO question_table (question, opt1, opt2, opt3, opt4, anskey, package_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $result = $this->query_db($query, $value);
+    $result = $this->query_db($query, $val);
     $lID = $this->conn->insert_id;
     $this->db_close();
     if($result == 1){
-      return $lID;
+      $response['response'] = "true";
+      $response['errMessage'] = "";
+      $response['lid']=$lID;
+      return $response;
+    //  return $lID;
     }else{
-      return "false";
+      $response['response'] = "false";
+      $response['errMessage'] = "";
+      return $response;
     }
   }
 
@@ -263,6 +269,7 @@ class library extends connector{
 
   private function displayPurchasePackage(){
     // lib function to show all the purchased packages >> ! <<
+
     $retVal = [];
     $res = $this->db_connection();
     if($res){
