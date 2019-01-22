@@ -17,9 +17,10 @@ ownGFlag = false;
 poFlag:any;create_ovp_flag:any;
 own_conSelect:string;
 profile_noti:string;pro_acriveClass:string;lib_activeClass:string;
-boughtPackMsg:any;pur_pkgData:any;
+boughtPackMsg:any;
+pur_pkgData:any = [];
 createPackMsg:any = true;
-own_pkgData:any;
+own_pkgData:any = [];
 idAsEmail;
 
 constructor(private _routes: Router,private _service: KnowelApiService){ }
@@ -71,6 +72,7 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
         this.poFlag = !this.poFlag;
       }
     }
+
     if(this.pur_conSelect == "_contentSwitchPanel_Select"){
       if(this.purGFlag == false){
         this.getAllPurchasedPacks();
@@ -87,15 +89,19 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
   getAllPurchasedPacks(){
     let options = {
       "v_class": "library",
-      "v_function": "displayPurchasePackage"
+      "v_function": "displayPurchasePackage",
+      "value" :{
+          "token": localStorage.getItem('token')
+      }
     };
     this._service.postRequestWithObservable(options)
        .subscribe( res => {
-      console.log(res);
-      if(res == "" || res == "false"){
+      console.log(res.result);
+      if(res.response == "true"){
         this.boughtPackMsg = false;
+        this.pur_pkgData = res.result;
       }else{
-        this.pur_pkgData = res;
+        this.boughtPackMsg = true;
       }
     });
   }
@@ -104,15 +110,19 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
   getAllOwnPacks(){
     let options = {
       "v_class": "library",
-      "v_function": "viewOwnPackages"
+      "v_function": "viewOwnPackages",
+      "value":{
+          "token": localStorage.getItem('token')
+      }
     };
     this._service.postRequestWithObservable(options)
-       .subscribe( res => {
+       .subscribe(res => {
       console.log(res);
-      if(res == "" || res == "false"){
+      if(res.response == "true"){
         this.createPackMsg = false;
+        this.own_pkgData = res.result;
       }else{
-        this.own_pkgData = res;
+        this.createPackMsg = true;
       }
     });
   }
@@ -126,7 +136,7 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
   }
 
   viewOwnPackages(){
-      this._routes.navigate(['/pur_package_viewer']);
+      this._routes.navigate(['/purpack']);
   }
 
   navlib(){

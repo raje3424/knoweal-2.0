@@ -39,12 +39,13 @@ class library extends connector{
     //  return $lID;
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = "";
+      $response['errMessage'] = "cant add questions";
       return $response;
     }
   }
 
   private function updateQuestion($value){
+    $this->clearOldResponseData();
     $version = $this->getQuestionVersion($value['question_id']);
     $version++;
     //echo "Version >>>>".$version."<<<";
@@ -71,19 +72,27 @@ class library extends connector{
   }
 
   private function questionGetter($value){ //Here it accepts package_id
+    $this->clearOldResponseData();
     $query = "SELECT `question`, `opt1`, `opt2`, `opt3`, `opt4` FROM `question_table` WHERE package_id = ?";
     $data = array();
     $result = $this->query_db($query, $value);
     $result = mysqli_fetch_array($result);
     $this->db_close();
     if($result != ""){
-      return json_encode($result);
+      $response['response'] = "true";
+      $response['errMessage'] = "";
+      $response['result'] = json_encode($result);
+      return $response;
+    //  return json_encode($result);
     }else{
-      return "false";
+      $response['response'] = "false";
+      $response['errMessage'] = "cant get question";
+      return $response;
     }
   }
 
   private function deleteQuestion($value){ //Here it accepts question_id
+     $this->clearOldResponseData();
       $query = "Delete FROM `question_table` WHERE question_id = ?";
       $result = $this->query_db($query,$value);
       $this->db_close();
@@ -99,11 +108,21 @@ class library extends connector{
   }
 
   private function getQuestionVersion($value){
+    $this->clearOldResponseData();
     $query = "SELECT `version` FROM question_table WHERE question_id = ?";
     $result = $this->query_db($query,$value);
     $result = mysqli_fetch_array($result);
     $this->db_close();
-    return $result['version'];
+    if($result){
+      $response['response'] = "true";
+      $response['errMessage'] = "";
+      $response['result'] = $result['version'];
+      return $response;
+    }else{
+        $response['response'] = "false";
+        $response['errMessage'] = "can't get version";
+        return $response;
+      }
   }
 
 //Add,Delete,Update,Select and related dependencies of Package
@@ -127,7 +146,7 @@ class library extends connector{
       return $response;
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = "";
+      $response['errMessage'] = "Something is wrong";
       return $response;
     }
   }
@@ -142,10 +161,16 @@ class library extends connector{
     $result = $this->query_db($query, $val);
     $result = mysqli_fetch_array($result);
     $this->db_close();
+    if($result != ""){
     $response['response'] = "true";
     $response['packID'] =$result['package_id'];
     return $response;
+  }else{
+    $response['response'] = "false";
+    $response['errMessage'] = "Something is wrong";
+    return $response;
   }
+}
 
   private function updatePackage($value){
     $this->clearOldResponseData();
@@ -161,7 +186,7 @@ class library extends connector{
       $this->db_close();
       if($result == 1){
         $response['response'] = "true";
-        $response['errMessage'] = "package updated Succefully";
+        $response['errMessage'] = "";
         return $response;
       }else{
         $response['response'] = "false";
@@ -211,20 +236,23 @@ class library extends connector{
     if($retVal != ""){
       $response['response'] = "true";
       $response['errMessage'] = "";
-      $response['result'] = json_encode($retVal);
+      //  $response['result'] = $retVal;
+     $response['result'] = json_encode($retVal);
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = "";
+      $response['errMessage'] = "Something is wrong";
       return $response;
     }
   }
 
-
-
-  private function viewOwnPackages(){
+  private function viewOwnPackages($value){
+    $this->clearOldResponseData();
+    $jwtObj = new jwtGenerator();
+    $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
+    $vals['user_id'] = $jwt['data']['userid'];
     $retVal = [];
     $query = "SELECT `package_id`, `package_name`, `description` FROM `packages` WHERE `package_author` = ?";
-    $result = $this->query_db($query, $_SESSION['id']);
+    $result = $this->query_db($query, $vals['user_id']);
     $i = 0;
     while($row = mysqli_fetch_array($result)){
       array_push($retVal, array(
@@ -235,46 +263,74 @@ class library extends connector{
     }
     $this->db_close();
     if($result != ""){
-      return json_encode($retVal);
+      $response['response'] = "true";
+      $response['errMessage'] = "";
+      $response['result'] = $retVal;
+    //  $response['result'] = json_encode($retVal);
+      return $response;
     }else{
-      return "false";
+      $response['response'] = "false";
+      $response['errMessage'] = "Something is wrong";
+      return $response;
     }
   }
 
   private function getPackageVersion($value){
+    $this->clearOldResponseData();
     $query = "SELECT `package_version` FROM packages WHERE package_id = ?";
     $result = $this->query_db($query, $value);
     $result = mysqli_fetch_array($result);
     $this->db_close();
-    return $result['package_version'];
+      if($result != ""){
+    $response['response'] = "true";
+    $response['errMessage'] = "";
+    $response['result'] = $result['package_version'];
+    return $response;
   }
+  else{
+    $response['response'] = "false";
+    $response['errMessage'] = "Something is wrong";
+    return $response;
+  }
+}
 
 //Add,Delete,Update,Select and related dependencies of Store
 
   private function addPurchasePackage($value){
+    $this->clearOldResponseData();
+    $jwtObj = new jwtGenerator();
+    $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
+    $vals['user_id'] = $jwt['data']['userid'];
+
     $newAr = [
-      'user_id' => $_SESSION['id'],
-      'pkg_id' => $value
+      'user_id' => $vals['user_id'],
+      'pkg_id' => $value['pkg_id']
     ];
     $query = "INSERT INTO purchase_table(user_id, pack_id)VALUES(?, ?)";
     $result = $this->query_db($query, $newAr);
     $this->db_close();
     if($result == 1){
-      return "true";
+      $response['response'] = "true";
+      $response['errMessage'] = '';
+      return $response;
     }else{
-      return "false";
+      $response['response'] = "false";
+      $response['errMessage'] = 'Something is wrong';
+      return $response;
     }
-
   }
 
-  private function displayPurchasePackage(){
+  private function displayPurchasePackage($value){
     // lib function to show all the purchased packages >> ! <<
-
+    $this->clearOldResponseData();
+    $jwtObj = new jwtGenerator();
+    $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
+    $vals['user_id'] = $jwt['data']['userid'];
     $retVal = [];
     $res = $this->db_connection();
     if($res){
       $query = "SELECT `package_id`, `package_name`, `full_name`, `description` from packages pkt, user_profile upt, purchase_table put WHERE put.user_id = ? and pkt.package_id = put.pack_id and pkt.package_author = upt.user_id";
-      $result = $this->query_db($query, $_SESSION['id']);
+      $result = $this->query_db($query, $vals['user_id']);
       while ($row = mysqli_fetch_array($result)) {
         array_push($retVal, array(
           "package_id" => $row['package_id'],
@@ -284,10 +340,17 @@ class library extends connector{
         ));
       }
       $this->db_close();
-      if($retVal != ""){
-        return json_encode($retVal);
+      if($row == 1){
+        $response['response'] = "true";
+        $response['errMessage'] = '';
+        //$response['result'] = $retVal;
+        $response['result']= json_encode($retVal);
+        return $response;
+        //return json_encode($retVal);
       }else{
-        return "false";
+        $response['response'] = "false";
+        $response['errMessage'] = 'Something is wrong';
+        return $response;
       }
     }else{
       echo "Db Connection lost";
@@ -295,19 +358,29 @@ class library extends connector{
   }
 
   private function checkIfPur($value){
-    $value['user_id'] = $_SESSION['id'];
+    $this->clearOldResponseData();
+    $jwtObj = new jwtGenerator();
+    $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
+    $value['user_id'] = $jwt['data']['userid'];
+    //$value['user_id'] = $_SESSION['id'];
     $query = "SELECT `tans_id` FROM `purchase_table` WHERE pack_id = ? and user_id = ?";
     $result = $this->query_db($query, $value);
     $result = mysqli_fetch_array($result);
     $this->db_close();
     if($result != ""){
-      return $result['tans_id'];
+      $response['response'] = "true";
+      $response['errMessage'] = '';
+      $response['tans_id'] = $result['tans_id'];
+      return $response;
     }else{
-      return false;
+      $response['response'] = "false";
+      $response['errMessage'] = 'Something is wrong';
+      return $response;
     }
   }
 
   private function getPackageInfoStore($value){
+    $this->clearOldResponseData();
     // store function to browse the package in detail
     $query = "SELECT `package_name`,`description`, `full_name` FROM packages a, user_profile b WHERE package_id = ? and a.package_author = b.user_id";
     $result = $this->query_db($query, $value);
@@ -319,13 +392,19 @@ class library extends connector{
         "packName" => $result['package_name'],
         "description" => $result['description']
       ];
-      return json_encode($retVal);
+      $response['response'] = "true";
+      $response['errMessage'] = '';
+      $response['result'] = json_encode($retVal);
+      return $response;
     }else{
-      return "false";
+      $response['response'] = "false";
+      $response['errMessage'] = 'Something is wrong';
+      return $response;
     }
   }
 
   private function getPur_PackageInfo($value){
+    $this->clearOldResponseData();
     $query = "SELECT `package_name`,`description`, `package_note`, `full_name` FROM packages a, user_profile b WHERE package_id = ? and a.package_author = b.user_id";
     $result = $this->query_db($query, $value);
     $result = mysqli_fetch_array($result);
@@ -337,25 +416,37 @@ class library extends connector{
         "packDescription" => $result['description'],
         "packNotes" => $result['package_note']
       ];
-      return json_encode($retVal);
+      $response['response'] = "true";
+      $response['errMessage'] = '';
+      $response['result'] = json_encode($retVal);
+      return $response;
     }else{
-      return "false";
+      $response['response'] = "false";
+      $response['errMessage'] = 'Something is wrong';
+      return $response;
     }
   }
 
   private function getPackageInfo($value){
+    $this->clearOldResponseData();
     $query = "SELECT `package_name`,`description`,`package_note` FROM packages WHERE package_id = ?";
     $result = $this->query_db($query, $value);
     $result = mysqli_fetch_array($result);
     $this->db_close();
     if($result != ""){
-      return json_encode($result);
+      $response['response'] = "true";
+      $response['errMessage'] = '';
+      $response['result'] = json_encode($result);
+      return $response;
     }else{
-      return "false";
+      $response['response'] = "false";
+      $response['errMessage'] = 'Something is wrong';
+      return $response;
     }
   }
 
   private function getQuestionsToSolve($value){
+      $this->clearOldResponseData();
     // get questions to solve >>
     $retVal = [];
     $query = "SELECT `question_id`,`question`,`opt1`,`opt2`,`opt3`,`opt4` FROM question_table WHERE package_id = ?";
@@ -373,13 +464,19 @@ class library extends connector{
     }
     $this->db_close();
     if($retVal != ""){
-      return json_encode($retVal);
+      $response['response'] = "true";
+      $response['errMessage'] = '';
+      $response['result'] = json_encode($retVal);
+      return $response;
     }else{
-      return "false";
+      $response['response'] = "false";
+      $response['errMessage'] = 'Something is wrong';
+      return $response;
     }
   }
 
   private function getPackageQuestions($value){
+    $this->clearOldResponseData();
     $retVal = [];
     $query = "SELECT `question_id`,`question`,`opt1`,`opt2`,`opt3`,`opt4`,`anskey` FROM question_table WHERE package_id = ?";
     $result = $this->query_db($query, $value);
@@ -396,15 +493,19 @@ class library extends connector{
     }
     $this->db_close();
     if($retVal != ""){
-      return json_encode($retVal);
+      $response['response'] = "true";
+      $response['errMessage'] = '';
+      $response['result'] = json_encode($retVal);
+      return $response;
     }else{
-      return "false";
+      $response['response'] = "false";
+      $response['errMessage'] = 'Something is wrong';
+      return $response;
     }
   }
 
   private function getTheResults($value){
-    // complete it >> ! <<
-    // work on this >> ! <<
+    $this->clearOldResponseData();
     $checkAgainst = [];
     $retVal = [];
     $query = "SELECT `question_id`, `anskey` FROM question_table WHERE package_id = ?";
@@ -435,26 +536,36 @@ class library extends connector{
           continue;
         }
       }
-
     }
 
     if(sizeof($retVal) > 0){
-      return json_encode($retVal);
+      $response['response'] = "true";
+      $response['errMessage'] = '';
+      $response['result'] = json_encode($retVal);
+      return $response;
     }else{
-      return "false";
+      $response['response'] = "false";
+      $response['errMessage'] = 'Something is wrong';
+      return $response;
     }
 
   }
 
   private function purchasePackageId($value){
+    $this->clearOldResponseData();
     $query = "SELECT `pack_id` FROM purchase_table WHERE user_id = ?";
     $result = $this->query_db($query,$value);
     $result = mysqli_fetch_array($result);
     $this->db_close();
-    return $result['pack_id'];
+    $response['response'] = "true";
+    $response['errMessage'] = '';
+    $response['result'] = $result['pack_id'];
+    return $response;
+    //return $result['pack_id'];
   }
 
   private function getAllPurchaseList($value){
+    $this->clearOldResponseData();
     $purList = array();
     $query = "SELECT `pack_id` FROM purchase_table WHERE user_id = ?";
     $result = $this->query_db($query,$value);
@@ -464,7 +575,10 @@ class library extends connector{
       $i++;
     }
     $this->db_close();
-    return $purList;
+    $response['response'] = "true";
+    $response['errMessage'] = '';
+    $response['result'] = $purList;
+    return $response;
   }
 
   //Common dependencies ....
@@ -474,17 +588,21 @@ class library extends connector{
   }
 
   private function insertBeforeKey($oldArray, $newKey, $newValue, $followingKey) {
+    $this->clearOldResponseData();
       $newArray = array ();
       foreach (array_keys($oldArray) as $k) {
           if ($k == $followingKey)
               $newArray[$newKey] = $newValue;
           $newArray[$k] = $oldArray [$k];
       }
-      return $newArray;
+      $response['response'] = "true";
+      $response['errMessage'] = '';
+      $response['result'] = $newArray;
+      return $response;
   }
 
-  // the function below is a cutya function and to be deleted if found guilty >>
   public function addToArray($index, $value, $targetArray){
+    $this->clearOldResponseData();
     //echo "index >> ".$index." | value >> ".$value." <br/>\n<br/>\n";
     $retVal;
     for($i = 0, $j = 0; $i < sizeof($targetArray) + 1; $i++, $j++){
@@ -495,27 +613,18 @@ class library extends connector{
         $retVal[$i] = $targetArray[$j];
       }
     }
-    return $retVal;
+    $response['response'] = "true";
+    $response['errMessage'] = '';
+    $response['result'] = $retVal;
+    return $response;
   }
 
   public function clearOldResponseData(){
     unset($response);
     $response = array();
   }
-
-
 }
 
-
 error_reporting( E_ALL );
-
-
-/*
-echo "Hello library !!<br/>\n";
-$oLib = new library;
-$arvalue = ['exapmles', 'description', 'notes are here'];
-$retval = $oLib->userAdaptor('viewOwnPackages');
-echo "retval >> ".$retval." <<::";
-*/
 
 ?>
