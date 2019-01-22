@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { KnowelApiService } from '../_service/knowel-api.service';
-import { AppRoutingModule } from '../app-routing/app-routing.module';
+//import * from 'jquery';
+declare var $: any;
 
 @Component({
   selector: 'app-package-marker',
@@ -9,8 +10,8 @@ import { AppRoutingModule } from '../app-routing/app-routing.module';
   styleUrls: ['./package-marker.component.css']
 })
 export class PackageMarkerComponent implements OnInit {
-  theMainQCanvas = false;
-  editableCanvas = true;
+  theMainQCanvas = true;
+  editableCanvas = false;
   q_edit = "Edit";
   opt1Class:any;opt2Class:any;opt3Class:any;opt4Class:any;
   x:any;
@@ -266,33 +267,38 @@ export class PackageMarkerComponent implements OnInit {
             };
             this._service.postRequestWithObservable(options)
                .subscribe( res => {
-              if(res.lid != "" && res.lid > 0){
-                //var question = {};
-                this.theQestionList.push({
-                  "question": this.question_IO,
-                  "opt1": this.optionA_IO,
-                  "opt2": this.optionB_IO,
-                  "opt3": this.optionC_IO,
-                  "opt4": this.optionD_IO,
-                  "anskey": this.theRightOption,
-                  "q_id": res.lid
-                });
-                if(this.theQestionList.length > 0){
-                  //$("#showAllAddedQuestions").css("display", "block");
+              if(res.response == "true"){
+                if(res.lid != "" && res.lid > 0){
+                  //var question = {};
+                  this.theQestionList.push({
+                    "question": this.question_IO,
+                    "opt1": this.optionA_IO,
+                    "opt2": this.optionB_IO,
+                    "opt3": this.optionC_IO,
+                    "opt4": this.optionD_IO,
+                    "anskey": this.theRightOption,
+                    "q_id": res.lid
+                  });
+                  if(this.theQestionList.length > 0){
+                    $("#showAllAddedQuestions").css("display", "block");
+                  }else{
+                    $("#showAllAddedQuestions").css("display", "none");
+                  }
+                  this.q_whichMsg = "_success_msg";
+                  this.addQuestionMessage = "Question Added Succefully :)";
+                  this.question_IO = "";
+                  this.optionA_IO = "";
+                  this.optionB_IO = "";
+                  this.optionC_IO = "";
+                  this.optionD_IO = "";
+                  this.theRightOption = "";
+                  setTimeout(function(){
+                    $("#theQestionMessage").html("Add new Question :)");
+                  },1000)
                 }else{
-                  //$("#showAllAddedQuestions").css("display", "none");
+                  this.q_whichMsg = "_error_msg";
+                  this.addQuestionMessage = "Error in adding question, try again :(";
                 }
-                this.q_whichMsg = "_success_msg";
-                this.addQuestionMessage = "Question Added Succefully :)";
-                this.question_IO = "";
-                this.optionA_IO = "";
-                this.optionB_IO = "";
-                this.optionC_IO = "";
-                this.optionD_IO = "";
-                this.theRightOption = "";
-                setTimeout(function(){
-                  //$("#theQestionMessage").html("Add new Question :)");
-                },1000)
               }else{
                 this.q_whichMsg = "_error_msg";
                 this.addQuestionMessage = "Error in adding question, try again :(";
