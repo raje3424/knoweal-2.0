@@ -26,6 +26,7 @@ class library extends connector{
 
   //Add,Delete,Update,Select and related dependencies of question_table
   private function addQuestion($value){
+    $val = array('question' => $value['question'],'opt1'=>$value['opt1'],'opt2'=>$value['opt2'],'opt3'=>$v$value['opt3'],'opt4'=>$value['opt4'],'anskey'=>$value['anskey'],'packID'=>$value['packID'] );
     $query = "INSERT INTO question_table (question, opt1, opt2, opt3, opt4, anskey, package_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $result = $this->query_db($query, $value);
     $lID = $this->conn->insert_id;
@@ -50,9 +51,13 @@ class library extends connector{
       $result = $this->query_db($query, $value);
       $this->db_close();
       if($result == 1){
-        return "true";
+        $response['response'] = "true";
+        $response['errMessage'] = "";
+        return $response;
       }else{
-        return "false";
+        $response['response'] = "false";
+        $response['errMessage'] = "question update failed";
+        return $response;
       }
     }else{
       echo "falseCX";
@@ -77,9 +82,13 @@ class library extends connector{
       $result = $this->query_db($query,$value);
       $this->db_close();
       if($result){
-        return "true";
+        $response['response'] = "true";
+        $response['errMessage'] = "";
+        return $response;
       }else{
-        return "false";
+        $response['response'] = "false";
+        $response['errMessage'] = "can't delete question";
+        return $response;
       }
   }
 
@@ -133,6 +142,7 @@ class library extends connector{
   }
 
   private function updatePackage($value){
+    $this->clearOldResponseData();
     $version = $this->getPackageVersion($value['package_id']);
     $version++;
     $value = $this->insertBeforeKey($value, 'package_version', $version, 'packNotes');
@@ -144,9 +154,13 @@ class library extends connector{
       $result = $this->query_db($query, $value);
       $this->db_close();
       if($result == 1){
-        return "true";
+        $response['response'] = "true";
+        $response['errMessage'] = "package updated Succefully";
+        return $response;
       }else{
-        return "false";
+        $response['response'] = "false";
+        $response['errMessage'] = "package not updated";
+        return $response;
       }
     }else{
       echo "falseCX";
@@ -154,22 +168,30 @@ class library extends connector{
   }
 
   private function deletePackage($value){
+    $this->clearOldResponseData();
     $query = "DELETE FROM packages WHERE package_id = ?";
     $result = $this->query_db($query,$value);
     $this->db_close();
     if($result){
-      return "true";
+      $response['response'] = "true";
+      $response['errMessage'] = "";
+      return $response;
     }else{
-      return "false";
+      $response['response'] = "false";
+      $response['errMessage'] = "Something is wrong";
+      return $response;
     }
   }
 
   private function viewAllPackages(){
     // works for store >> ! <<
+    $this->clearOldResponseData();
     $retVal = [];
     $query = "SELECT `package_id`, `package_name`, `full_name`, `description` FROM packages a, user_profile b WHERE `package_author` != ? and a.package_author = b.user_id";
-    $vals['user_id'] = $_SESSION['id'];
-    $vals['user_id_s'] = $_SESSION['id'];
+    $jwtObj = new jwtGenerator();
+    $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
+    $vals['user_id'] = $jwt['data']['userid'];
+    // $vals['user_id_s'] = $_SESSION['id'];
     $result = $this->query_db($query, $vals);
     while($row = mysqli_fetch_array($result)){
       array_push($retVal, array(
@@ -181,9 +203,13 @@ class library extends connector{
     }
     $this->db_close();
     if($retVal != ""){
-      return json_encode($retVal);
+      $response['response'] = "true";
+      $response['errMessage'] = "";
+      $response['result'] = json_encode($retVal);
     }else{
-      return "false";
+      $response['response'] = "false";
+      $response['errMessage'] = "";
+      return $response;
     }
   }
 

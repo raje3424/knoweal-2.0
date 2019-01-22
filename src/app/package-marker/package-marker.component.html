@@ -68,42 +68,42 @@
                     <textarea class="_g1_input" placeholder="Write new question here ..." style="height: 60px; resize: vertical;" [(ngModel)]="question_IO" [ngClass]="question_IOClass"></textarea>
                   </div>
                   <div class="col-xs-12 col-sm-12 _question_ans_canvas">
-                    <label *ngFor="let opt of options">Options</label>
+                    <label>Options</label>
 
                     <div class="row">
                       <div class="col-xs-1 col-sm-1" style="margin-top: 15px;">
                         <input id="radio-1" class="radio-custom" name="radio-group" type="radio" [(ngModel)]="theRightOption" ng-value="optionA_IO"/>
-                        <label *ngFor="let radio of radio-1" class="radio-custom-label"></label>
+                        <label class="radio-custom-label"></label>
                       </div>
                       <div class="col-xs-11 col-sm-11">
-                        <input type="text" *ngFor="let radio of radio-1" placeholder="Option A" class="_g1_input"[(ngModel)]="optionA_IO" [ngClass]="optionA_IOClass"/>
+                        <input type="text" placeholder="Option A" class="_g1_input"[(ngModel)]="optionA_IO" [ngClass]="optionA_IOClass"/>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-xs-1 col-sm-1" style="margin-top: 15px;">
                         <input id="radio-2" class="radio-custom" name="radio-group" type="radio" [(ngModel)]="theRightOption" ng-value="optionB_IO"/>
-                        <label *ngFor="let radio of radio-2" class="radio-custom-label"></label>
+                        <label class="radio-custom-label"></label>
                       </div>
                       <div class="col-xs-11 col-sm-11">
-                        <input type="text" *ngFor="let radio of radio-2" placeholder="Option B" class="_g1_input" [(ngModel)]="optionB_IO" [ngClass]="optionB_IOClass"/>
+                        <input type="text"  placeholder="Option B" class="_g1_input" [(ngModel)]="optionB_IO" [ngClass]="optionB_IOClass"/>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-xs-1 col-sm-1" style="margin-top: 15px;">
                         <input id="radio-3" class="radio-custom" name="radio-group" type="radio" [(ngModel)]="theRightOption" ng-value="optionC_IO"/>
-                        <label *ngFor="let radio of radio-3" class="radio-custom-label"></label>
+                        <label class="radio-custom-label"></label>
                       </div>
                       <div class="col-xs-11 col-sm-11">
-                        <input type="text" *ngFor="let radio of radio-3" placeholder="Option C" class="_g1_input" [(ngModel)]="optionC_IO" [ngClass]="optionC_IOClass"/>
+                        <input type="text"  placeholder="Option C" class="_g1_input" [(ngModel)]="optionC_IO" [ngClass]="optionC_IOClass"/>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-xs-1 col-sm-1" style="margin-top: 15px;">
                         <input id="radio-4" class="radio-custom" name="radio-group" type="radio" [(ngModel)]="theRightOption" ng-value="optionD_IO"/>
-                        <label *ngFor="let radio of radio-4" class="radio-custom-label"></label>
+                        <label class="radio-custom-label"></label>
                       </div>
                       <div class="col-xs-11 col-sm-11">
-                        <input type="text" *ngFor="let radio of radio-4" placeholder="Option D" class="_g1_input" [(ngModel)]="optionD_IO" [ngClass]="optionD_IOClass"/>
+                        <input type="text" placeholder="Option D" class="_g1_input" [(ngModel)]="optionD_IO" [ngClass]="optionD_IOClass"/>
                       </div>
                     </div>
                     <div class="row _margin_top_5 _margin_bottom_5">
