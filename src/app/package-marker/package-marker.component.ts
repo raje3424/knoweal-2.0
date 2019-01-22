@@ -231,7 +231,7 @@ export class PackageMarkerComponent implements OnInit {
             blanker.push("Option Field Four");
           }
           if(this.theRightOption == ""){
-            blanker.push("Correcct Options Checkbox");
+            blanker.push("Correct Options Checkbox");
           }
 
           if(blanker.length > 0){
