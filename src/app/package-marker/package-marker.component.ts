@@ -437,21 +437,21 @@ deleteRow(index: number) {
 
   delete_question(queData){
     console.log(queData);
-    // var options ={
-    //     "v_class": "library",
-    //     "v_function": "deleteQuestion",
-    //     "value": this.q_id
-    //   };
-    //   this._service.postRequestWithObservable(options)
-    //      .subscribe( res => {
-    //     console.log(res);
-    //     if(res == "true"){
-    //       //("#question_"+this.q_id).css("display", "none");
-    //       alert("deleted");
-    //     }else{
-    //       alert("Error Deleting Question quesition");
-    //     }
-    //   });
+    var options ={
+        "v_class": "library",
+        "v_function": "deleteQuestion",
+        "value": queData.q_id
+      };
+      this._service.postRequestWithObservable(options)
+         .subscribe( res => {
+        console.log(res);
+        if(res == "true"){
+          $("#question_"+this.q_id).css("display", "none");
+          alert("deleted");
+        }else{
+          alert("Error Deleting Question quesition");
+        }
+      });
   }
 
   addQuestions(){
