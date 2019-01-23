@@ -136,8 +136,8 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
       this._routes.navigate(['/pur_package_viewer']);
   }
 
-  viewOwnPackages(){
-      this._routes.navigate(['/purpack']);
+  viewOwnPackages(id){
+      this._routes.navigate(['/purpack'],{ queryParams:id});
   }
 
   navlib(){
@@ -147,9 +147,11 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
   navpro(){
     this._routes.navigate(['/userpro']);
   }
+
   navstream(){
     this._routes.navigate(['/basic']);
   }
+
   //logout function
   logOut(){
     this._service.logout();

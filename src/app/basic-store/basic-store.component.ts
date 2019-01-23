@@ -13,6 +13,7 @@ export class BasicStoreComponent implements OnInit {
 profile_noti;pro_acriveClass;lib_activeClass;
 boughtPackMsg;pkgData;
 
+
  constructor(private _routes: Router,private _service: KnowelApiService){ }
 
 ngOnInit() {

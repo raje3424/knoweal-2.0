@@ -412,15 +412,17 @@ class library extends connector{
     $result = mysqli_fetch_array($result);
     $this->db_close();
     if($result != ""){
-      $retVal = [
-        "author_name" => $result['full_name'],
-        "packName" => $result['package_name'],
-        "packDescription" => $result['description'],
-        "packNotes" => $result['package_note']
-      ];
+      // $retVal = [
+      //   "author_name" => $result['full_name'],
+      //   "packName" => $result['package_name'],
+      //   "packDescription" => $result['description'],
+      //   "packNotes" => $result['package_note']
+      // ];
+      //print_r(json_encode($result));
+      //echo $result;
       $response['response'] = "true";
       $response['errMessage'] = '';
-      $response['result'] = json_encode($retVal);
+      $response['result'] = json_encode($result);
       return $response;
     }else{
       $response['response'] = "false";

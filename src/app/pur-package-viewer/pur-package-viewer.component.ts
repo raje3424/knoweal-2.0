@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { KnowelApiService } from '../_service/knowel-api.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AppRoutingModule } from '../app-routing/app-routing.module';
 
 @Component({
@@ -19,9 +19,17 @@ theAnsList:any = [];
 theGlassFlag = true;
 author_name;
 
-  constructor(private _routes: Router,private _service: KnowelApiService){ }
+  constructor(private route: ActivatedRoute,private _routes: Router,private _service: KnowelApiService){ }
 
   ngOnInit() {
+    this.route.queryParams
+      .filter(params => params.id)
+      .subscribe(params => {
+        //console.log(params);
+        this.packID = params.id;
+      });
+
+    console.log(this.packID);
     this.getAllPackInfo();
     // toc_nav('info_Desc_class');
     // toc_nav('notes_class');
@@ -125,17 +133,18 @@ getAnsCount(){
       "v_class": "library",
       "v_function": "getPur_PackageInfo",
       "value": {
-          "token": localStorage.getItem('token'),
-          "packID": this.packID
-        },
+          "packID": this.packID,
+          "token": localStorage.getItem('token')
+        }
     };
     this._service.postRequestWithObservable(options)
        .subscribe(res => {
          console.log(res.result);
-        this.packName = res.result.packName;
-        this.packDescription = res.result['packDescription'];
-        this.packNotes = res.result['packNotes'];
-        this.author_name = res.result['full_name'];
+         console.log(res.result['package_name']);
+         this.packName = res.result[package_name];
+        // this.packDescription = res.result['packDescription'];
+        // this.packNotes = res.result['packNotes'];
+        // this.author_name = res.result['full_name'];
     });
   }
 
