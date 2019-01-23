@@ -446,7 +446,7 @@ deleteRow(index: number) {
          .subscribe( res => {
         console.log(res);
         if(res == "true"){
-          $("#question_"+this.q_id).css("display", "none");
+          $("#question_"+queData.q_id).css("display", "none");
           alert("deleted");
         }else{
           alert("Error Deleting Question quesition");
