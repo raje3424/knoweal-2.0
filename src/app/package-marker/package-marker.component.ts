@@ -78,16 +78,20 @@ deleteRow(index: number) {
   }
 
   addPackage(){
+    console.log('In add package!');
     var blanker = [];
-        if(this.packName == ""){
+        if(this.packName == "" || this.packName == undefined){
+          console.log(this.packName);
           this.name_class = "_error_input";
           blanker.push("Package Name");
         }
-        if(this.packDescription == ""){
+        if(this.packDescription == "" || this.packDescription == undefined){
+          console.log(this.packDescription);
           this.des_class = "_error_input";
           blanker.push("Package Description");
         }
-        if(this.packNotes == ""){
+        if(this.packNotes == "" || this.packNotes == undefined){
+          console.log(this.packNotes);
           this.note_class = "_error_input";
           blanker.push("Package Notes");
         }
