@@ -78,20 +78,16 @@ deleteRow(index: number) {
   }
 
   addPackage(){
-    console.log('In add package!');
     var blanker = [];
         if(this.packName == "" || this.packName == undefined){
-          console.log(this.packName);
           this.name_class = "_error_input";
           blanker.push("Package Name");
         }
         if(this.packDescription == "" || this.packDescription == undefined){
-          console.log(this.packDescription);
           this.des_class = "_error_input";
           blanker.push("Package Description");
         }
         if(this.packNotes == "" || this.packNotes == undefined){
-          console.log(this.packNotes);
           this.note_class = "_error_input";
           blanker.push("Package Notes");
         }
@@ -111,6 +107,7 @@ deleteRow(index: number) {
           }else {
             this.messages += " is blank ]";
           }
+          
         }else{
           let options = {
             "v_class": "library",
