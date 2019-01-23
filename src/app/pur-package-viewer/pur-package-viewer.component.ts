@@ -8,15 +8,21 @@ import { AppRoutingModule } from '../app-routing/app-routing.module';
   templateUrl: './pur-package-viewer.component.html',
   styleUrls: ['./pur-package-viewer.component.css']
 })
+
 export class PurPackageViewerComponent implements OnInit {
-submitFlag;packName;packDescription;packID;
-theQestionList;totalQuestions;packNotes;
-theAnsList = [];
-theGlassFlag;totalSolved;
+submitFlag = false;
+totalSolved = 0;
+theQestionList:any = [];
+packName;packDescription;packID;
+totalQuestions;packNotes;
+theAnsList:any = [];
+theGlassFlag = true;
+author_name;
 
   constructor(private _routes: Router,private _service: KnowelApiService){ }
 
   ngOnInit() {
+    this.getAllPackInfo();
     // toc_nav('info_Desc_class');
     // toc_nav('notes_class');
     // toc_nav('questions_class');
@@ -30,15 +36,18 @@ theGlassFlag;totalSolved;
     this._routes.navigate['/library'];
   }
 
-  goBackFunction(){
-    this._routes.navigate['/library'];
-  }
+  // goBackFunction(){
+  //   this._routes.navigate['/library'];
+  // }
 
   solveTheQuestion(){
     let options ={
       "v_class": "library",
       "v_function": "getQuestionsToSolve",
-      "value": this.packID
+      "value": {
+          "token": localStorage.getItem('token'),
+          "packID":this.packID
+        }
     };
     console.log(options);
     this._service.postRequestWithObservable(options)
@@ -66,7 +75,10 @@ theGlassFlag;totalSolved;
       let options ={
         "v_class": "library",
         "v_function": "getTheResults",
-        "value": this.theAnsList
+        "value": {
+          "token": localStorage.getItem('token'),
+          "theAnsList":this.theAnsList
+        }
       };
       this._service.postRequestWithObservable(options)
          .subscribe(res => {
@@ -107,5 +119,28 @@ getAnsCount(){
       }
     }
   };
+
+  getAllPackInfo(){
+    var options ={
+      "v_class": "library",
+      "v_function": "getPur_PackageInfo",
+      "value": {
+          "token": localStorage.getItem('token'),
+          "packID": this.packID
+        },
+    };
+    this._service.postRequestWithObservable(options)
+       .subscribe(res => {
+         console.log(res.result);
+        this.packName = res.result.packName;
+        this.packDescription = res.result['packDescription'];
+        this.packNotes = res.result['packNotes'];
+        this.author_name = res.result['full_name'];
+    });
+  }
+
+  goBackFunction(){
+   this._routes.navigate(['/library']);
+  }
 
 }

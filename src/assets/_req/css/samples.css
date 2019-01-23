@@ -1,16 +1,16 @@
 @font-face {
     font-family: ek_mukta_bold;
-    src: url('assets/_req/fonts_images/fonts/Ek_Mukta/EkMukta-Bold.ttf');
+    src: url('../assets/_req/fonts_images/fonts/Ek_Mukta/EkMukta-Bold.ttf');
 }
 
 @font-face {
     font-family: ek_mukta_eLight;
-    src: url('assets/_req/fonts_images/fonts/Ek_Mukta/EkMukta-ExtraLight.ttf');
+    src: url('../assets/_req/fonts_images/fonts/Ek_Mukta/EkMukta-ExtraLight.ttf');
 }
 
 @font-face {
     font-family: ek_mukta;
-    src: url('assets/_req/fonts_images/fonts/Ek_Mukta/EkMukta-Regular.ttf');
+    src: url('../assets/_req/fonts_images/fonts/Ek_Mukta/EkMukta-Regular.ttf');
 }
 
 @font-face {

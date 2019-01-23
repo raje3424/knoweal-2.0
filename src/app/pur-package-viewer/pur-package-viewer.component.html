@@ -1,4 +1,4 @@
-<div class="the_glass" ng-init="theGlassFlag = true" ng-hide="theGlassFlag">
+<div class="the_glass" ng-hide="theGlassFlag">
 
   <div class="row _hideit">
     <div class="col-xs-12 col-sm-1 col-md-2 col-lg-2"></div>
@@ -24,20 +24,20 @@
           </div>
           <div class="_tbloc_content">
             <div class="_tbloc_point_canvas">
-              <span class="_tbloc_point" ng-class="info_Desc_class" (click)="content_view_switch = 'packDInfo';">Info &amp; Description</span>
+              <span class="_tbloc_point" [ngClass]="info_Desc_class" (click)="content_view_switch = 'packDInfo';">Info &amp; Description</span>
             </div>
             <div class="_tbloc_point_canvas">
-              <span class="_tbloc_point" ng-class="notes_class" (click)="content_view_switch = 'content_notes';">Notes</span>
+              <span class="_tbloc_point" [ngClass]="notes_class" (click)="content_view_switch = 'content_notes';">Notes</span>
             </div>
             <div class="_tbloc_point_canvas">
-              <span class="_tbloc_point"   class="questions_class" (click)="content_view_switch = 'content_questoin'; solveTheQuestion()">Question</span>
+              <span class="_tbloc_point" [ngClass]="questions_class" (click)="content_view_switch = 'content_questoin'; solveTheQuestion()">Question</span>
             </div>
           </div>
         </div>
       </div> <!-- <</ content nav -->
 
 
-      <div class="col-xs-12 col-sm-9"  ng-switch="content_view_switch"> <!-- contant canvas >> -->
+      <div class="col-xs-12 col-sm-9"  [ngSwitch]="content_view_switch"> <!-- contant canvas >> -->
         <div class="row _content_back_button">
           <div class="col-xs-12">
             <span (click)="goBackFunction()" class="_content_back_button_canvas _default_back"><span class="_go_back_button glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back to library</span>
@@ -45,17 +45,17 @@
         </div>
 
         <!-- info n description >> -->
-        <div class="col-xs-12 _content_canvas" ng-switch-when="packDInfo">
-          <div class="row _text_content" style="border-bottom: 1px solid #e0e0e0;" ng-init="toc_nav('info_Desc_class')">
-            <span class="_view_packName">packName</span><br/> by <span class="_view_packAuthoe">author_name</span>
+        <div class="col-xs-12 _content_canvas" *ngSwitchCase="packDInfo">
+          <div class="row _text_content" style="border-bottom: 1px solid #e0e0e0;" ngOnInit="toc_nav('info_Desc_class')">
+            <span class="_view_packName">{{packName}}</span><br/> by <span class="_view_packAuthoe">{{author_name}}</span>
           </div>
           <div class="row _view_packDescription _text_content">
-            packDescription
+            {{packDescription}}
           </div>
         </div> <!-- <</ info n description -->
 
         <!-- notes >> -->
-        <div class="col-xs-12 _content_canvas" ng-switch-when="content_notes" ng-init="toc_nav('notes_class')">
+        <div class="col-xs-12 _content_canvas" *ngSwitchCase="content_notes" ngOnInit="toc_nav('notes_class')">
           <div class="row _view_packDescription _text_content">
             packNotes
           </div>
@@ -63,7 +63,7 @@
         <!-- <</ notes -->
 
         <!-- questions cnavs >> -->
-        <div class="col-xs-12 _content_canvas" style="margin-bottom: 20px;" ng-switch-when="content_questoin" ng-init="toc_nav('questions_class'); ">
+        <div class="col-xs-12 _content_canvas" style="margin-bottom: 20px;"*ngSwitchCase = "content_questoin" ngOnInit="toc_nav('questions_class'); ">
 
           <!-- show added quesiton >> -->
           <div id="showAllAddedQuestions">
@@ -78,16 +78,16 @@
                       </div>
 
                       <div class="col-xs-12 col-sm-12 _margin_bottom_5">
-                        <div class="row _answer_content _margin_top_5 _margin_bottom_5" ng-class="opt1Class"  (click)="opt1Class = '_correct_ans'; opt2Class = ''; opt3Class = ''; opt4Class = ''; x.anskey = x.opt1; getAnsCount()">
+                        <div class="row _answer_content _margin_top_5 _margin_bottom_5" [ngClass]="opt1Class"  (click)="opt1Class = '_correct_ans'; opt2Class = ''; opt3Class = ''; opt4Class = ''; x.anskey = x.opt1; getAnsCount()">
                           {{opt1}}
                         </div>
-                        <div class="row _answer_content _margin_top_5 _margin_bottom_5" ng-class="opt2Class"  (click)="opt2Class = '_correct_ans'; opt1Class = ''; opt3Class = ''; opt4Class = ''; x.anskey = x.opt2; getAnsCount()">
+                        <div class="row _answer_content _margin_top_5 _margin_bottom_5" [ngClass]="opt2Class"  (click)="opt2Class = '_correct_ans'; opt1Class = ''; opt3Class = ''; opt4Class = ''; x.anskey = x.opt2; getAnsCount()">
                           {{opt2}}
                         </div>
-                        <div class="row _answer_content _margin_top_5 _margin_bottom_5" ng-class="opt3Class"  (click)="opt3Class = '_correct_ans'; opt2Class = ''; opt4Class = ''; opt1Class = ''; x.anskey = x.opt3; getAnsCount()">
+                        <div class="row _answer_content _margin_top_5 _margin_bottom_5" [ngClass]="opt3Class"  (click)="opt3Class = '_correct_ans'; opt2Class = ''; opt4Class = ''; opt1Class = ''; x.anskey = x.opt3; getAnsCount()">
                           {{opt3}}
                         </div>
-                        <div class="row _answer_content _margin_top_5 _margin_bottom_5" ng-class="opt4Class"  (click)="opt4Class = '_correct_ans'; opt2Class = ''; opt3Class = ''; opt1Class = ''; x.anskey = x.opt4; getAnsCount()">
+                        <div class="row _answer_content _margin_top_5 _margin_bottom_5" [ngClass]="opt4Class"  (click)="opt4Class = '_correct_ans'; opt2Class = ''; opt3Class = ''; opt1Class = ''; x.anskey = x.opt4; getAnsCount()">
                           {{opt4}}
                         </div>
                         <div class="_the_ans_stat">

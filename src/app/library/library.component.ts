@@ -57,6 +57,7 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
     });
   }
 
+
     nav(cho){
     if(cho == "pur"){
       this.pur_conSelect = "_contentSwitchPanel_Select";
@@ -146,10 +147,13 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
   navpro(){
     this._routes.navigate(['/userpro']);
   }
-
+  navstream(){
+    this._routes.navigate(['/basic']);
+  }
   //logout function
   logOut(){
     this._service.logout();
     this._routes.navigate(['/cfindex']);
   }
+
 }

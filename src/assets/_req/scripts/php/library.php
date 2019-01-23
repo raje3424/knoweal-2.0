@@ -10,7 +10,7 @@
 ** ~~~
 **
 */
-include_once("serverConnector.php");
+include_once ("serverConnector.php");
 include_once ("jwtGenerator.php");
 
 class library extends connector{
@@ -47,15 +47,19 @@ class library extends connector{
   private function updateQuestion($value){
     $this->clearOldResponseData();
     $version = $this->getQuestionVersion($value['question_id']);
+    //print_r($version);
     $version++;
     //echo "Version >>>>".$version."<<<";
-    $value = $this->insertBeforeKey($value, 'version', $version, 'question_id');
+    //$value = $this->insertBeforeKey($value, 'version', $version, 'question_id');
     //$value['version']=$version;
     //print_r($value);
-    $res = $this->db_connection();
-    if(res){
-      $query = "UPDATE `question_table` SET `question` = ?, `opt1` = ?, `opt2` = ?, `opt3` = ?, `opt4` = ?, `anskey` = ?, `version` = ? WHERE question_id = ?";
-      $result = $this->query_db($query, $value);
+    //$res = $this->db_connection();
+   $val = array('question' => $value['question'],'opt1'=>$value['opt1'], 'opt2'=>$value['opt2'],'opt3'=>$value['opt3'],'opt4'=>$value['opt4'],'anskey'=>$value['anskey'],'version'=>$version++,'question_id'=>$value['question_id']
+ );
+  //print_r($val);
+      $query = "UPDATE question_table SET question = ?, opt1 = ?, opt2 = ?, opt3 = ?, opt4 = ?, anskey = ?, version = ? WHERE question_id = ?";
+
+      $result = $this->query_db($query, $val);
       $this->db_close();
       if($result == 1){
         $response['response'] = "true";
@@ -66,9 +70,7 @@ class library extends connector{
         $response['errMessage'] = "question update failed";
         return $response;
       }
-    }else{
-      echo "falseCX";
-    }
+
   }
 
   private function questionGetter($value){ //Here it accepts package_id
@@ -112,17 +114,17 @@ class library extends connector{
     $query = "SELECT `version` FROM question_table WHERE question_id = ?";
     $result = $this->query_db($query,$value);
     $result = mysqli_fetch_array($result);
-    $this->db_close();
+    //$this->db_close();
     if($result){
-      $response['response'] = "true";
-      $response['errMessage'] = "";
-      $response['result'] = $result['version'];
-      return $response;
-    }else{
-        $response['response'] = "false";
-        $response['errMessage'] = "can't get version";
-        return $response;
-      }
+      // $response['response'] = "true";
+      // $response['errMessage'] = "";
+      //$response['result'] = $result['version'];
+      return $result['version'];
+    // }else{
+    //     $response['response'] = "false";
+    //     $response['errMessage'] = "can't get version";
+    //     return $response;
+       }
   }
 
 //Add,Delete,Update,Select and related dependencies of Package

@@ -61,6 +61,10 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
     navpro(){
       this._routes.navigate(['/userpro']);
     }
+    
+    navstream(){
+      this._routes.navigate(['/basic']);
+    }
 
      nav(present){
        switch (present) {

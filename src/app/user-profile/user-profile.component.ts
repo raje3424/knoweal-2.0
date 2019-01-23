@@ -130,7 +130,10 @@ export class UserProfileComponent implements OnInit {
     this._routes.navigate(['/userpro']);
   }
 
-
+  navstream(){
+    this._routes.navigate(['/basic']);
+  }
+  
   saupData(){
     console.log(this.buttonOperation);
 
