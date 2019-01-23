@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -36,6 +36,7 @@ import { TokenInterceptorService } from './_service/token-interceptor.service';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     HttpModule,
     HttpClientModule,

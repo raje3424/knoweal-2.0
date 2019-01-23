@@ -17,11 +17,11 @@
 
         <div class="row _package_maker_io" *ngIf="infod_hideFlag">
           <div class="col-xs-12 col-sm-4">
-            <label *ngFor="let pack of packName"> Package Name </label>
+            <label> Package Name </label>
             <input type="text" name="packName" [ngClass]="name_class" class="_g1_input ¸ _no_border_radis" placeholder="Package Name" [(ngModel)]="packName" [attr.Disabled]="pkg_edit_flag> 1 ? true : null"/>
           </div>
           <div class="col-xs-12 col-sm-8">
-            <label *ngFor="let desc of description"> Package Description </label>
+            <label> Package Description </label>
             <textarea name="description" Class="des_class _margin_bottom_5 _margin_top_5" class="_g1_input" placeholder="Give short description of your package here..." style="resize: none; height: 90px;" [(ngModel)]="packDescription" [attr.Disabled]="pkg_edit_flag> 1 ? true : null"></textarea>
           </div>
           <div class="col-xs-12">
@@ -33,7 +33,7 @@
 
         <div class="row _package_maker_io" *ngIf="notes_hideFlag">
           <div class="col-xs-12 col-sm-12 _margin_top_5">
-            <label *ngFor="let packn of packNotes">Package Notes</label>
+            <label>Package Notes</label>
             <textarea name="packNotes" [ngClass]="note_class" class="_g1_input" placeholder="If you have some notes or tips you can share them here ..." style="height: 150px; resize: vertical" [(ngModel)]="packNotes" [attr.Disabled]="pkg_edit_flag> 1 ? true : null"></textarea>
           </div>
           <div class="col-xs-12">
@@ -64,7 +64,8 @@
 
                 <div class="col-xs-12 col-sm-12 _margin_top_5 _margin_bottom_5">
                   <div class="col-xs-12 col-sm-12 _question_ans_canvas">
-                    <label *ngFor="let que of newQuestion">Add new Question</label> <span *ngIf="questionAddErrorMsg" [ngClass]="q_whichMsg" id="theQestionMessage"> {{addQuestionMessage}}</span>
+                    <!-- <label>Add new Question</label> -->
+                     <span *ngIf="questionAddErrorMsg" [ngClass]="q_whichMsg" id="theQestionMessage"> {{addQuestionMessage}}</span>
                     <textarea class="_g1_input" placeholder="Write new question here ..." style="height: 60px; resize: vertical;" [(ngModel)]="question_IO" [ngClass]="question_IOClass"></textarea>
                   </div>
                   <div class="col-xs-12 col-sm-12 _question_ans_canvas">
@@ -138,7 +139,7 @@
                   <div class="col-xs-12 col-sm-12">
                     <!--question :{{theQestionList}}<<-->
 
-                    <div class="row _given_question_canvas _margin_top_5 _margin_bottom_5" *ngFor="let x of theQestionList"  >
+                    <div class="row _given_question_canvas _margin_top_5 _margin_bottom_5" *ngFor="let x of theQestionList;let i = index">
                       <div id="questionListCanvas" *ngIf="theMainQCanvas">
                         <div class="_question_content">
                             {{x.question}}
@@ -161,57 +162,87 @@
                       </div>
                       <!-- question editable canvas >> -->
                       <div id="questionEditableCanvas" *ngIf="editableCanvas">
-                        <div class="col-xs-12 col-sm-12 _margin_top_5" id="_quesion">
-                          <label *ngFor="let que of newQuestion">Edit Question</label>
-                          <textarea class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis" style="height: 60px; resize: vertical;" [ngClass]="question_IOClass" [(ngModel)]="question"></textarea>
-                        </div>
-                        <div class="col-xs-12 col-sm-12" id="options">
-                          <div class="row">
-                            <div class="col-xs-1 col-sm-1" style="margin-top: 15px;">
-                              <input id="" class="radio-custom" name="radio" type="radio" value='' [(ngModel)]="anskey" />
-                              <label  class="radio-custom-label"></label>
-                            </div>
-                            <div class="col-xs-11 col-sm-11">
-                              <input type="text" class="_g1_input _no_border_radis radio-custom-label" [ngClass]="optionA_IOClass" [(ngModel)]="opt1" />
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-xs-1 col-sm-1" style="margin-top: 15px;">
-                              <input id="radioB" class="radio-custom" name="radio" type="radio" value="" [(ngModel)]="anskey"/>
-                              <label class="radio-custom-label"></label>
-                            </div>
-                            <div class="col-xs-11 col-sm-11">
-                              <input type="text"  class="_g1_input _no_border_radis radio-custom-label" [ngClass]="optionB_IOClass" [(ngModel)]="opt2"/>
-                            </div>
-                          </div>
 
-                          <div class="row">
-                          <div class="col-xs-1 col-sm-1" style="margin-top: 15px;">
-                            <input id="radio-C" class="radio-custom" name="radio-group-{{q_id}}" type="radio" ng-value="opt3" [(ngModel)]="anskey"/>
-                            <label class="radio-custom-label"></label>
-                          </div>
-                          <div class="col-xs-11 col-sm-11">
-                            <input type="text" class="_g1_input _no_border_radis radio-custom-label" ng-class="optionC_IOClass" [(ngModel)]="opt3"/>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-xs-1 col-sm-1" style="margin-top: 15px;">
-                            <input id="radio-D-{{q_id}}" class="radio-custom" name="radio-group-{{q_id}}" type="radio" ng-value="opt4" [(ngModel)]="anskey"/>
-                            <label  class="radio-custom-label"></label>
-                          </div>
-                          <div class="col-xs-11 col-sm-11">
-                            <input type="text"  class="_g1_input _no_border_radis radio-custom-label" ngClass="optionD_IOClass" [(ngModel)]="opt4"/>
-                          </div>
-                        </div>
-                        <hr/>
+                        <!-- <button type="button" (click)="addNewRow()" class="btn btn-primary">Add new Row</button><br>
+                        <form [formGroup]="invoiceForm">
+                            <div formArrayName="itemRows">
+                            
+                            
+                            In the template we are iterating this formarray, 
+                                and that is just the path to the formarray, which is:
+                                
+                                invoiceForm.controls.itemRows.controls
+                                
+                                'invoiceForm' being the complete form object, 'controls' being the content of the form object,
+                                'itemRows' being the (form)array in the form, 'controls' being the content of the formarray.
+                            
+                            
+                            
+                              <div *ngFor="let itemrow of invoiceForm.controls.itemRows.controls; let i=index"  [formGroupName]="i">
+                                <h4>Invoice Row #{{ i + 1 }}</h4>
+                                <div class="form-group">
+                                  <label>Item Name</label>
+                                  <input formControlName="itemname" class="form-control">
+                                </div>
+                                <button *ngIf="invoiceForm.controls.itemRows.controls.length > 1" (click)="deleteRow(i)" class="btn btn-danger">Delete Button</button>
+                              </div>
+                            </div>
+                      
+                        </form> -->
+
+
+                        
+                            <div class="col-xs-12 col-sm-12 _margin_top_5" id="_quesion"><!--[hidden]="!hideme[i]"-->
+                                <label>Edit Question {{x.question}}</label>
+                                <textarea class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis" style="height: 60px; resize: vertical;" [ngClass]="question_IOClass" [(ngModel)]="x.question" [value]="x.question"></textarea>
+                              </div>
+                              <div class="col-xs-12 col-sm-12" id="options">
+                                <div class="row">
+                                  <div class="col-xs-1 col-sm-1" style="margin-top: 15px;">
+                                    <input id="" class="radio-custom" name="radio" type="radio" [value]="x.opt1" [checked]="x.opt1===x.ansKey"  [(ngModel)]="anskey" />
+                                    <label  class="radio-custom-label"></label>
+                                  </div>
+                                  <div class="col-xs-11 col-sm-11">
+                                    <input type="text" class="_g1_input _no_border_radis radio-custom-label" [ngClass]="optionA_IOClass" [(ngModel)]="x.opt1" />
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-xs-1 col-sm-1" style="margin-top: 15px;">
+                                    <input id="radioB" class="radio-custom" name="radio" type="radio" [value]="x.opt2" [checked]="x.opt2===x.ansKey" [(ngModel)]="anskey"/>
+                                    <label class="radio-custom-label"></label>
+                                  </div>
+                                  <div class="col-xs-11 col-sm-11">
+                                    <input type="text"  class="_g1_input _no_border_radis radio-custom-label" [ngClass]="optionB_IOClass" [(ngModel)]="x.opt2"/>
+                                  </div>
+                                </div>
+      
+                                <div class="row">
+                                <div class="col-xs-1 col-sm-1" style="margin-top: 15px;">
+                                  <input id="radio-C" class="radio-custom" name="radio-group-{{x.q_id}}" type="radio" [value]="x.opt3" [checked]="x.opt3===x.ansKey" [(ngModel)]="anskey"/>
+                                  <label class="radio-custom-label"></label>
+                                </div>
+                                <div class="col-xs-11 col-sm-11">
+                                  <input type="text" class="_g1_input _no_border_radis radio-custom-label" ng-class="optionC_IOClass" [(ngModel)]="x.opt3"/>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-xs-1 col-sm-1" style="margin-top: 15px;">
+                                  <input id="radio-D-{{x.q_id}}" class="radio-custom" name="radio-group-{{x.q_id}}" type="radio" [value]="x.opt4" [checked]="x.opt4===x.ansKey" [(ngModel)]="anskey"/>
+                                  <label  class="radio-custom-label"></label>
+                                </div>
+                                <div class="col-xs-11 col-sm-11">
+                                  <input type="text"  class="_g1_input _no_border_radis radio-custom-label" ngClass="optionD_IOClass" [(ngModel)]="x.opt4"/>
+                                </div>
+                              </div>
+                              <hr/>
                       </div>
                     </div>
                       <!-- <</ question editable canvas-->
                       <div class="col-xs-12 col-sm-12 _margin_bottom_5" style="margin-bottom: 20px;">
-                        <div class="_g_button _blue col-xs-8 _no_right_border_radius" id="{{q_id}}" (click)="edit_question()">
+                        <div class="_g_button _blue col-xs-8 _no_right_border_radius" id="{{x.q_id}}" (click)="edit_question(x, i)">
                           {{q_edit}}
                         </div>
-                        <div class="_g_button _red col-xs-4 _no_left_border_radius" id="{{q_id}}" (click)="delete_question()">
+                        <div class="_g_button _red col-xs-4 _no_left_border_radius" id="{{x.q_id}}" (click)="delete_question(x)">
                           Delete
                         </div>
                       </div>
