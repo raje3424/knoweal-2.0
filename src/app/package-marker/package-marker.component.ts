@@ -420,15 +420,29 @@ deleteRow(index: number) {
         this._service.postRequestWithObservable(options)
            .subscribe( res => {
           console.log(res);
-          // if(res == "true"){
-          //   this.q_edit == "Question Update :)";
-          //   setTimeout(function(){
-          //     this.q_edit = "Edit";
-          //   }, 1500);
-          // }else{
-          //   // give an error !!
-          //   alert("Error Updating quesition");
-          // }
+          if(res.response == "true"){
+            this.q_edit == "Question Update :)";
+            setTimeout(function(){
+              this.q_edit = "Edit";
+            }, 1500);
+            var updatedQuestion: any = [{
+              "question": queData.question,
+              "opt1": queData.opt1,
+              "opt2": queData.opt2,
+              "opt3": queData.opt3,
+              "opt4": queData.opt4,
+              "anskey": queData.anskey,
+              "q_id": queData.q_id
+            }];
+          
+            this.theQestionList = this.theQestionList.map(obj => updatedQuestion.find(o => o.q_id === obj.q_id) || obj);
+            this.theMainQCanvas = true;
+            this.editableCanvas = false;
+            console.log(this.theQestionList);
+          }else{
+            // give an error !!
+            alert("Error Updating quesition");
+          }
         });
       }
     }
@@ -448,7 +462,7 @@ deleteRow(index: number) {
       this._service.postRequestWithObservable(options)
          .subscribe( res => {
         console.log(res);
-        if(res == "true"){
+        if(res.response == "true"){
           $("#question_"+queData.q_id).css("display", "none");
           alert("deleted");
         }else{

@@ -145,16 +145,16 @@
                             {{x.question}}
                         </div>
                         <div class="col-xs-12 col-sm-12 _margin_bottom_5">
-                          <div class="row _answer_content_v _margin_top_5 _margin_bottom_5"  [ngClass]="opt1Class">
+                          <div class="row _answer_content_v _margin_top_5 _margin_bottom_5"  [ngClass]="{'_correct_ans': x.opt1 == x.anskey}">
                             {{x.opt1}}
                           </div>
-                          <div class="row _answer_content_v _margin_top_5 _margin_bottom_5"  [ngClass]="opt2Class">
+                          <div class="row _answer_content_v _margin_top_5 _margin_bottom_5"  [ngClass]="{'_correct_ans': x.opt2 == x.anskey}">
                             {{x.opt2}}
                           </div>
-                          <div class="row _answer_content_v _margin_top_5 _margin_bottom_5" [ngClass]="opt3Class">
+                          <div class="row _answer_content_v _margin_top_5 _margin_bottom_5" [ngClass]="{'_correct_ans': x.opt3 == x.anskey}">
                             {{x.opt3}}
                           </div>
-                          <div class="row _answer_content_v _margin_top_5 _margin_bottom_5"  [ngClass]="opt4Class">
+                          <div class="row _answer_content_v _margin_top_5 _margin_bottom_5"  [ngClass]="{'_correct_ans': x.opt4 == x.anskey}">
                             {{x.opt4}}
                           </div>
                           <hr/>
@@ -222,7 +222,7 @@
                                   <label class="radio-custom-label"></label>
                                 </div>
                                 <div class="col-xs-11 col-sm-11">
-                                  <input type="text" class="_g1_input _no_border_radis radio-custom-label" ng-class="optionC_IOClass" [(ngModel)]="x.opt3"/>
+                                  <input type="text" class="_g1_input _no_border_radis radio-custom-label" [ngClass]="optionC_IOClass" [(ngModel)]="x.opt3"/>
                                 </div>
                               </div>
                               <div class="row">
@@ -231,7 +231,7 @@
                                   <label  class="radio-custom-label"></label>
                                 </div>
                                 <div class="col-xs-11 col-sm-11">
-                                  <input type="text"  class="_g1_input _no_border_radis radio-custom-label" ngClass="optionD_IOClass" [(ngModel)]="x.opt4"/>
+                                  <input type="text"  class="_g1_input _no_border_radis radio-custom-label" [ngClass]="optionD_IOClass" [(ngModel)]="x.opt4"/>
                                 </div>
                               </div>
                               <hr/>
