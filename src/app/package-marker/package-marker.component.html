@@ -140,7 +140,7 @@
                     <!--question :{{theQestionList}}<<-->
 
                     <div class="row _given_question_canvas _margin_top_5 _margin_bottom_5" *ngFor="let x of theQestionList;let i = index">
-                      <div id="questionListCanvas" *ngIf="theMainQCanvas">
+                      <div id="questionListCanvas_{{x.q_id}}" *ngIf="theMainQCanvas">
                         <div class="_question_content">
                             {{x.question}}
                         </div>

@@ -440,7 +440,10 @@ deleteRow(index: number) {
     var options ={
         "v_class": "library",
         "v_function": "deleteQuestion",
-        "value": queData.q_id
+        "value": {
+          "token": localStorage.getItem("token"),
+          "question_id": queData.q_id
+        }
       };
       this._service.postRequestWithObservable(options)
          .subscribe( res => {
