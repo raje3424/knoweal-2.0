@@ -79,15 +79,15 @@ deleteRow(index: number) {
 
   addPackage(){
     var blanker = [];
-        if(this.packName == ""){
+        if(this.packName == "" || this.packName == undefined){
           this.name_class = "_error_input";
           blanker.push("Package Name");
         }
-        if(this.packDescription == ""){
+        if(this.packDescription == "" || this.packDescription == undefined){
           this.des_class = "_error_input";
           blanker.push("Package Description");
         }
-        if(this.packNotes == ""){
+        if(this.packNotes == "" || this.packNotes == undefined){
           this.note_class = "_error_input";
           blanker.push("Package Notes");
         }
@@ -107,6 +107,7 @@ deleteRow(index: number) {
           }else {
             this.messages += " is blank ]";
           }
+          
         }else{
           let options = {
             "v_class": "library",
@@ -436,21 +437,21 @@ deleteRow(index: number) {
 
   delete_question(queData){
     console.log(queData);
-    // var options ={
-    //     "v_class": "library",
-    //     "v_function": "deleteQuestion",
-    //     "value": this.q_id
-    //   };
-    //   this._service.postRequestWithObservable(options)
-    //      .subscribe( res => {
-    //     console.log(res);
-    //     if(res == "true"){
-    //       //("#question_"+this.q_id).css("display", "none");
-    //       alert("deleted");
-    //     }else{
-    //       alert("Error Deleting Question quesition");
-    //     }
-    //   });
+    var options ={
+        "v_class": "library",
+        "v_function": "deleteQuestion",
+        "value": queData.q_id
+      };
+      this._service.postRequestWithObservable(options)
+         .subscribe( res => {
+        console.log(res);
+        if(res == "true"){
+          $("#question_"+queData.q_id).css("display", "none");
+          alert("deleted");
+        }else{
+          alert("Error Deleting Question quesition");
+        }
+      });
   }
 
   addQuestions(){
