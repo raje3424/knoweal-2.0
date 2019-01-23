@@ -95,8 +95,8 @@ class library extends connector{
 
   private function deleteQuestion($value){ //Here it accepts question_id
      $this->clearOldResponseData();
-      $query = "Delete FROM `question_table` WHERE question_id = ?";
-      $result = $this->query_db($query,$value);
+      $query = "DELETE FROM `question_table` WHERE question_id = ?";
+      $result = $this->query_db($query,$value['question_id']);
       $this->db_close();
       if($result){
         $response['response'] = "true";
