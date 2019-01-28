@@ -137,7 +137,7 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
   }
 
   viewOwnPackages(id){
-      this._routes.navigate(['/purpack'],{ queryParams:id});
+      this._routes.navigate(['/purpack'],{ queryParams: { id: id}});
   }
 
   navlib(){

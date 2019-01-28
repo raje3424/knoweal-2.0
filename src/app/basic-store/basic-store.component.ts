@@ -38,6 +38,22 @@ ngOnInit() {
                     }
                   });
       }
+
+      goBackFunction(){
+       this._routes.navigate(['/library']);
+      }
+
+      navlib(){
+        this._routes.navigate(['/library']);
+      }
+
+      navpro(){
+        this._routes.navigate(['/userpro']);
+      }
+
+      navstream(){
+        this._routes.navigate(['/basic']);
+      }
 //
 //       function getPackage(pkg_id){
 //         checkIfPur_Su(pkg_id);

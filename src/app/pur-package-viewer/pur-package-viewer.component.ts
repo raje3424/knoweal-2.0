@@ -17,7 +17,9 @@ packName;packDescription;packID;
 totalQuestions;packNotes;
 theAnsList:any = [];
 theGlassFlag = true;
-author_name;
+author_name;notes_class;questions_class;
+info_Desc_class = "_tbloc_point_active";
+present;
 
   constructor(private route: ActivatedRoute,private _routes: Router,private _service: KnowelApiService){ }
 
@@ -31,9 +33,31 @@ author_name;
 
     console.log(this.packID);
     this.getAllPackInfo();
-    // toc_nav('info_Desc_class');
-    // toc_nav('notes_class');
-    // toc_nav('questions_class');
+
+    if(this.packID !=""){
+      this.present = "questions_class";
+      let options ={
+      "v_class": "library",
+      "v_function": "getQuestionsToSolve",
+      "value":{
+        "packID":this.packID,
+        "token": localStorage.getItem('token')
+      }
+    };
+    console.log(options);
+    this._service.postRequestWithObservable(options)
+       .subscribe(res => {
+         console.log(res);
+         console.log(res.result);
+         this.theQestionList = res.result;
+         this.totalQuestions = this.theQestionList.length;
+       })
+    }else{
+      this.present = "packDInfo";
+    }
+    // this.toc_nav('info_Desc_class');
+    // this.toc_nav('notes_class');
+    // this.toc_nav('questions_class');
 
   }
 
@@ -44,9 +68,6 @@ author_name;
     this._routes.navigate['/library'];
   }
 
-  // goBackFunction(){
-  //   this._routes.navigate['/library'];
-  // }
 
   solveTheQuestion(){
     let options ={
@@ -140,16 +161,43 @@ getAnsCount(){
     this._service.postRequestWithObservable(options)
        .subscribe(res => {
          console.log(res.result);
-         console.log(res.result['package_name']);
-         this.packName = res.result[package_name];
-        // this.packDescription = res.result['packDescription'];
-        // this.packNotes = res.result['packNotes'];
-        // this.author_name = res.result['full_name'];
+         console.log(res.result.packNotes);
+        // console.log(":: pack notes >>  "+res.result.packNotes);
+        // console.log(res.result['packName']);
+         this.packName = res.result.packName;
+         //console.log(this.packName);
+        this.packDescription = res.result.packDescription;
+        this.packNotes = res.result.packNotes;
+        this.author_name = res.result.author_name;
     });
   }
 
   goBackFunction(){
    this._routes.navigate(['/library']);
   }
+
+  toc_nav(present){
+    switch (this.present) {
+      case 'info_Desc_class':
+        this.info_Desc_class = "_tbloc_point_active";
+        this.notes_class = "";
+        this.questions_class = "";
+        break;
+      case 'notes_class':
+        this.info_Desc_class = "";
+        this.notes_class = "_tbloc_point_active";
+        this.questions_class = "";
+        break;
+      case 'questions_class':
+        this.info_Desc_class = "";
+        this.notes_class = "";
+        this.questions_class = "_tbloc_point_active";
+        break;
+      default:
+        this.info_Desc_class = "_tbloc_point_active";
+        this.notes_class = "";
+        this.questions_class = "";
+    }
+  };
 
 }
