@@ -52,26 +52,7 @@ export class PackageMarkerComponent implements OnInit {
 
   ngOnInit() {
      this.edit_label='Edit';
-    //  this.invoiceForm = this._fb.group({
-    //   itemRows: this._fb.array([this.initItemRows()])
-    // });
   }
-
-  initItemRows() {
-    return this._fb.group({
-        itemname: this.theQestionList
-    });
-}
-
-addNewRow() {
-    const control = <FormArray>this.invoiceForm.controls['itemRows'];
-    control.push(this.initItemRows());
-}
-
-deleteRow(index: number) {
-    const control = <FormArray>this.invoiceForm.controls['itemRows'];
-    control.removeAt(index);
-}
 
   goBackFunction(){
    this._routes.navigate(['/library']);
@@ -345,17 +326,37 @@ deleteRow(index: number) {
       this.theRightOption = "";
   }
 
-  edit_question(queData, i){
-    console.log(queData);
-    if(this.q_edit == "Edit"){
-      //this.hideme[i] = !this.hideme[i]
-      this.theMainQCanvas = false;
-      this.editableCanvas = true;
-      this.q_edit = "Update";
-    }else if(this.q_edit == "Update"){
-      this.theMainQCanvas = false;
-      this.editableCanvas = true;
-      this.q_edit = "Edit";
+  onClick(item, updateEdit) {
+    console.log(item, updateEdit);
+    
+    if(updateEdit == "Edit"){
+      console.log(document.getElementById("btn_"+item.q_id).innerHTML);
+      
+      document.getElementById("btn_"+item.q_id).innerHTML = document.getElementById("btn_"+item.q_id).innerHTML == "Update" ? "Edit" : "Update";
+      Object.keys(this.hideme).forEach(h => {
+        this.hideme[h] = false;
+      });
+      this.hideme[item.q_id] = true;
+    }
+    
+    if(updateEdit == "Update"){
+      console.log(document.getElementById("btn_"+item.q_id).innerHTML);
+      document.getElementById("btn_"+item.q_id).innerHTML = document.getElementById("btn_"+item.q_id).innerHTML == "Update" ? "Edit" : "Update";
+      Object.keys(this.hideme).forEach(h => {
+        this.hideme[h] = false;
+      });
+      //this.hideme[item.q_id] = false;
+    }
+  }
+
+  edit_question(queData, i, anskey, btnText){
+    
+    console.log(queData, anskey, $.trim(document.getElementById("btn_"+queData.q_id).innerHTML), btnText);
+    if($.trim(document.getElementById("btn_"+queData.q_id).innerHTML) == "Edit"){
+      this.onClick(queData, "Edit");
+      //this.q_edit = "Update";
+    }else if($.trim(document.getElementById("btn_"+queData.q_id).innerHTML) == "Update"){
+      
       console.log("Question >> "+queData.question);
       console.log("Option 1 >> "+queData.opt1);
       console.log("Option 2 >> "+queData.opt2);
@@ -366,13 +367,13 @@ deleteRow(index: number) {
       this.opt2Class = "";
       this.opt3Class = "";
       this.opt4Class = "";
-      if(queData.anskey == queData.opt1){
+      if(anskey == queData.opt1){
         this.opt1Class = "_correct_ans";
-      }else if (queData.anskey == queData.opt2) {
+      }else if (anskey == queData.opt2) {
         this.opt2Class = "_correct_ans";
-      }else if (queData.anskey == queData.opt3){
+      }else if (anskey == queData.opt3){
         this.opt3Class = "_correct_ans";
-      }else if (queData.anskey == queData.opt4){
+      }else if (anskey == queData.opt4){
         this.opt4Class = "_correct_ans";
       }
 
@@ -413,7 +414,7 @@ deleteRow(index: number) {
             "opt2": queData.opt2,
             "opt3": queData.opt3,
             "opt4": queData.opt4,
-            "anskey": queData.anskey,
+            "anskey": anskey,
             "question_id": queData.q_id
           }
         };
@@ -422,8 +423,13 @@ deleteRow(index: number) {
           console.log(res);
           if(res.response == "true"){
             this.q_edit == "Question Update :)";
+            this.theMainQCanvas = false;
+            this.editableCanvas = true;
+            document.getElementById("btn_"+queData.q_id).innerHTML = "Edit";
+            //this.q_edit = "Edit";
             setTimeout(function(){
-              this.q_edit = "Edit";
+              document.getElementById("btn_"+queData.q_id).innerHTML = "Edit";
+              //this.q_edit = "Edit";
             }, 1500);
             var updatedQuestion: any = [{
               "question": queData.question,
@@ -431,13 +437,14 @@ deleteRow(index: number) {
               "opt2": queData.opt2,
               "opt3": queData.opt3,
               "opt4": queData.opt4,
-              "anskey": queData.anskey,
+              "anskey": anskey,
               "q_id": queData.q_id
             }];
           
             this.theQestionList = this.theQestionList.map(obj => updatedQuestion.find(o => o.q_id === obj.q_id) || obj);
             this.theMainQCanvas = true;
             this.editableCanvas = false;
+            this.onClick(queData, "Update");
             console.log(this.theQestionList);
           }else{
             // give an error !!
@@ -445,6 +452,14 @@ deleteRow(index: number) {
           }
         });
       }
+    }
+  }
+
+  isSelected(opt, anskey){
+    if(opt === anskey){
+      return true;
+    }else{
+      return false;
     }
   }
 
@@ -463,7 +478,19 @@ deleteRow(index: number) {
          .subscribe( res => {
         console.log(res);
         if(res.response == "true"){
+          // this.theQestionList = this.theQestionList.filter(function(returnableObjects){
+          //   return returnableObjects.q_id === queData.q_id;
+          // });
+
+          var index = this.theQestionList.findIndex(function(o){
+              return o.q_id == queData.q_id;
+          })
+          if (index !== -1) this.theQestionList.splice(index, 1);
+
+          console.log(this.theQestionList);
           $("#question_"+queData.q_id).css("display", "none");
+          $("#questionListCanvas_"+queData.q_id).css("display", "none");
+          $("#button_"+queData.q_id).css("display", "none");
           alert("deleted");
         }else{
           alert("Error Deleting Question quesition");
