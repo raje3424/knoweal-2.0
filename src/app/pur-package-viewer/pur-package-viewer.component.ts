@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { KnowelApiService } from '../_service/knowel-api.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AppRoutingModule } from '../app-routing/app-routing.module';
+declare var $: any;
 
 @Component({
   selector: 'app-pur-package-viewer',
@@ -117,9 +117,9 @@ present;
             if(res[i]['q_id'] == this.theQestionList[i]['q_id']){
               if(res[i]['rkie'] != "true"){
                 this.theQestionList[i]['rkie'] = "Correct answer is [ "+res[i]['rkie']+" ]";
-                //$("#question_"+res[i]['q_id']).addClass("_solver_wrong"); sarita
+                $("#question_"+res[i]['q_id']).addClass("_solver_wrong"); 
               }else{
-                //$("#question_"+res[i]['q_id']).addClass("_solved_correct");sarita
+                $("#question_"+res[i]['q_id']).addClass("_solved_correct");
                 this.theQestionList[i]['rkie'] = "Correct";
               }
             }
