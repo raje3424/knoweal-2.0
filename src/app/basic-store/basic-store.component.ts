@@ -12,8 +12,8 @@ import { AppRoutingModule } from '../app-routing/app-routing.module';
 export class BasicStoreComponent implements OnInit {
 profile_noti;pro_acriveClass;lib_activeClass;
 boughtPackMsg;pkgData:any=[];
-buyHide;
-
+buyHide;packID;
+b_flag;
  constructor(private _routes: Router,private _service: KnowelApiService){ }
 
 ngOnInit() {
@@ -57,69 +57,84 @@ ngOnInit() {
         this._routes.navigate(['/basic']);
       }
 
-//
-//       function getPackage(pkg_id){
-//         checkIfPur_Su(pkg_id);
-//
-//          makePur(pack_id){
-//           console.log("into make pur");
-//           var options = {
-//             "v_class": "library",
-//             "v_function": "addPurchasePackage",
-//             "value": pkg_id
-//           };
-//           this.http.post('/_req/scripts/php/interface.php', options).success((data=>){
-//             if(data.trim() == "true"){
-//               // take out the realod and add some message ;
-//               window.location.reload();
-//             }else{
-//               alert("Sorry Could not add it library now. Try again. :| ");
-//             }
-//           });
-//         };
-//
-//         checkIfPur_Su(pack_id){
-//           var options = {
-//             "v_class": "library",
-//             "v_function": "checkIfPur",
-//             "value":{
-//               "package_id": pkg_id
-//             }
-//           };
-//           this.http.post('/_req/scripts/php/interface.php', options).success((data=>){
-//             if(data.trim() == false){
-//               console.log("can be bought "+data+" ::");
-//               makePur(pack_id);
-//             }else{
-//               console.log("cant be "+data+ " ::");
-//             }
-//           });
-//         };
-//       };
-//
-//       function checkIfPur(pkg_id){
-//         var flag;
-//         var options = {
-//           "v_class": "library",
-//           "v_function": "checkIfPur",
-//           "value":{
-//             "package_id": pkg_id
-//           }
-//         };
-//         this.http.post('/_req/scripts/php/interface.php', options).success((data=>){
-//           if(data.trim() == false){
-//             flag = true;
-//             b_flag = true;
-//             console.log("can be bought"+flag);
-//           }else{
-//             flag = false;
-//             b_flag = false;
-//             console.log("cant be "+flag);
-//           }
-//         });
-//       //  return flag;
-//       };
-//
+
+       getPackage(pack_id){
+        this.checkIfPur_Su(this.packID);
+        if(this.makePur(this.packID)){
+          this.ngOnInit();
+        }else{
+              alert("Sorry Could not add it library now. Try again. :| ");
+        }
+      }
+
+      makePur(pack_id){
+       console.log("into make pur");
+       let options = {
+         "v_class": "library",
+         "v_function": "addPurchasePackage",
+         "value":{
+           "pkg_id":this.packID,
+           "token": localStorage.getItem('token')
+         }
+       };
+       this._service.postRequestWithObservable(options)
+          .subscribe( res => {
+         if(res.response == "true"){
+           // take out the realod and add some message ;
+           this.ngOnInit();
+         //  window.location.reload();
+         }
+       });
+     }
+
+
+        checkIfPur_Su(pack_id){
+          let options = {
+            "v_class": "library",
+            "v_function": "checkIfPur",
+            "value":{
+              "package_id":this.packID,
+              "token": localStorage.getItem('token')
+            }
+          };
+          this._service.postRequestWithObservable(options)
+             .subscribe( res => {
+            if(res.response == "false"){
+              console.log("can be bought "+res+" ::");
+              //this.makePur(pack_id);
+            }else{
+              console.log("cant be "+res+ " ::");
+            }
+          });
+        }
+
+
+
+       checkIfPur(pkg_id){
+        var flag;
+        var options = {
+          "v_class": "library",
+          "v_function": "checkIfPur",
+          "value":{
+            "package_id":this.packID,
+            "token": localStorage.getItem('token')
+          }
+        };
+        this._service.postRequestWithObservable(options)
+           .subscribe( res => {
+          if(res.response == "false"){
+            flag = true;
+            this.b_flag = true;
+            console.log("can be bought"+flag);
+          }else{
+            flag = false;
+            this.b_flag = false;
+            console.log("cant be "+flag);
+          }
+        });
+       //return flag;
+      }
+
       viewPackages(id){
         this._routes.navigate(['/purpack'],{ queryParams: { id: id}});
       }
