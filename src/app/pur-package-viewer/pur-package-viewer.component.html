@@ -27,7 +27,7 @@
               <span class="_tbloc_point" [ngClass]="info_Desc_class" (click)="content_view_switch = 'packDInfo';">Info &amp; Description</span>
             </div>
             <div class="_tbloc_point_canvas">
-              <span class="_tbloc_point" [ngClass]="notes_class" (click)="content_view_switch = 'content_notes';">Notes</span>
+              <span class="_tbloc_point" [ngClass]="notes_class" (click)="notes();">Notes</span>
             </div>
             <div class="_tbloc_point_canvas">
               <span class="_tbloc_point" [ngClass]="questions_class" (click)="content_view_switch = 'content_questoin'; solveTheQuestion()">Question</span>
@@ -97,7 +97,7 @@
                     </div>
                   </div>
                   <div class="row _margin_bottom_5">
-                    <div class="row _g_button _blue_back _margin_bottom_5" (click)="getTheResults()" ng-hide="submitFlag">
+                    <div class="row _g_button _blue_back _margin_bottom_5" (click)="getTheResults()" hidden="submitFlag">
                       Submit
                     </div>
                   </div>

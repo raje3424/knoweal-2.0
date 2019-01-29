@@ -19,7 +19,7 @@ theAnsList:any = [];
 theGlassFlag = true;
 author_name;notes_class;questions_class;
 info_Desc_class = "_tbloc_point_active";
-present;
+present;content_view_switch;
 
   constructor(private route: ActivatedRoute,private _routes: Router,private _service: KnowelApiService){ }
 
@@ -34,7 +34,7 @@ present;
     console.log(this.packID);
     this.getAllPackInfo();
 
-    if(this.packID !=""){
+    if(this.packID){
       this.present = "questions_class";
       let options ={
       "v_class": "library",
@@ -49,16 +49,18 @@ present;
        .subscribe(res => {
          console.log(res);
          console.log(res.result);
-         this.theQestionList = res.result;
-         this.totalQuestions = this.theQestionList.length;
+         if (res.response == "true"){
+           this.content_view_switch = "content_questoin";
+           this.theQestionList = res.result;
+           this.totalQuestions = this.theQestionList.length;
+         }else{
+           this.content_view_switch = "packDInfo";
+         }
        })
-    }else{
-      this.present = "packDInfo";
     }
-    // this.toc_nav('info_Desc_class');
-    // this.toc_nav('notes_class');
-    // this.toc_nav('questions_class');
-
+    this.toc_nav('info_Desc_class');
+    this.toc_nav('notes_class');
+    this.toc_nav('questions_class');
   }
 
   cancel_pack(){
@@ -117,7 +119,7 @@ present;
             if(res[i]['q_id'] == this.theQestionList[i]['q_id']){
               if(res[i]['rkie'] != "true"){
                 this.theQestionList[i]['rkie'] = "Correct answer is [ "+res[i]['rkie']+" ]";
-                $("#question_"+res[i]['q_id']).addClass("_solver_wrong"); 
+                $("#question_"+res[i]['q_id']).addClass("_solver_wrong");
               }else{
                 $("#question_"+res[i]['q_id']).addClass("_solved_correct");
                 this.theQestionList[i]['rkie'] = "Correct";
@@ -161,7 +163,7 @@ getAnsCount(){
     this._service.postRequestWithObservable(options)
        .subscribe(res => {
          console.log(res.result);
-         console.log(res.result.packNotes);
+         //console.log(res.result.packNotes);
         // console.log(":: pack notes >>  "+res.result.packNotes);
         // console.log(res.result['packName']);
          this.packName = res.result.packName;
@@ -193,11 +195,14 @@ getAnsCount(){
         this.notes_class = "";
         this.questions_class = "_tbloc_point_active";
         break;
-      default:
+      default :
         this.info_Desc_class = "_tbloc_point_active";
         this.notes_class = "";
         this.questions_class = "";
     }
   };
 
+  notes(){
+    this.content_view_switch = 'content_notes';
+  }
 }

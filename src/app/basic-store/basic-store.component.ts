@@ -11,7 +11,7 @@ import { AppRoutingModule } from '../app-routing/app-routing.module';
 })
 export class BasicStoreComponent implements OnInit {
 profile_noti;pro_acriveClass;lib_activeClass;
-boughtPackMsg;pkgData;
+boughtPackMsg;pkgData:any=[];
 
 
  constructor(private _routes: Router,private _service: KnowelApiService){ }
@@ -28,13 +28,14 @@ ngOnInit() {
               "token": localStorage.getItem('token')
           }
         };
+        console.log(options);
         this._service.postRequestWithObservable(options)
            .subscribe( res => {
           console.log(res.result);
                     if(res.response == "" || res.response == "false"){
                       this.boughtPackMsg = false;
                     }else{
-                      this.pkgData = res;
+                      this.pkgData = res.result;
                     }
                   });
       }
@@ -54,6 +55,7 @@ ngOnInit() {
       navstream(){
         this._routes.navigate(['/basic']);
       }
+
 //
 //       function getPackage(pkg_id){
 //         checkIfPur_Su(pkg_id);
@@ -117,10 +119,14 @@ ngOnInit() {
 //       //  return flag;
 //       };
 //
-//       viewPackages(pkg_id){
-//         window.location.assign("#/package_viewer/"+pkg_id);
-//       }
-//
+      viewPackages(id){
+        this._routes.navigate(['/purpack'],{ queryParams: { id: id}});
+      }
+
+  logOut(){
+    this._service.logout();
+    this._routes.navigate(['/cfindex']);
+  }
 
   createPackage(){
     let options = {

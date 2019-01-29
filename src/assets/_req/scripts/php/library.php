@@ -178,13 +178,14 @@ class library extends connector{
     $this->clearOldResponseData();
     $version = $this->getPackageVersion($value['package_id']);
     $version++;
-    $value = $this->insertBeforeKey($value, 'package_version', $version, 'packNotes');
+    //$value = $this->insertBeforeKey($value, 'package_version', $version, 'packNotes');
     $time = $this->getCurrentTimestamp();
-    $value = $this->insertBeforeKey($value, 'last_edit_on',$time , 'packNotes');
-    $res = $this->db_connection();
-    if($res){
+    //$value = $this->insertBeforeKey($value, 'last_edit_on',$time , 'packNotes');
+    $val= array('package_name' => $value['packName'], 'package_version'=>$version++,'last_edit_on'=>$time,'package_note'=>$value['packNotes'],'description'=>$value['packDescription'],'package_id'=>$value['package_id']);
+    //$res = $this->db_connection();
+    // if($res){
       $query = "UPDATE `packages` SET `package_name` = ?, `package_version` = ?,`last_edit_on` = ?, `package_note` = ?, `description` = ? WHERE `package_id` = ?";
-      $result = $this->query_db($query, $value);
+      $result = $this->query_db($query, $val);
       $this->db_close();
       if($result == 1){
         $response['response'] = "true";
@@ -195,9 +196,9 @@ class library extends connector{
         $response['errMessage'] = "package not updated";
         return $response;
       }
-    }else{
-      echo "falseCX";
-    }
+    // }else{
+    //   echo "falseCX";
+    // }
   }
 
   private function deletePackage($value){
@@ -216,7 +217,7 @@ class library extends connector{
     }
   }
 
-  private function viewAllPackages(){
+  private function viewAllPackages($value){
     // works for store >> ! <<
     $this->clearOldResponseData();
     $retVal = [];
@@ -239,7 +240,8 @@ class library extends connector{
       $response['response'] = "true";
       $response['errMessage'] = "";
       //  $response['result'] = $retVal;
-     $response['result'] = json_encode($retVal);
+     $response['result'] = $retVal;
+     return $response;
     }else{
       $response['response'] = "false";
       $response['errMessage'] = "Something is wrong";
@@ -282,18 +284,18 @@ class library extends connector{
     $query = "SELECT `package_version` FROM packages WHERE package_id = ?";
     $result = $this->query_db($query, $value);
     $result = mysqli_fetch_array($result);
-    $this->db_close();
+    //$this->db_close();
       if($result != ""){
-    $response['response'] = "true";
-    $response['errMessage'] = "";
-    $response['result'] = $result['package_version'];
-    return $response;
+    // $response['response'] = "true";
+    // $response['errMessage'] = "";
+    //$response['result'] = $result['package_version'];
+    return $result['package_version'];
   }
-  else{
-    $response['response'] = "false";
-    $response['errMessage'] = "Something is wrong";
-    return $response;
-  }
+  // else{
+  //   $response['response'] = "false";
+  //   $response['errMessage'] = "Something is wrong";
+  //   return $response;
+  // }
 }
 
 //Add,Delete,Update,Select and related dependencies of Store

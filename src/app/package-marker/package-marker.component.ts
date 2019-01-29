@@ -46,7 +46,7 @@ export class PackageMarkerComponent implements OnInit {
    public invoiceForm: FormGroup;
    hideme = {};
 
-  constructor(private _routes: Router,private _service: KnowelApiService, private _fb: FormBuilder){ 
+  constructor(private _routes: Router,private _service: KnowelApiService, private _fb: FormBuilder){
     this.hideme = {}; // init is required
   }
 
@@ -89,7 +89,7 @@ export class PackageMarkerComponent implements OnInit {
           }else {
             this.messages += " is blank ]";
           }
-          
+
         }else{
           let options = {
             "v_class": "library",
@@ -183,18 +183,18 @@ export class PackageMarkerComponent implements OnInit {
               "v_class": "library",
               "v_function": "updatePackage",
               "value":{
-                "token": localStorage.getItem('token'),
                 "packName": this.packName,
                 "packNotes": this.packNotes,
                 "packDescription": this.packDescription,
-                "package_id": this.packID
+                "package_id": this.packID,
+                "token": localStorage.getItem('token')
               }
             };
           console.log(options);
             this._service.postRequestWithObservable(options)
                .subscribe( res => {
               console.log(res);
-              if(res == "true"){
+              if(res.response == "true"){
                 this.messages = "[ Package Updated :) ]";
                 this.whichMsg = "_success_msg";
                 setTimeout(function(){
@@ -329,17 +329,17 @@ export class PackageMarkerComponent implements OnInit {
 
   onClick(item, updateEdit) {
     console.log(item, updateEdit);
-    
+
     if(updateEdit == "Edit"){
       console.log(document.getElementById("btn_"+item.q_id).innerHTML);
-      
+
       document.getElementById("btn_"+item.q_id).innerHTML = document.getElementById("btn_"+item.q_id).innerHTML == "Update" ? "Edit" : "Update";
       Object.keys(this.hideme).forEach(h => {
         this.hideme[h] = false;
       });
       this.hideme[item.q_id] = true;
     }
-    
+
     if(updateEdit == "Update"){
       console.log(document.getElementById("btn_"+item.q_id).innerHTML);
       document.getElementById("btn_"+item.q_id).innerHTML = document.getElementById("btn_"+item.q_id).innerHTML == "Update" ? "Edit" : "Update";
@@ -351,13 +351,13 @@ export class PackageMarkerComponent implements OnInit {
   }
 
   edit_question(queData, i, anskey, btnText){
-    
+
     console.log(queData, anskey, $.trim(document.getElementById("btn_"+queData.q_id).innerHTML), btnText);
     if($.trim(document.getElementById("btn_"+queData.q_id).innerHTML) == "Edit"){
       this.onClick(queData, "Edit");
       //this.q_edit = "Update";
     }else if($.trim(document.getElementById("btn_"+queData.q_id).innerHTML) == "Update"){
-      
+
       console.log("Question >> "+queData.question);
       console.log("Option 1 >> "+queData.opt1);
       console.log("Option 2 >> "+queData.opt2);
@@ -441,7 +441,7 @@ export class PackageMarkerComponent implements OnInit {
               "anskey": anskey,
               "q_id": queData.q_id
             }];
-          
+
             this.theQestionList = this.theQestionList.map(obj => updatedQuestion.find(o => o.q_id === obj.q_id) || obj);
             this.theMainQCanvas = true;
             this.editableCanvas = false;
