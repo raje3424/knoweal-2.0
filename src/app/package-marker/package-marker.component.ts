@@ -22,7 +22,7 @@ export class PackageMarkerComponent implements OnInit {
   questionAddFlag = "true";
   pkgCreateButtonFlag: boolean = true;
    packID:string = "";
-   packName:any;packNotes;packDescription;
+   packName:any;packNotes;packDescription;packPrice;
    name_class;des_class;whichMsg;note_class;
    messages;
    pkg_edit_flag;
@@ -65,6 +65,10 @@ export class PackageMarkerComponent implements OnInit {
           this.name_class = "_error_input";
           blanker.push("Package Name");
         }
+        if(this.packPrice == "" || this.packPrice == undefined){
+          this.name_class = "_error_input";
+          blanker.push("Package Price");
+        }
         if(this.packDescription == "" || this.packDescription == undefined){
           this.des_class = "_error_input";
           blanker.push("Package Description");
@@ -97,6 +101,7 @@ export class PackageMarkerComponent implements OnInit {
             "value":{
               "token": localStorage.getItem('token'),
               "packName": this.packName,
+              "packPrice": this.packPrice,
               "packNotes": this.packNotes,
               "packDescription": this.packDescription
             }
@@ -154,6 +159,10 @@ export class PackageMarkerComponent implements OnInit {
             this.name_class = "_error_input";
             blanker.push("Package Name");
           }
+          if(this.packPrice == ""){
+            this.name_class = "_error_input";
+            blanker.push("Package Price");
+          }
           if(this.packDescription == ""){
             this.des_class = "_error_input";
             blanker.push("Package Description");
@@ -184,6 +193,7 @@ export class PackageMarkerComponent implements OnInit {
               "v_function": "updatePackage",
               "value":{
                 "packName": this.packName,
+                "packPrice": this.packPrice,
                 "packNotes": this.packNotes,
                 "packDescription": this.packDescription,
                 "package_id": this.packID,
