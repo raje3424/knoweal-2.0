@@ -137,8 +137,8 @@ class library extends connector{
     $package_author = $jwt['data']['userid'];
     //print_r($package_author);
     //$retVal = $this->insertBeforeKey($value, 'author_id', 'packNotes');
-    $retVal = array('packName'=>$value['packName'],'packNotes'=>$value['packNotes'],'packDescription'=>$value['packDescription'],'package_author'=>$package_author,'valid_till'=>$end_date);
-    $query = "INSERT INTO packages (package_name, package_note, description,package_author,valid_till) VALUES (?,?,?,?,?)";
+    $retVal = array('packName'=>$value['packName'],'pack_price'=>$value['packPrice']'packNotes'=>$value['packNotes'],'packDescription'=>$value['packDescription'],'package_author'=>$package_author,'valid_till'=>$end_date);
+    $query = "INSERT INTO packages (package_name,pack_price ,package_note, description,package_author,valid_till) VALUES (?,?,?,?,?,?)";
     $result = $this->query_db($query, $retVal);
     $this->db_close();
     //echo $result;
