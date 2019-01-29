@@ -221,7 +221,7 @@ class library extends connector{
     // works for store >> ! <<
     $this->clearOldResponseData();
     $retVal = [];
-    $query = "SELECT `package_id`, `package_name`, `full_name`, `description` FROM packages a, user_profile b WHERE `package_author` != ? and a.package_author = b.user_id";
+    $query = "SELECT `package_id`, `package_name`, `full_name`, `description`, `pack_price` FROM packages a, user_profile b WHERE `package_author` != ? and a.package_author = b.user_id";
     $jwtObj = new jwtGenerator();
     $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
     $vals['user_id'] = $jwt['data']['userid'];
@@ -233,6 +233,7 @@ class library extends connector{
         "package_name" => $row['package_name'],
         "author_name" => $row['full_name'],
         "description" => $row['description'],
+        "packPrice" => $row['pack_price'],
       ));
     }
     $this->db_close();

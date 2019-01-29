@@ -12,7 +12,7 @@ import { AppRoutingModule } from '../app-routing/app-routing.module';
 export class BasicStoreComponent implements OnInit {
 profile_noti;pro_acriveClass;lib_activeClass;
 boughtPackMsg;pkgData:any=[];
-
+buyHide;
 
  constructor(private _routes: Router,private _service: KnowelApiService){ }
 
@@ -36,6 +36,7 @@ ngOnInit() {
                       this.boughtPackMsg = false;
                     }else{
                       this.pkgData = res.result;
+                      this.buyHide=true;
                     }
                   });
       }
