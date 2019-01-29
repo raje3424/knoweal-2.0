@@ -24,7 +24,8 @@ export class PackageMarkerComponent implements OnInit {
    packID:string = "";
    packName:any;packNotes;packDescription;
    name_class;des_class;whichMsg;note_class;
-   messages;pkg_edit_flag;
+   messages;
+   pkg_edit_flag;
    edit_label;
    questionAddErrorMsg;question_IO;question_IOClass;
    optionA_IO;optionA_IOClass;optionB_IO;optionB_IOClass;
@@ -140,11 +141,11 @@ export class PackageMarkerComponent implements OnInit {
 
   editSave_pack(){
     if(this.edit_label == "Edit"){
-          this.pkg_edit_flag = "";
+          this.pkg_edit_flag = "false";
           this.questionAddFlag = "true";
           this.edit_label = "Update";
         }else if (this.edit_label == "Update") {
-          this.pkg_edit_flag = true;
+          this.pkg_edit_flag = 'true';
           this.edit_label = "Edit";
           this.questionAddFlag = "";
 
