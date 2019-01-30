@@ -7,14 +7,14 @@
       <div class="col-xs-12 col-sm-3"> <!-- content nav >> -->
         <div class="_tbl_o_content">
           <div class="_tbloc_title">
-            <h3>packName</h3>
+            <h3>{{packName}}</h3>
           </div>
           <div class="_tbloc_content">
             <div class="_tbloc_point_canvas">
               <span class="_tbloc_point_active" ngClass="info_Desc_class" (click)="content_view_switch = 'packDInfo';">by {{author_name}}</span>
             </div>
             <div class="_tbloc_point_canvas">
-              <div class="_g_button _green_back" (click)="getPackage(package_id)" hidden="libButtonHF">
+              <div class="_g_button _green_back" (click)="getPackage(package_id)" *ngIf="libButtonHF">
                 Buy
               </div>
             </div>

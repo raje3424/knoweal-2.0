@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { KnowelApiService } from '../_service/knowel-api.service';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { AppRoutingModule } from '../app-routing/app-routing.module';
 
 @Component({
@@ -15,9 +15,17 @@ export class PackageViewerComponent implements OnInit {
   packID;
   author_name;
 
-constructor(private _routes: Router,private _service: KnowelApiService){ }
+constructor(private route: ActivatedRoute,private _routes: Router,private _service: KnowelApiService){ }
 
   ngOnInit() {
+    this.route.queryParams
+      .filter(params => params.id)
+      .subscribe(params => {
+        //console.log(params);
+        this.pkg_id = params.id;
+      });
+
+      this.getPackInfo();
   }
 
  checkIfPur(pkg_id){
@@ -25,7 +33,8 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
     "v_class": "library",
     "v_function": "checkIfPur",
     "value":{
-      "package_id": this.pkg_id
+      "package_id": this.pkg_id,
+      "token": localStorage.getItem('token')
     }
   };
   this._service.postRequestWithObservable(options)
@@ -58,7 +67,10 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
    let options = {
        "v_class": "library",
        "v_function": "addPurchasePackage",
-       "value": this.packID
+       "value": {
+         "packID":this.pkg_id,
+         "token": localStorage.getItem('token')
+       }
      };
      this._service.postRequestWithObservable(options)
         .subscribe(res => {
@@ -77,14 +89,17 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
        let options = {
          "v_class": "library",
          "v_function": "getPackageInfoStore",
-         "value": this.packID
+         "value": {
+           "packID":this.pkg_id,
+           "token": localStorage.getItem('token')
+         }
        };
        this._service.postRequestWithObservable(options)
           .subscribe(res => {
             console.log(res);
-         this.author_name = res['author_name'];
-         this.packName = res['packName'];
-         this.packDescription = res['description'];
+         this.author_name = res.result.author_name;
+         this.packName = res.result.packName;
+         this.packDescription = res.result.description;
        });
      }
 

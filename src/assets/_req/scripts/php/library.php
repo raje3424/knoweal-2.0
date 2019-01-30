@@ -400,7 +400,7 @@ class library extends connector{
       ];
       $response['response'] = "true";
       $response['errMessage'] = '';
-      $response['result'] = json_encode($retVal);
+      $response['result'] = $retVal;
       return $response;
     }else{
       $response['response'] = "false";
