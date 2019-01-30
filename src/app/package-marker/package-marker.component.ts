@@ -43,8 +43,8 @@ export class PackageMarkerComponent implements OnInit {
    notes_hideFlag = false;
    question_hideFlag = false;
 
-   public invoiceForm: FormGroup;
    hideme = {};
+   queIdHolder;
 
   constructor(private _routes: Router,private _service: KnowelApiService, private _fb: FormBuilder){
     this.hideme = {}; // init is required
@@ -341,32 +341,32 @@ export class PackageMarkerComponent implements OnInit {
     console.log(item, updateEdit);
 
     if(updateEdit == "Edit"){
-      console.log(document.getElementById("btn_"+item.q_id).innerHTML);
-
-      document.getElementById("btn_"+item.q_id).innerHTML = document.getElementById("btn_"+item.q_id).innerHTML == "Update" ? "Edit" : "Update";
       Object.keys(this.hideme).forEach(h => {
         this.hideme[h] = false;
       });
       this.hideme[item.q_id] = true;
-    }
-
-    if(updateEdit == "Update"){
-      console.log(document.getElementById("btn_"+item.q_id).innerHTML);
-      document.getElementById("btn_"+item.q_id).innerHTML = document.getElementById("btn_"+item.q_id).innerHTML == "Update" ? "Edit" : "Update";
+      document.getElementById("btn_"+item.q_id).innerHTML = "Update";
+    }else{
       Object.keys(this.hideme).forEach(h => {
         this.hideme[h] = false;
       });
       //this.hideme[item.q_id] = false;
+      document.getElementById("btn_"+item.q_id).innerHTML = "Edit";
     }
   }
 
-  edit_question(queData, i, anskey, btnText){
-
-    console.log(queData, anskey, $.trim(document.getElementById("btn_"+queData.q_id).innerHTML), btnText);
+  edit_question(queData, i, anskey){
+    console.log(queData, anskey, $.trim(document.getElementById("btn_"+queData.q_id).innerHTML));
     if($.trim(document.getElementById("btn_"+queData.q_id).innerHTML) == "Edit"){
+      console.log('In Edit block....!');
+      if(this.queIdHolder){
+        document.getElementById("btn_"+this.queIdHolder).innerHTML = "Edit";
+       }
       this.onClick(queData, "Edit");
       //this.q_edit = "Update";
     }else if($.trim(document.getElementById("btn_"+queData.q_id).innerHTML) == "Update"){
+
+      console.log('In Update block....!');
 
       console.log("Question >> "+queData.question);
       console.log("Option 1 >> "+queData.opt1);
@@ -436,12 +436,6 @@ export class PackageMarkerComponent implements OnInit {
             this.q_edit == "Question Update :)";
             this.theMainQCanvas = false;
             this.editableCanvas = true;
-            document.getElementById("btn_"+queData.q_id).innerHTML = "Edit";
-            //this.q_edit = "Edit";
-            setTimeout(function(){
-              document.getElementById("btn_"+queData.q_id).innerHTML = "Edit";
-              //this.q_edit = "Edit";
-            }, 1500);
             var updatedQuestion: any = [{
               "question": queData.question,
               "opt1": queData.opt1,
@@ -464,6 +458,7 @@ export class PackageMarkerComponent implements OnInit {
         });
       }
     }
+    this.queIdHolder = queData.q_id;
   }
 
   isSelected(opt, anskey){

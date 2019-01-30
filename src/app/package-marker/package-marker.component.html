@@ -218,23 +218,24 @@
                                 
                       </div>
                     </div>
-                      <!-- <</ question editable canvas-->
-                      <div id="button_{{x.q_id}}" class="col-xs-12 col-sm-12 _margin_bottom_5" style="margin-bottom: 20px;" [hidden]="!hideme[x.q_id]">
-                        <div id="btn_{{x.q_id}}" class="_g_button _blue col-xs-8 _no_right_border_radius" (click)="edit_question(x, i, anskey, q_edit)">
+                      <!-- <</ question editable canvas [hidden]="!hideme[x.q_id]"-->
+                      <div id="button_{{x.q_id}}" class="col-xs-12 col-sm-12 _margin_bottom_5" style="margin-bottom: 20px;">
+                        <div id="btn_{{x.q_id}}" class="_g_button _blue col-xs-8 _no_right_border_radius" (click)="edit_question(x, i, anskey)">
                           {{q_edit}} 
                         </div>
                         <div class="_g_button _red col-xs-4 _no_left_border_radius" id="{{x.q_id}}" (click)="delete_question(x)">
                           Delete
                         </div>
                       </div>
-                      <div id="button_{{x.q_id}}" class="col-xs-12 col-sm-12 _margin_bottom_5" style="margin-bottom: 20px;" [hidden]="hideme[x.q_id]">
-                          <div id="btn_{{x.q_id}}" class="_g_button _blue col-xs-8 _no_right_border_radius" (click)="edit_question(x, i, anskey, q_edit)">
+                      <!-- <div id="button_{{x.q_id}}" class="col-xs-12 col-sm-12 _margin_bottom_5" style="margin-bottom: 20px;" [hidden]="hideme[x.q_id]">
+                        two block
+                          <div id="editBtn_{{x.q_id}}" class="_g_button _blue col-xs-8 _no_right_border_radius" (click)="edit_question(x, i, anskey)">
                             {{q_edit}} 
                           </div>
                           <div class="_g_button _red col-xs-4 _no_left_border_radius" id="{{x.q_id}}" (click)="delete_question(x)">
                             Delete
                           </div>
-                        </div>
+                        </div> -->
 
 
                     </div>
