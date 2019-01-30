@@ -13,11 +13,14 @@ export class BasicStoreComponent implements OnInit {
 profile_noti;pro_acriveClass;lib_activeClass;
 boughtPackMsg;pkgData:any=[];
 buyHide;packID;
-b_flag;
+b_flag;viewPort= "12";viewIconF;viewMode;
+
  constructor(private _routes: Router,private _service: KnowelApiService){ }
 
 ngOnInit() {
   this.getAllPacks();
+  console.log(this.pkgData);
+
 }
 
       getAllPacks(){
@@ -33,10 +36,33 @@ ngOnInit() {
            .subscribe( res => {
           console.log(res.result);
                     if(res.response == "" || res.response == "false"){
-                      this.boughtPackMsg = false;
+                      this.boughtPackMsg = true;
                     }else{
                       this.pkgData = res.result;
-                      this.buyHide=true;
+                      console.log(this.pkgData);
+                      this.viewMode = "6";
+                      var options = {
+                        "v_class": "library",
+                        "v_function": "checkIfPur",
+                        "value":{
+                          "package_id": this.pkgData.package_id,
+                          "token": localStorage.getItem('token')
+                        }
+                      };
+                      console.log(options);
+                      this._service.postRequestWithObservable(options)
+                         .subscribe( res => {
+                           console.log(res);
+                        if(res.response == "false"){
+                          this.viewMode = "6";
+                          this.buyHide = false;
+                        }else{
+                          this.viewMode = "12";
+                          this.buyHide = true;
+                        }
+                      });
+                      // this.buyHide=true;
+                      // this.boughtPackMsg = false;
                     }
                   });
       }
@@ -57,10 +83,21 @@ ngOnInit() {
         this._routes.navigate(['/basic']);
       }
 
+      viewChanger(){
+          // changes view of Package List
+          if(this.viewPort != '12'){
+            this.viewPort = '12';
+            this.viewIconF = !this.viewIconF;
+          }else{
+            this.viewPort = '6';
+            this.viewIconF = !this.viewIconF;
+          }
+        };
+
 
        getPackage(pack_id){
-        this.checkIfPur_Su(this.packID);
-        if(this.makePur(this.packID)){
+        this.checkIfPur_Su(pack_id);
+        if(this.makePur(pack_id)){
           this.ngOnInit();
         }else{
               alert("Sorry Could not add it library now. Try again. :| ");
@@ -73,7 +110,7 @@ ngOnInit() {
          "v_class": "library",
          "v_function": "addPurchasePackage",
          "value":{
-           "pkg_id":this.packID,
+           "pkg_id":pack_id,
            "token": localStorage.getItem('token')
          }
        };
@@ -89,51 +126,29 @@ ngOnInit() {
 
 
         checkIfPur_Su(pack_id){
+          console.log(pack_id);
           let options = {
             "v_class": "library",
             "v_function": "checkIfPur",
             "value":{
-              "package_id":this.packID,
+              "pkg_id":pack_id,
               "token": localStorage.getItem('token')
             }
           };
+          console.log(options);
           this._service.postRequestWithObservable(options)
              .subscribe( res => {
-            if(res.response == "false"){
-              console.log("can be bought "+res+" ::");
-              //this.makePur(pack_id);
+            if(res.response == "true"){
+              alert("Sorry Can't be Baught");
+             console.log("cant be "+res.tans_id+ " ::");
+             this.buyHide= false;
             }else{
-              console.log("cant be "+res+ " ::");
+                alert("Can be Baught ");
+                console.log("can be bought "+res.tans_id+" ::");
+                this.makePur(pack_id);
             }
           });
         }
-
-
-
-       checkIfPur(pkg_id){
-        var flag;
-        var options = {
-          "v_class": "library",
-          "v_function": "checkIfPur",
-          "value":{
-            "package_id":this.packID,
-            "token": localStorage.getItem('token')
-          }
-        };
-        this._service.postRequestWithObservable(options)
-           .subscribe( res => {
-          if(res.response == "false"){
-            flag = true;
-            this.b_flag = true;
-            console.log("can be bought"+flag);
-          }else{
-            flag = false;
-            this.b_flag = false;
-            console.log("cant be "+flag);
-          }
-        });
-       //return flag;
-      }
 
       viewPackages(id){
         this._routes.navigate(['/purpack'],{ queryParams: { id: id}});

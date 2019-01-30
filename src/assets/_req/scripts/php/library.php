@@ -306,10 +306,10 @@ class library extends connector{
     $jwtObj = new jwtGenerator();
     $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
     $vals['user_id'] = $jwt['data']['userid'];
-
+    //echo $value['pkg_id'];
     $newAr = [
       'user_id' => $vals['user_id'],
-      'pkg_id' => $value['pkg_id']
+      'package_id' => $value['pkg_id']
     ];
     $query = "INSERT INTO purchase_table(user_id, pack_id)VALUES(?, ?)";
     $result = $this->query_db($query, $newAr);
@@ -332,8 +332,8 @@ class library extends connector{
     $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
     $vals['user_id'] = $jwt['data']['userid'];
     $retVal = [];
-    $res = $this->db_connection();
-    if($res){
+  //  $res = $this->db_connection();
+    //if($res){
       $query = "SELECT `package_id`, `package_name`, `full_name`, `description` from packages pkt, user_profile upt, purchase_table put WHERE put.user_id = ? and pkt.package_id = put.pack_id and pkt.package_author = upt.user_id";
       $result = $this->query_db($query, $vals['user_id']);
       while ($row = mysqli_fetch_array($result)) {
@@ -343,13 +343,13 @@ class library extends connector{
           "package_author" => $row['full_name'],
           "description" => $row['description']
         ));
-      }
-      $this->db_close();
-      if($row == 1){
+     }
+      $this->db_close();//
+      if($result != ""){
         $response['response'] = "true";
         $response['errMessage'] = '';
         //$response['result'] = $retVal;
-        $response['result']= json_encode($retVal);
+        $response['result']= $retVal;
         return $response;
         //return json_encode($retVal);
       }else{
@@ -357,9 +357,9 @@ class library extends connector{
         $response['errMessage'] = 'Something is wrong';
         return $response;
       }
-    }else{
-      echo "Db Connection lost";
-    }
+    // }else{
+    //   echo "Db Connection lost";
+    // }
   }
 
   private function checkIfPur($value){

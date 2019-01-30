@@ -31,11 +31,11 @@ present;content_view_switch;
         this.packID = params.id;
       });
 
-    console.log(this.packID);
+  //  console.log(this.packID);
     this.getAllPackInfo();
 
     if(this.packID){
-      this.present = "questions_class";
+      //this.present = "questions_class";
       let options ={
       "v_class": "library",
       "v_function": "getQuestionsToSolve",
@@ -49,18 +49,23 @@ present;content_view_switch;
        .subscribe(res => {
          console.log(res);
          console.log(res.result);
-         if (res.response == "true"){
+         if (res.response == "true" && res.result !=""){
+           this.present = "questions_class";
            this.content_view_switch = "content_questoin";
            this.theQestionList = res.result;
            this.totalQuestions = this.theQestionList.length;
+           this.toc_nav('questions_class');
          }else{
+           this.present = "info_Desc_class";
            this.content_view_switch = "packDInfo";
+           //this.content_view_switch = 'content_notes';
+           this.toc_nav('info_Desc_class');
          }
        })
     }
-    this.toc_nav('info_Desc_class');
-    this.toc_nav('notes_class');
-    this.toc_nav('questions_class');
+     this.toc_nav('info_Desc_class');
+    // this.toc_nav('notes_class');
+    // this.toc_nav('questions_class');
   }
 
   cancel_pack(){
@@ -203,6 +208,7 @@ getAnsCount(){
   };
 
   notes(){
+    this.present ='notes_class';
     this.content_view_switch = 'content_notes';
   }
 }
