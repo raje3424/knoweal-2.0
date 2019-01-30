@@ -21,16 +21,14 @@ boughtPackMsg:any;
 pur_pkgData:any = [];
 createPackMsg:any = true;
 own_pkgData:any = [];
-idAsEmail;
+idAsEmail;solveflag;
 
 constructor(private _routes: Router,private _service: KnowelApiService){ }
 
   ngOnInit() {
       //this.idAsEmail = this._service.canActivate();
       this.nav('pur');
-    //  this._service.postRequestWithObservable(Authorization).subscribe(res=>{
-    //   console.log(res);
-    // });
+
   }
 
   createPackage(){
@@ -98,7 +96,7 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
     this._service.postRequestWithObservable(options)
        .subscribe( res => {
       console.log(res);
-      if(res.response == "true"){
+      if(res.response == "true" ){
         this.boughtPackMsg = false;
         this.pur_pkgData = res.result;
       }else{
@@ -134,7 +132,7 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
   }
 
   solveThePack(id){
-      this._routes.navigate(['/purpack'],{queryParams: {id: id}});
+      this._routes.navigate(['/packview'],{queryParams: {id: id}});
   }
 
   viewOwnPackages(id){

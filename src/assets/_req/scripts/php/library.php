@@ -334,14 +334,15 @@ class library extends connector{
     $retVal = [];
   //  $res = $this->db_connection();
     //if($res){
-      $query = "SELECT `package_id`, `package_name`, `full_name`, `description` from packages pkt, user_profile upt, purchase_table put WHERE put.user_id = ? and pkt.package_id = put.pack_id and pkt.package_author = upt.user_id";
+      $query = "SELECT `package_id`, `package_name`, `full_name`, `description` ,`no_of_questions` from packages pkt, user_profile upt, purchase_table put WHERE put.user_id = ? and pkt.package_id = put.pack_id and pkt.package_author = upt.user_id";
       $result = $this->query_db($query, $vals['user_id']);
       while ($row = mysqli_fetch_array($result)) {
         array_push($retVal, array(
           "package_id" => $row['package_id'],
           "package_name" => $row['package_name'],
           "package_author" => $row['full_name'],
-          "description" => $row['description']
+          "description" => $row['description'],
+          "no_of_questions" => $row['no_of_questions']
         ));
      }
       $this->db_close();//
