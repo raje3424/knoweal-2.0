@@ -67,10 +67,10 @@
           <div class="col-xs-12 _lib_panel">
             <div class="row">
               <div class="_pack_details">
-                <div class="_pack_name" (click)="viewPurPack()">
+                <div class="_pack_name" (click)="viewPurPack(pkgs.package_id)">
                   {{pkgs.package_name}}
                 </div>
-                <div class="_pack_author" (click)="viewPurPack()">
+                <div class="_pack_author" (click)="viewPurPack(pkgs.package_id)">
                   by {{pkgs.package_author}}
                 </div>
                 <div class="col-xs-12 _success_msg _the_button" (click)="solveThePack(pkgs.package_id)" *ngIf="pkgs.no_of_questions!=0">

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { KnowelApiService } from '../_service/knowel-api.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-own-package-viewer',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OwnPackageViewerComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute,private _routes: Router,private _service: KnowelApiService) { }
 
   ngOnInit() {
   }
 
+  goBackFunction(){
+   this._routes.navigate(['/library']);
+  }
 }

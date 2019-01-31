@@ -208,6 +208,7 @@ getAnsCount(){
   };
 
   notes(){
+    console.log("in notes");
     this.present ='notes_class';
     this.content_view_switch = 'content_notes';
   }
