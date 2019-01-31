@@ -1,4 +1,4 @@
-<!-- <div class="the_glass" ng-hide="theGlassFlag">
+<div class="the_glass" [hidden]="theGlassFlag">
 
   <div class="row _hideit">
     <div class="col-xs-12 col-sm-1 col-md-2 col-lg-2"></div>
@@ -11,7 +11,7 @@
     </div>
     <div class="col-xs-12 col-sm-1 col-md-2 col-lg-2"></div>
   </div>
-</div> -->
+</div>
 
 <div class="_main_content_canvas" style="margin-bottom: 40px;">
   <div class="col-xs-12 col-sm-1"></div>
@@ -63,7 +63,7 @@
         <!-- <</ notes -->
 
         <!-- questions cnavs >> -->
-        <div class="col-xs-12 _content_canvas" style="margin-bottom: 20px;"*ngSwitchCase = "'content_questoin'" >
+        <div class="col-xs-12 _content_canvas" style="margin-bottom: 20px;" *ngSwitchCase = "'content_questoin'" >
 
           <!-- show added quesiton >> -->
           <div id="showAllAddedQuestions">
@@ -97,7 +97,7 @@
                     </div>
                   </div>
                   <div class="row _margin_bottom_5">
-                    <div class="row _g_button _blue_back _margin_bottom_5" (click)="getTheResults()" hidden="submitFlag">
+                    <div class="row _g_button _blue_back _margin_bottom_5" (click)="getTheResults()" *ngIf="submitFlag">
                       Submit
                     </div>
                   </div>

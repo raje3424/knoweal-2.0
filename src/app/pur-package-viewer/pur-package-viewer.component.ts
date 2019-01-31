@@ -54,6 +54,7 @@ present;content_view_switch;
            this.content_view_switch = "content_questoin";
            this.theQestionList = res.result;
            this.totalQuestions = this.theQestionList.length;
+           this.submitFlag = true;
            this.toc_nav('questions_class');
          }else{
            this.present = "info_Desc_class";
@@ -119,14 +120,17 @@ present;content_view_switch;
       this._service.postRequestWithObservable(options)
          .subscribe(res => {
            console.log(res);
-        if(res != "false"){
-          for (var i = 0; i < res.length; i++) {
-            if(res[i]['q_id'] == this.theQestionList[i]['q_id']){
-              if(res[i]['rkie'] != "true"){
-                this.theQestionList[i]['rkie'] = "Correct answer is [ "+res[i]['rkie']+" ]";
-                $("#question_"+res[i]['q_id']).addClass("_solver_wrong");
+           console.log(res.result.length,res.result[0].q_id, this.theQestionList[0]['q_id']);
+        if(res.response != "false"){
+          for (var i = 0; i < res.result.length; i++) {
+            if(res.result[i].q_id == this.theQestionList[i]['q_id']){
+              console.log(res.result[i]['rkie']);
+              if(res.result[i]['rkie'] != "true"){
+                console.log(res.result[i]['rkie']);
+                this.theQestionList[i]['rkie'] = 'Correct answer is [   '+res.result[i]['rkie']+' ]';
+                $("#question_"+res.result[i]['q_id']).addClass("_solver_wrong");
               }else{
-                $("#question_"+res[i]['q_id']).addClass("_solved_correct");
+                $("#question_"+res.result[i]['q_id']).addClass("_solved_correct");
                 this.theQestionList[i]['rkie'] = "Correct";
               }
             }
@@ -199,6 +203,7 @@ getAnsCount(){
         this.info_Desc_class = "";
         this.notes_class = "";
         this.questions_class = "_tbloc_point_active";
+        this.submitFlag = true;
         break;
       default :
         this.info_Desc_class = "_tbloc_point_active";

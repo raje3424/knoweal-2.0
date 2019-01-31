@@ -118,7 +118,6 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
        .subscribe(res => {
       console.log(res);
       if(res.response == "true" && res.result !=""){
-
         this.createPackMsg = false;
         this.own_pkgData = res.result;
       }else{
@@ -129,13 +128,11 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
 
   viewPurPack(id){
     this._routes.navigate(['/packview'],{queryParams: {id: id}});
-      //this._routes.navigate(['/ownpack']);
   }
 
   solveThePack(id){
-      //this._routes.navigate(['/purpack'],{queryParams: {id: id}});
-    //  this._routes.navigate(['/packview'],{queryParams: {id: id}});
-    this._routes.navigate(['/ownpack'],{queryParams: {id: id}});
+      this._routes.navigate(['/purpack'],{queryParams: {id: id}});
+    //this._routes.navigate(['/ownpack'],{queryParams: {id: id}});
   }
 
   viewOwnPackages(id){

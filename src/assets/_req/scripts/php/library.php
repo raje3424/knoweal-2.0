@@ -515,10 +515,12 @@ class library extends connector{
 
   private function getTheResults($value){
     $this->clearOldResponseData();
+    //print_r($value['theAnsList'][1]['pkg_id']);
     $checkAgainst = [];
     $retVal = [];
     $query = "SELECT `question_id`, `anskey` FROM question_table WHERE package_id = ?";
-    $result = $this->query_db($query, $value[sizeof($value) - 1]['pkg_id']);
+    //$result = $this->query_db($query, $value[sizeof($value) - 1]['pkg_id']);
+    $result = $this->query_db($query, $value['theAnsList'][1]['pkg_id']);
     while ($row = mysqli_fetch_array($result)) {
       array_push($checkAgainst, array(
         "q_id" => $row['question_id'],
@@ -526,17 +528,17 @@ class library extends connector{
       ));
     }
 
-    for($i = 0; $i < sizeof($value) - 1; $i++){
+    for($i = 0; $i < sizeof($value['theAnsList']) - 1; $i++){
       for($j = 0; $j < sizeof($checkAgainst); $j++){
-        if($checkAgainst[$j]['q_id'] === $value[$i]['q_id']){
-          if($value[$i]['anskey'] === $checkAgainst[$j]['anskey']){
+        if($checkAgainst[$j]['q_id'] == $value['theAnsList'][0]['q_id']){
+          if($value['theAnsList'][0]['anskey'] == $checkAgainst[$j]['anskey']){
             array_push($retVal, array(
-              "q_id" => $value[$i]['q_id'],
+              "q_id" => $value['theAnsList'][0]['q_id'],
               "rkie" => "true"
             ));
           }else{
             array_push($retVal, array(
-              "q_id" => $value[$i]['q_id'],
+              "q_id" => $value['theAnsList'][0]['q_id'],
               "rkie" => $checkAgainst[$j]['anskey']
             ));
           }
@@ -550,7 +552,7 @@ class library extends connector{
     if(sizeof($retVal) > 0){
       $response['response'] = "true";
       $response['errMessage'] = '';
-      $response['result'] = json_encode($retVal);
+      $response['result'] = $retVal;
       return $response;
     }else{
       $response['response'] = "false";
