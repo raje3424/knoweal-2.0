@@ -26,6 +26,7 @@ class library extends connector{
 
   //Add,Delete,Update,Select and related dependencies of question_table
   private function addQuestion($value){
+    $this->clearOldResponseData();
     $val = array('question' => $value['question'],'opt1'=>$value['opt1'],'opt2'=>$value['opt2'],'opt3'=>$value['opt3'],'opt4'=>$value['opt4'],'anskey'=>$value['anskey'],'packID'=>$value['packID'] );
     $query = "INSERT INTO question_table (question, opt1, opt2, opt3, opt4, anskey, package_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $result = $this->query_db($query, $val);
@@ -234,6 +235,7 @@ class library extends connector{
         "author_name" => $row['full_name'],
         "description" => $row['description'],
         "packPrice" => $row['pack_price'],
+        "author" => $row['full_name']
       ));
     }
     $this->db_close();
@@ -249,6 +251,37 @@ class library extends connector{
       return $response;
     }
   }
+
+ private function viewAllunpurchasedPackages($value){
+   $this->clearOldResponseData();
+   $jwtObj = new jwtGenerator();
+   $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
+   $vals['user_id'] = $jwt['data']['userid'];
+   $retVal = [];
+   $query="SELECT `package_id`, `package_name`, `full_name`, `description`, `pack_price`,`tans_id` FROM packages a, user_profile b, purchase_table c WHERE `package_author` != ? and a.package_author = b.user_id and c.user_id != b.user_id";
+   $result = $this->query_db($query, $vals['user_id']);
+   $i = 0;
+   while($row = mysqli_fetch_array($result)){
+     array_push($retVal, array(
+       "package_id" => $row['package_id'],
+       "package_name" => $row['package_name'],
+       "description" => $row['description'],
+       "author"=>$row['full_name']
+     ));
+   }
+   $this->db_close();
+   if($result != ""){
+     $response['response'] = "true";
+     $response['errMessage'] = "";
+     $response['result'] = $retVal;
+   //  $response['result'] = json_encode($retVal);
+     return $response;
+   }else{
+     $response['response'] = "false";
+     $response['errMessage'] = "Something is wrong";
+     return $response;
+   }
+ }
 
   private function viewOwnPackages($value){
     $this->clearOldResponseData();
@@ -504,7 +537,7 @@ class library extends connector{
     if($retVal != ""){
       $response['response'] = "true";
       $response['errMessage'] = '';
-      $response['result'] = json_encode($retVal);
+      $response['result'] = $retVal;
       return $response;
     }else{
       $response['response'] = "false";

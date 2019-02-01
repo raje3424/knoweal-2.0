@@ -26,7 +26,7 @@ ngOnInit() {
       getAllPacks(){
         var options = {
           "v_class": "library",
-          "v_function": "viewAllPackages",
+          "v_function": "viewAllunpurchasedPackages",
           "value" :{
               "token": localStorage.getItem('token')
           }
@@ -36,31 +36,33 @@ ngOnInit() {
            .subscribe( res => {
           console.log(res.result);
                     if(res.response == "" || res.response == "false"){
-                      this.boughtPackMsg = true;
+                      this.boughtPackMsg = false;
                     }else{
                       this.pkgData = res.result;
                       console.log(this.pkgData);
-                      this.viewMode = "6";
-                      var options = {
-                        "v_class": "library",
-                        "v_function": "checkIfPur",
-                        "value":{
-                          "package_id": this.pkgData.package_id,
-                          "token": localStorage.getItem('token')
-                        }
-                      };
-                      console.log(options);
-                      this._service.postRequestWithObservable(options)
-                         .subscribe( res => {
-                           console.log(res);
-                        if(res.response == "false"){
-                          this.viewMode = "6";
-                          this.buyHide = false;
-                        }else{
-                          this.viewMode = "12";
-                          this.buyHide = true;
-                        }
-                      });
+                      this.boughtPackMsg = true;
+                      this.buyHide = true;
+                      // this.viewMode = "6";
+                      // var options = {
+                      //   "v_class": "library",
+                      //   "v_function": "checkIfPur",
+                      //   "value":{
+                      //     "package_id": this.pkgData.package_id,
+                      //     "token": localStorage.getItem('token')
+                      //   }
+                      // };
+                      // console.log(options);
+                      // this._service.postRequestWithObservable(options)
+                      //    .subscribe( res => {
+                      //      console.log(res);
+                      //   if(res.response == "false"){
+                      //     this.viewMode = "6";
+                      //     this.buyHide = false;
+                      //   }else{
+                      //     this.viewMode = "12";
+                      //     this.buyHide = true;
+                      //   }
+                      // });
                       // this.buyHide=true;
                       // this.boughtPackMsg = false;
                     }
