@@ -26,7 +26,7 @@ ngOnInit() {
       getAllPacks(){
         var options = {
           "v_class": "library",
-          "v_function": "viewAllunpurchasedPackages",
+          "v_function": "viewAllPackages",
           "value" :{
               "token": localStorage.getItem('token')
           }
@@ -39,9 +39,10 @@ ngOnInit() {
                       this.boughtPackMsg = false;
                     }else{
                       this.pkgData = res.result;
-                      console.log(this.pkgData);
+                      console.log(this.pkgData[0]);
                       this.boughtPackMsg = true;
                       this.buyHide = true;
+
                       // this.viewMode = "6";
                       // var options = {
                       //   "v_class": "library",
@@ -143,7 +144,7 @@ ngOnInit() {
             if(res.response == "true"){
               alert("Sorry Can't be Baught");
              console.log("cant be "+res.tans_id+ " ::");
-             this.buyHide= false;
+             this.buyHide= true;
             }else{
                 alert("Can be Baught ");
                 console.log("can be bought "+res.tans_id+" ::");
