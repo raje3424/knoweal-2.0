@@ -129,7 +129,7 @@ response:any;
               console.log(res.response);
               console.log(res.token);
               if(res.response == 'true'){
-                localStorage.setItem('token', JSON.stringify(res.token));
+                //localStorage.setItem('token', JSON.stringify(res.token));
                 this.s_email_ioClass = "";
                 this.s_pass_ioClass = "";
                 this.siEmail = "";
