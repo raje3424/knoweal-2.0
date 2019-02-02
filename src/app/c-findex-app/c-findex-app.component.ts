@@ -51,29 +51,8 @@ response:any;
     this.returnUrl = this.activateRoute.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  login() {
-    this.loading = true;
-    let options = {
-      "v_class": "palika",
-      "v_function": "login",
-      "value": {
-        "email": this.logEmail,
-        "password": this.logPass
-        }
-      };
-    this._service.login(options)
-        .first()
-        .subscribe(
-            data => {
-                this._routes.navigate([this.returnUrl]);
-            },
-            error => {
-                this.error = error;
-                this.loading = false;
-            });
-  }
-
   logSiFunc(logSi){
+    console.log('In logSiFunc');
    if(logSi == 'register'){
      this.logSiFlag = "signup";
       this.logEmail = '';
@@ -153,11 +132,13 @@ response:any;
                 localStorage.setItem('token', JSON.stringify(res.token));
                 this.s_email_ioClass = "";
                 this.s_pass_ioClass = "";
-                this.loginMsg = "Preparing profile...";
+                this.siEmail = "";
+                this.siPass = "";
+                this.siCoPass = "";
+                // this.loginMsg = "Preparing profile...";
                 this.signmsg_class = "_success_msg";
-                setTimeout(function(){  
-                },"1000");
-                this._routes.navigate(['/userpro']);
+                alert('Registration successfull, Login now!!!');
+                this.logSiFunc("login");
               }else{
                 if(res.response == "rfalse"){
                   this.s_email_ioClass = "_error_input";
