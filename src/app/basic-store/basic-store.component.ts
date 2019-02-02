@@ -26,6 +26,7 @@ ngOnInit() {
       getAllPacks(){
         var options = {
           "v_class": "library",
+          //"v_function" : "viewAllunpurchasedPackages",
           "v_function": "viewAllPackages",
           "value" :{
               "token": localStorage.getItem('token')
@@ -39,10 +40,37 @@ ngOnInit() {
                       this.boughtPackMsg = false;
                     }else{
                       this.pkgData = res.result;
-                      console.log(this.pkgData[0]);
-                      this.boughtPackMsg = true;
-                      this.buyHide = true;
-
+                      console.log(this.pkgData[0].package_id);
+                      console.log(this.pkgData.length);
+                      // this.boughtPackMsg = true;
+                      // this.buyHide = true;
+                      for(let i=0;i<this.pkgData.length;i++)
+                      {
+                        //console.log(this.pkgData[i].package_id);
+                        var options = {
+                          "v_class": "library",
+                          "v_function": "checkIfPur",
+                          "value":{
+                            "package_id": this.pkgData[i].package_id,
+                            "token": localStorage.getItem('token')
+                          }
+                        };
+                        console.log(options);
+                        this._service.postRequestWithObservable(options)
+                           .subscribe( res => {
+                             console.log(res);
+                             console.log(res.result);
+                          if(res.response == "false"){
+                            this.viewMode = "6";
+                            this.buyHide = true;
+                          }else{
+                            this.viewMode = "12";
+                            this.buyHide = false;
+                          }
+                        });
+                        // this.buyHide=true;
+                        // this.boughtPackMsg = false;
+                      }
                       // this.viewMode = "6";
                       // var options = {
                       //   "v_class": "library",
@@ -99,12 +127,15 @@ ngOnInit() {
 
 
        getPackage(pack_id){
-        this.checkIfPur_Su(pack_id);
-        if(this.makePur(pack_id)){
-          this.ngOnInit();
+        if(this.checkIfPur_Su(pack_id)){
+           alert("Sorry Could not add it library now. Try again. :| ");
         }else{
-              alert("Sorry Could not add it library now. Try again. :| ");
+          this.makePur(pack_id);
+            this.ngOnInit();
         }
+        // }else{
+        //       alert("Sorry Could not add it library now. Try again. :| ");
+        // }
       }
 
       makePur(pack_id){
@@ -120,9 +151,7 @@ ngOnInit() {
        this._service.postRequestWithObservable(options)
           .subscribe( res => {
          if(res.response == "true"){
-           // take out the realod and add some message ;
-           this.ngOnInit();
-         //  window.location.reload();
+           alert("package baught");
          }
        });
      }
@@ -154,7 +183,7 @@ ngOnInit() {
         }
 
       viewPackages(id){
-        this._routes.navigate(['/purpack'],{ queryParams: { id: id}});
+        this._routes.navigate(['/purpack'],{ queryParams: {id:id}});
       }
 
   logOut(){

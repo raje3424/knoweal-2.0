@@ -260,8 +260,10 @@ class library extends connector{
    $jwtObj = new jwtGenerator();
    $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
    $vals['user_id'] = $jwt['data']['userid'];
+   //print_r($vals['user_id']);
    $retVal = [];
-   $query="SELECT `package_id`, `package_name`, `full_name`, `description`, `pack_price`,`tans_id` FROM packages a, user_profile b, purchase_table c WHERE `package_author` != ? and a.package_author = b.user_id and c.user_id != b.user_id";
+   $query ="SELECT DISTINCT `package_id`, `package_name`, `full_name`, `description`,`pack_price`,`tans_id` FROM packages a, user_profile b, purchase_table c WHERE `package_author` != ? and c.user_id != b.user_id";
+   // $query="SELECT `package_id`, `package_name`, `full_name`, `description`, `pack_price`,`tans_id` FROM packages a, user_profile b, purchase_table c WHERE `package_author` != ? and a.package_author = b.user_id and c.user_id != b.user_id";
    $result = $this->query_db($query, $vals['user_id']);
    $i = 0;
    while($row = mysqli_fetch_array($result)){
@@ -344,14 +346,17 @@ class library extends connector{
     $jwtObj = new jwtGenerator();
     $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
     $vals['user_id'] = $jwt['data']['userid'];
-    //echo $value['pkg_id'];
-    $newAr = [
-      'user_id' => $vals['user_id'],
-      'package_id' => $value['pkg_id']
-    ];
+    echo $jwt['data']['userid'] ;
+    //echo $value['token'];
+    $va = array('user_id' => $vals['user_id'], 'pack_id' => $value['pkg_id']);
+    // $newAr = [
+    //   'user_id' => $vals['user_id'],
+    //   'pack_id' => $value['pkg_id']
+    // ];
     $query = "INSERT INTO purchase_table(user_id, pack_id)VALUES(?, ?)";
-    $result = $this->query_db($query, $newAr);
+    $result = $this->query_db($query, $va);
     $this->db_close();
+    echo $result;
     if($result == 1){
       $response['response'] = "true";
       $response['errMessage'] = '';
@@ -374,7 +379,7 @@ class library extends connector{
     //if($res){
       $query = "SELECT `package_id`, `package_name`, `full_name`, `description` ,`no_of_questions` from packages pkt, user_profile upt, purchase_table put WHERE put.user_id = ? and pkt.package_id = put.pack_id and pkt.package_author = upt.user_id";
       $result = $this->query_db($query, $vals['user_id']);
-      if($result == 1){
+      // if($result == 1){
       while ($row = mysqli_fetch_array($result)) {
         array_push($retVal, array(
           "package_id" => $row['package_id'],
@@ -384,7 +389,7 @@ class library extends connector{
           "no_of_questions" => $row['no_of_questions']
         ));
      }
-   }
+   //}
       $this->db_close();//
       if($result != ""){
         $response['response'] = "true";
@@ -408,15 +413,19 @@ class library extends connector{
     $jwtObj = new jwtGenerator();
     $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
     $value['user_id'] = $jwt['data']['userid'];
-    //$value['user_id'] = $_SESSION['id'];
+    $val = array('pack_id'=>$value['package_id'],'user_id' => $value['user_id'] );
+    //print_r($value['user_id']);
+    //print_r($val['pack_id']);
     $query = "SELECT `tans_id` FROM `purchase_table` WHERE pack_id = ? and user_id = ?";
-    $result = $this->query_db($query, $value);
+    $result = $this->query_db($query, $val);
     $result = mysqli_fetch_array($result);
     $this->db_close();
+    //echo $result;
+  //  print_r($result);
     if($result != ""){
       $response['response'] = "true";
       $response['errMessage'] = '';
-      $response['tans_id'] = $result['tans_id'];
+      $response['result'] = $result['tans_id'];
       return $response;
     }else{
       $response['response'] = "false";

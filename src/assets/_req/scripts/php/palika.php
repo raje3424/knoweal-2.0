@@ -62,15 +62,13 @@ class palika extends connector {
           // $query="SELECT user_id from user_profile WHERE email= $simple_email";
           // $result = $this->query_db($query);
           // echo $result;
-
-
-          $jwtObj = new jwtGenerator();
-          $jwt = $jwtObj->EncodeToken(array('email'=>$simple_email));
+          // $jwtObj = new jwtGenerator();
+          // $jwt = $jwtObj->EncodeToken(array('email'=>$simple_email));
           //$this->spark($simple_email);
           $this->db_close();
           $response['response'] = "true";
           $response['errMessage'] = "new user added";
-          $response['token'] = $jwt;
+          // $response['token'] = $jwt;
             return $response;
         }else{
           //return "efalse";
