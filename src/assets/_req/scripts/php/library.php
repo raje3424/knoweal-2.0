@@ -297,7 +297,7 @@ class library extends connector{
     $query = "SELECT `package_id`, `package_name`, `description` FROM `packages` WHERE `package_author` = ?";
     $result = $this->query_db($query, $vals['user_id']);
     $i = 0;
-    if($result == 1){
+    //if($result == 1){
     while($row = mysqli_fetch_array($result)){
       array_push($retVal, array(
         "package_id" => $row['package_id'],
@@ -305,7 +305,7 @@ class library extends connector{
         "description" => $row['description']
       ));
     }
-  }
+  //}
     $this->db_close();
     if($result != ""){
       $response['response'] = "true";

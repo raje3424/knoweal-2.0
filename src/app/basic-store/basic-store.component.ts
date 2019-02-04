@@ -71,29 +71,6 @@ ngOnInit() {
                         // this.buyHide=true;
                         // this.boughtPackMsg = false;
                       }
-                      // this.viewMode = "6";
-                      // var options = {
-                      //   "v_class": "library",
-                      //   "v_function": "checkIfPur",
-                      //   "value":{
-                      //     "package_id": this.pkgData.package_id,
-                      //     "token": localStorage.getItem('token')
-                      //   }
-                      // };
-                      // console.log(options);
-                      // this._service.postRequestWithObservable(options)
-                      //    .subscribe( res => {
-                      //      console.log(res);
-                      //   if(res.response == "false"){
-                      //     this.viewMode = "6";
-                      //     this.buyHide = false;
-                      //   }else{
-                      //     this.viewMode = "12";
-                      //     this.buyHide = true;
-                      //   }
-                      // });
-                      // this.buyHide=true;
-                      // this.boughtPackMsg = false;
                     }
                   });
       }
@@ -175,6 +152,7 @@ ngOnInit() {
              console.log("cant be "+res.tans_id+ " ::");
              this.buyHide= true;
             }else{
+                //this.buyHide= true;
                 alert("Can be Baught ");
                 console.log("can be bought "+res.tans_id+" ::");
                 this.makePur(pack_id);
