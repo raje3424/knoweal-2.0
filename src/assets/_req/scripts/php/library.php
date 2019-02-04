@@ -293,10 +293,13 @@ class library extends connector{
     $jwtObj = new jwtGenerator();
     $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
     $vals['user_id'] = $jwt['data']['userid'];
+    //print_r($vals['user_id']);
     $retVal = [];
     $query = "SELECT `package_id`, `package_name`, `description` FROM `packages` WHERE `package_author` = ?";
     $result = $this->query_db($query, $vals['user_id']);
     $i = 0;
+    // print_r ($result);
+    // echo $result.length;
     //if($result == 1){
     while($row = mysqli_fetch_array($result)){
       array_push($retVal, array(
@@ -306,6 +309,7 @@ class library extends connector{
       ));
     }
   //}
+  //echo $retVal.package_id;
     $this->db_close();
     if($result != ""){
       $response['response'] = "true";
