@@ -11,17 +11,34 @@ import { AppRoutingModule } from '../app-routing/app-routing.module';
 })
 export class BasicStoreComponent implements OnInit {
 profile_noti;pro_acriveClass;lib_activeClass;
-boughtPackMsg;pkgData:any=[];
+//boughtPackMsg= true;
+pkgData:any=[];
 buyHide;packID;
 b_flag;viewPort= "12";viewIconF;viewMode;
 
  constructor(private _routes: Router,private _service: KnowelApiService){ }
 
 ngOnInit() {
-  this.getAllPacks();
-  console.log(this.pkgData);
+  var options = {
+    "v_class": "basic",
+    "v_function": "getUserInstanceStatus",
+    "value": {
+      "token": localStorage.getItem('token')
+      }
+    };
+    console.log(options);
+    this._service.postRequestWithObservable(options)
+       .subscribe(res => {
+         console.log(res);
+      if (res.response == "true" && res.infoFlag == "0") {
+        this._routes.navigate(['/userpro']);
+      }else{
+        this.getAllPacks();
+        //console.log(this.pkgData);
+      }
+    });
+  }
 
-}
 
       getAllPacks(){
         var options = {
@@ -35,13 +52,13 @@ ngOnInit() {
         console.log(options);
         this._service.postRequestWithObservable(options)
            .subscribe( res => {
-          console.log(res.result);
+          //console.log(res.result);
                     if(res.response == "" || res.response == "false"){
-                      this.boughtPackMsg = false;
+                      this.boughtPackMsg = true;
                     }else{
                       this.pkgData = res.result;
-                      console.log(this.pkgData[0].package_id);
-                      console.log(this.pkgData.length);
+                      // console.log(this.pkgData[0].package_id);
+                      // console.log(this.pkgData.length);
                       // this.boughtPackMsg = true;
                       // this.buyHide = true;
                       for(let i=0;i<this.pkgData.length;i++)
@@ -60,21 +77,24 @@ ngOnInit() {
                            .subscribe( res => {
                              console.log(res);
                              console.log(res.result);
+
                           if(res.response == "false"){
                             this.viewMode = "6";
                             this.buyHide = true;
-
+                            //this.boughtPackMsg = false;
                           }else{
                             this.viewMode = "12";
                             this.buyHide = false;
+                            //this.boughtPackMsg = false;
                           }
                         });
                         // this.buyHide=true;
-                        // this.boughtPackMsg = false;
+                        //
                       }
                     }
                   });
-      }
+                }
+
 
       goBackFunction(){
        this._routes.navigate(['/library']);
@@ -105,15 +125,8 @@ ngOnInit() {
 
 
        getPackage(pack_id){
-        if(this.checkIfPur_Su(pack_id)){
-           alert("Sorry Could not add it library now. Try again. :| ");
-        }else{
           this.makePur(pack_id);
-            this.ngOnInit();
-        }
-        // }else{
-        //       alert("Sorry Could not add it library now. Try again. :| ");
-        // }
+          this.ngOnInit();
       }
 
       makePur(pack_id){
@@ -193,5 +206,13 @@ ngOnInit() {
       }
     });
   }
+
+  arrayLength = function(obj): any {
+   var len = 0, key;
+   for (key in obj) {
+     if (obj.hasOwnProperty(key)) len++;
+   }
+   return len;
+ };
 
 }

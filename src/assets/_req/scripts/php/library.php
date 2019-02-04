@@ -137,9 +137,11 @@ class library extends connector{
     $end_date = date('Y-m-d H:i:s',strtotime('+1 years'));
     $package_author = $jwt['data']['userid'];
     //print_r($package_author);
+    //echo $package_author;
     //$retVal = $this->insertBeforeKey($value, 'author_id', 'packNotes');
-    $retVal = array('packName'=>$value['packName'],'pack_price'=>$value['packPrice'],'packNotes'=>$value['packNotes'],'packDescription'=>$value['packDescription'],'package_author'=>$package_author,'valid_till'=>$end_date);
-    $query = "INSERT INTO packages (package_name,pack_price ,package_note, description,package_author,valid_till) VALUES (?,?,?,?,?,?)";
+    $retVal = array('package_name'=>$value['packName'],'package_author'=>$package_author,'pack_price'=>$value['packPrice'],'valid_till'=>$end_date,'package_note'=>$value['packNotes'],'description'=>$value['packDescription']);
+    //print_r($retVal);
+    $query = "INSERT INTO packages (package_name,package_author,pack_price ,valid_till,package_note, description) VALUES (?,?,?,?,?,?)";
     $result = $this->query_db($query, $retVal);
     $this->db_close();
     //echo $result;
@@ -308,14 +310,11 @@ class library extends connector{
         "description" => $row['description']
       ));
     }
-  //}
-  //echo $retVal.package_id;
     $this->db_close();
     if($result != ""){
       $response['response'] = "true";
       $response['errMessage'] = "";
       $response['result'] = $retVal;
-    //  $response['result'] = json_encode($retVal);
       return $response;
     }else{
       $response['response'] = "false";
@@ -350,15 +349,17 @@ class library extends connector{
     $jwtObj = new jwtGenerator();
     $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
     $vals['user_id'] = $jwt['data']['userid'];
-    //echo $jwt['data']['userid'] ;
+    //print_r( $jwt['data']['userid']) ;
     //echo $value['token'];
     $va = array('user_id' => $vals['user_id'], 'pack_id' => $value['pkg_id']);
     // $newAr = [
     //   'user_id' => $vals['user_id'],
     //   'pack_id' => $value['pkg_id']
     // ];
+  //  print_r($va);
     $query = "INSERT INTO purchase_table(user_id, pack_id)VALUES(?, ?)";
     $result = $this->query_db($query, $va);
+    // echo $result;
     $this->db_close();
     //echo $result;
     if($result == 1){
@@ -367,7 +368,7 @@ class library extends connector{
       return $response;
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = 'Something is wrong';
+      $response['errMessage'] = 'Package purchase failed';
       return $response;
     }
   }
@@ -395,7 +396,7 @@ class library extends connector{
      }
    //}
       $this->db_close();//
-      if($result != ""){
+      if($retVal != ""){
         $response['response'] = "true";
         $response['errMessage'] = '';
         //$response['result'] = $retVal;
@@ -433,7 +434,7 @@ class library extends connector{
       return $response;
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = 'Something is wrong';
+      $response['errMessage'] = 'package is not purchased';
       return $response;
     }
   }

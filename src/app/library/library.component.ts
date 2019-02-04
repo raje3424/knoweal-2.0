@@ -17,19 +17,34 @@ ownGFlag = false;
 poFlag:any;create_ovp_flag:any;
 own_conSelect:string;
 profile_noti:string;pro_acriveClass:string;lib_activeClass:string;
-boughtPackMsg:any;
+boughtPackMsg=true;
 pur_pkgData:any = [];
-createPackMsg:any = true;
+createPackMsg= true;
 own_pkgData:any = [];
 idAsEmail;solveflag;
 
 constructor(private _routes: Router,private _service: KnowelApiService){ }
 
   ngOnInit() {
+    var options = {
+      "v_class": "basic",
+      "v_function": "getUserInstanceStatus",
+      "value": {
+        "token": localStorage.getItem('token')
+        }
+      };
+      console.log(options);
+      this._service.postRequestWithObservable(options)
+         .subscribe(res => {
+           console.log(res);
+        if (res.response == "true" && res.infoFlag == "0") {
+          this._routes.navigate(['/userpro']);
+        }else{
+            this.nav('pur');
+        }
       //this.idAsEmail = this._service.canActivate();
-      this.nav('pur');
-
-  }
+  });
+}
 
   createPackage(){
     let options = {
@@ -96,11 +111,17 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
     this._service.postRequestWithObservable(options)
        .subscribe( res => {
       console.log(res);
-      if(res.response == "true" && res.result!=""){
-        this.boughtPackMsg = false;
-        this.pur_pkgData = res.result;
+      console.log(res.result);
+      if(res.response == "true"){
+        if(this.arrayLength(res.result) != 0){
+          this.boughtPackMsg = false;
+          this.pur_pkgData = res.result;
+        }else {
+          //  alert('No any purchased package!');
+            this.boughtPackMsg = true;
+        }
       }else{
-        this.boughtPackMsg = true;
+        alert(res.errMessage);
       }
     });
   }
@@ -118,11 +139,15 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
        .subscribe(res => {
       console.log(res);
       console.log(res.result);
-      if(res.response == "true" && res.result !=""){
+      if(res.response == "true"){
+        if(this.arrayLength(res.result) != 0){
         this.createPackMsg = false;
-        this.own_pkgData = res.result;
+          this.own_pkgData = res.result;
       }else{
         this.createPackMsg = true;
+      }
+      }else{
+        alert(res.errMessage);
       }
     });
   }
@@ -158,5 +183,13 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
     this._service.logout();
     this._routes.navigate(['/cfindex']);
   }
+
+  arrayLength = function(obj): any {
+   var len = 0, key;
+   for (key in obj) {
+     if (obj.hasOwnProperty(key)) len++;
+   }
+   return len;
+ };
 
 }
