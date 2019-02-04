@@ -96,7 +96,7 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
     this._service.postRequestWithObservable(options)
        .subscribe( res => {
       console.log(res);
-      if(res.response == "true" ){
+      if(res.response == "true" && res.result!=""){
         this.boughtPackMsg = false;
         this.pur_pkgData = res.result;
       }else{

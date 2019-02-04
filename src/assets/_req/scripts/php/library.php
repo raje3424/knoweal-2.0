@@ -350,7 +350,7 @@ class library extends connector{
     $jwtObj = new jwtGenerator();
     $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
     $vals['user_id'] = $jwt['data']['userid'];
-    echo $jwt['data']['userid'] ;
+    //echo $jwt['data']['userid'] ;
     //echo $value['token'];
     $va = array('user_id' => $vals['user_id'], 'pack_id' => $value['pkg_id']);
     // $newAr = [
@@ -360,7 +360,7 @@ class library extends connector{
     $query = "INSERT INTO purchase_table(user_id, pack_id)VALUES(?, ?)";
     $result = $this->query_db($query, $va);
     $this->db_close();
-    echo $result;
+    //echo $result;
     if($result == 1){
       $response['response'] = "true";
       $response['errMessage'] = '';

@@ -63,6 +63,7 @@ ngOnInit() {
                           if(res.response == "false"){
                             this.viewMode = "6";
                             this.buyHide = true;
+
                           }else{
                             this.viewMode = "12";
                             this.buyHide = false;
@@ -140,7 +141,7 @@ ngOnInit() {
             "v_class": "library",
             "v_function": "checkIfPur",
             "value":{
-              "pkg_id":pack_id,
+              "package_id":pack_id,
               "token": localStorage.getItem('token')
             }
           };
