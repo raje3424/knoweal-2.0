@@ -28,8 +28,8 @@ export class OwnPackageViewerComponent implements OnInit {
   notes_hideFlag = true;question_hideFlag = true;
   questionAddErrorMsg;
   hideme = {};
-  queIdHolder;
-  past = "info_Desc_class";
+  queIdHolder;editPackFlag;
+  //past = "info_Desc_class";
 
   constructor(private route: ActivatedRoute,private _routes: Router,private _service: KnowelApiService) {
   this.hideme = {};
@@ -100,6 +100,7 @@ export class OwnPackageViewerComponent implements OnInit {
           this.question_hideFlag = false;
           this.theMainQCanvas = false;
           this.editableCanvas = false;
+          this.editPackFlag = true;
           break;
         default:
           this.info_Desc_class = "_tbloc_point_active";
