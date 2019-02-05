@@ -46,7 +46,7 @@
 
         <!-- info n description >> -->
         <div class="col-xs-12 _content_canvas" *ngSwitchCase="'packDInfo'">
-          <div class="row _text_content" style="border-bottom: 1px solid #e0e0e0;" ngOnInit="toc_nav('info_Desc_class')">
+          <div class="row _text_content" style="border-bottom: 1px solid #e0e0e0;" >
             <span class="_view_packName">{{packName}}</span><br/> by <span class="_view_packAuthoe">{{author_name}}</span>
           </div>
           <div class="row _view_packDescription _text_content">
@@ -55,7 +55,7 @@
         </div> <!-- <</ info n description -->
 
         <!-- notes >> -->
-        <div class="col-xs-12 _content_canvas" *ngSwitchCase="'content_notes'" ngOnInit="toc_nav('notes_class')">
+        <div class="col-xs-12 _content_canvas" *ngSwitchCase="'content_notes'" >
           <div class="row _view_packDescription _text_content">
             {{packNotes}}
           </div>

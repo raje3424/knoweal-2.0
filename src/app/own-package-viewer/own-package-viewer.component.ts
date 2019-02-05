@@ -309,19 +309,20 @@ export class OwnPackageViewerComponent implements OnInit {
           "v_class": "library",
           "v_function": "addQuestion",
           "value":{
+            "token": localStorage.getItem('token'),
               "question": this.question_IO,
               "opt1": this.optionA_IO,
               "opt2": this.optionB_IO,
               "opt3": this.optionC_IO,
               "opt4": this.optionD_IO,
               "anskey": this.theRightOption,
-              "packID": this.packID,
-              "token": localStorage.getItem('token')
+              "packID": this.packID
           }
         };
         this._service.postRequestWithObservable(options)
            .subscribe(res => {
           if(res.response == "true"){
+            if(res.lid != "" && res.lid > 0){
             this.theQestionList.push({
               "question": this.question_IO,
               "opt1": this.optionA_IO,
@@ -346,7 +347,7 @@ export class OwnPackageViewerComponent implements OnInit {
             this.theRightOption = "";
             setTimeout(function(){
               $("#theQestionMessage").html("Add new Question :)");
-            },1000)
+            },1000)}
           }else{
             this.q_whichMsg = "_error_msg";
             this.addQuestionMessage = "Error in adding question, try again :(";
