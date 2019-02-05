@@ -53,7 +53,7 @@ constructor(private route: ActivatedRoute,private _routes: Router,private _servi
  }
 
  goBackFunction(){
-   this._routes.navigate(['/basic']);
+   this._routes.navigate(['/library']);
  }
 
  cancel_pack(){
