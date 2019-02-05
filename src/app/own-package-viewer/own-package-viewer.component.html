@@ -28,7 +28,7 @@
         <div class="row _content_back_button">
           <div class="col-xs-12">
             <span (click)="goBackFunction()" class="_content_back_button_canvas _default_back"><span class="_go_back_button glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back to library</span>
-            <span class="_warning_msg _content_options_button" [Disabled]="editPackFlag" (click)="editSave_pack()"> {{edit_label}} </span>
+            <span class="_warning_msg _content_options_button" *ngIf="!editPackFlag" (click)="editSave_pack()"> {{edit_label}} </span>
           </div>
         </div>
 
