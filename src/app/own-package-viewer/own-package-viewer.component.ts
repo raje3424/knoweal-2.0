@@ -82,6 +82,7 @@ export class OwnPackageViewerComponent implements OnInit {
           this.infod_hideFlag = false;
           this.notes_hideFlag = true;
           this.question_hideFlag = true;
+          this.editPackFlag=true;
           break;
         case 'notes_class':
           this.info_Desc_class = "";
@@ -90,6 +91,7 @@ export class OwnPackageViewerComponent implements OnInit {
           this.infod_hideFlag = true;
           this.notes_hideFlag = false;
           this.question_hideFlag = true;
+          this.editPackFlag=true;
           break;
         case 'questions_class':
           this.info_Desc_class = "";
@@ -99,8 +101,7 @@ export class OwnPackageViewerComponent implements OnInit {
           this.notes_hideFlag = true;
           this.question_hideFlag = false;
           this.theMainQCanvas = false;
-          this.editableCanvas = false;
-          this.editPackFlag = true;
+          this.editPackFlag = false;
           break;
         default:
           this.info_Desc_class = "_tbloc_point_active";
