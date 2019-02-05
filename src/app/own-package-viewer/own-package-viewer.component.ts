@@ -27,8 +27,12 @@ export class OwnPackageViewerComponent implements OnInit {
   questions_class = "";infod_hideFlag = false;
   notes_hideFlag = true;question_hideFlag = true;
   questionAddErrorMsg;
+  hideme = {};
+  queIdHolder;
 
-  constructor(private route: ActivatedRoute,private _routes: Router,private _service: KnowelApiService) { }
+  constructor(private route: ActivatedRoute,private _routes: Router,private _service: KnowelApiService) {
+  this.hideme = {};
+}
 
   ngOnInit() {
     this.route.queryParams
@@ -118,6 +122,24 @@ export class OwnPackageViewerComponent implements OnInit {
     this.packNotes = "";
     this._routes.navigate(['/library']);
   };
+
+  onClick(item, updateEdit) {
+    console.log(item, updateEdit);
+
+    if(updateEdit == "Edit"){
+      Object.keys(this.hideme).forEach(h => {
+        this.hideme[h] = false;
+      });
+      this.hideme[item.q_id] = true;
+      document.getElementById("btn_"+item.q_id).innerHTML = "Update";
+    }else{
+      Object.keys(this.hideme).forEach(h => {
+        this.hideme[h] = false;
+      });
+      //this.hideme[item.q_id] = false;
+      document.getElementById("btn_"+item.q_id).innerHTML = "Edit";
+    }
+  }
 
 // delete // QUESTION:
   delete_question(queData){
@@ -340,85 +362,119 @@ export class OwnPackageViewerComponent implements OnInit {
   };
 
 //edit // QUESTION:
-edit_question(){
-    if(this.q_edit == "Edit"){
-    this.theMainQCanvas = true;
-    this.editableCanvas = false;
-    this.q_edit = "Update";
-    }else if(this.q_edit == "Update"){
-    this.theMainQCanvas = false;
-    this.editableCanvas = true;
-    this.q_edit = "Edit";
+edit_question(queData, i, anskey){
+  console.log(queData, anskey, $.trim(document.getElementById("btn_"+queData.q_id).innerHTML));
+  if($.trim(document.getElementById("btn_"+queData.q_id).innerHTML) == "Edit"){
+    console.log('In Edit block....!');
+    if(this.queIdHolder){
+      document.getElementById("btn_"+this.queIdHolder).innerHTML = "Edit";
+     }
+    this.onClick(queData, "Edit");
+    //this.q_edit = "Update";
+  }else if($.trim(document.getElementById("btn_"+queData.q_id).innerHTML) == "Update"){
+
+    console.log('In Update block....!');
+
+    // console.log("Question >> "+queData.question);
+    // console.log("Option 1 >> "+queData.opt1);
+    // console.log("Option 2 >> "+queData.opt2);
+    // console.log("Option 3 >> "+queData.opt3);
+    // console.log("Option 4 >> "+queData.opt4);
+    // console.log("anskey : >> "+queData.anskey);
     this.opt1Class = "";
     this.opt2Class = "";
     this.opt3Class = "";
     this.opt4Class = "";
-      if(this.x.anskey == this.x.opt1){
+    if(anskey == queData.opt1){
       this.opt1Class = "_correct_ans";
-      }else if (this.x.anskey == this.x.opt2) {
+    }else if (anskey == queData.opt2) {
       this.opt2Class = "_correct_ans";
-      }else if (this.x.anskey == this.x.opt3){
+    }else if (anskey == queData.opt3){
       this.opt3Class = "_correct_ans";
-      }else if (this.x.anskey == this.x.opt4){
+    }else if (anskey == queData.opt4){
       this.opt4Class = "_correct_ans";
-      }
-
-      var blanker = [];
-      if(this.x.question == ""){
-        // give an error message here >> ! <<
-        blanker.push("Question");
-      }
-      if(this.x.opt1 == ""){
-        // give an error message here >> ! <<
-        blanker.push("Option Field One");
-      }
-      if(this.x.opt2 == ""){
-        // give an error message here >> ! <<
-        blanker.push("Option Field Two");
-      }
-      if(this.x.opt3 == ""){
-        // give an error message here >> ! <<
-        blanker.push("Option Field Three");
-      }
-      if(this.x.opt4 == ""){
-        // give an error message here >> ! <<
-        blanker.push("Option Field Four");
-      }
-      if(this.x.anskey == ""){
-        blanker.push("Correcct Options Checkbox");
-      }
-      if(blanker.length > 0){
-        alert("Please Fill the complete form");
-      }else{
-        var options ={
-          "v_class": "library",
-          "v_function": "updateQuestion",
-          "value": {
-            "question": this.x.question,
-            "opt1": this.x.opt1,
-            "opt2": this.x.opt2,
-            "opt3": this.x.opt3,
-            "opt4": this.x.opt4,
-            "anskey": this.x.anskey,
-            "question_id": this.x.q_id,
-            "token": localStorage.getItem('token')
-          }
-        };
-        this._service.postRequestWithObservable(options)
-           .subscribe(res => {
-          if(res.response == "true"){
-          this.q_edit == "Question Update :)";
-            setTimeout(function(){
-            this.q_edit = "Edit";
-            }, 1500);
-          }else{
-            // give an error !!
-            alert("Error Updating quesition");
-          }
-        });
-      }
     }
-  };
+
+    var blanker = [];
+    if(queData.question == ""){
+      // give an error message here >> ! <<
+      blanker.push("Question");
+    }
+    if(queData.opt1 == ""){
+      // give an error message here >> ! <<
+      blanker.push("Option Field One");
+    }
+    if(queData.opt2 == ""){
+      // give an error message here >> ! <<
+      blanker.push("Option Field Two");
+    }
+    if(queData.opt3 == ""){
+      // give an error message here >> ! <<
+      blanker.push("Option Field Three");
+    }
+    if(queData.opt == ""){
+      // give an error message here >> ! <<
+      blanker.push("Option Field Four");
+    }
+    if(queData.anskey == ""){
+      blanker.push("Correcct Options Checkbox");
+    }
+    if(blanker.length > 0){
+      alert("Please Fill the complete form");
+    }else{
+      var options ={
+        "v_class": "library",
+        "v_function": "updateQuestion",
+        "value": {
+          "token": localStorage.getItem('token'),
+          "question": queData.question,
+          "opt1": queData.opt1,
+          "opt2": queData.opt2,
+          "opt3": queData.opt3,
+          "opt4": queData.opt4,
+          "anskey": anskey,
+          "question_id": queData.q_id
+        }
+      };
+      this._service.postRequestWithObservable(options)
+         .subscribe( res => {
+        console.log(res);
+        if(res.response == "true"){
+          this.q_edit == "Question Update :)";
+          this.theMainQCanvas = false;
+          this.editableCanvas = true;
+          var updatedQuestion: any = [{
+            "question": queData.question,
+            "opt1": queData.opt1,
+            "opt2": queData.opt2,
+            "opt3": queData.opt3,
+            "opt4": queData.opt4,
+            "anskey": anskey,
+            "q_id": queData.q_id
+          }];
+
+          this.theQestionList = this.theQestionList.map(obj => updatedQuestion.find(o => o.q_id === obj.q_id) || obj);
+          this.theMainQCanvas = true;
+          this.editableCanvas = false;
+          this.onClick(queData, "Update");
+          console.log(this.theQestionList);
+        }else{
+          // give an error !!
+          alert("Error Updating quesition");
+        }
+      });
+    }
+  }
+  this.queIdHolder = queData.q_id;
+}
+
+isSelected(opt, anskey){
+  if(opt === anskey){
+    return true;
+  }else{
+    return false;
+  }
+}
 
   cancelQuestion(){
   this.questionAddErrorMsg = "";

@@ -135,39 +135,39 @@
                       You can view all the added question here. You can also Edit or Delete them from here...
                     </p>
                 </div>
-                <div class="col-xs-12 col-sm-12" *ngFor="let x of theQestionList;let i = index">
+                <div class="col-xs-12 col-sm-12">
                   <!--question :{{theQestionList}}<<-->
-                  <div class="row _given_question_canvas _margin_top_5 _margin_bottom_5" ng-repeat="x in theQestionList"  id="question_{{x.q_id}}">
-                    <div id="questionListCanvas" [hidden]="theMainQCanvas">
+                  <div class="row _given_question_canvas _margin_top_5 _margin_bottom_5"  *ngFor="let x of theQestionList;let i = index">
+                    <div id="questionListCanvas_{{x.q_id}}" [hidden]="hideme[x.q_id]">
                       <div class="_question_content">
                         {{x.question}}
                       </div>
                       <div class="col-xs-12 col-sm-12 _margin_bottom_5">
-                        <div class="row _answer_content_v _margin_top_5 _margin_bottom_5" ngOnInit="opt1Class = (x.anskey == x.opt1 ? '_correct_ans' : '' )" [ngClass]="opt1Class">
+                        <div class="row _answer_content_v _margin_top_5 _margin_bottom_5"  [ngClass]="{'_correct_ans': x.opt1 == x.anskey}">
                         {{x.opt1}}
                         </div>
-                        <div class="row _answer_content_v _margin_top_5 _margin_bottom_5" ngOnInit="opt2Class = (x.anskey == x.opt2 ? '_correct_ans' : '' )" [ngClass]="opt2Class">
+                        <div class="row _answer_content_v _margin_top_5 _margin_bottom_5"  [ngClass]="{'_correct_ans': x.opt2 == x.anskey}">
                           {{x.opt2}}
                         </div>
-                        <div class="row _answer_content_v _margin_top_5 _margin_bottom_5" ngOnInit="opt3Class = (x.anskey == x.opt3 ? '_correct_ans' : '' )" [ngClass]="opt3Class">
+                        <div class="row _answer_content_v _margin_top_5 _margin_bottom_5" [ngClass]="{'_correct_ans': x.opt3 == x.anskey}">
                           {{x.opt3}}
                         </div>
-                        <div class="row _answer_content_v _margin_top_5 _margin_bottom_5" ngOnInit="opt4Class = (x.anskey == x.opt4 ? '_correct_ans' : '' )" [ngClass]="opt4Class">
+                        <div class="row _answer_content_v _margin_top_5 _margin_bottom_5" [ngClass]="{'_correct_ans': x.opt4 == x.anskey}">
                           {{x.opt4}}
                         </div>
                         <hr/>
                       </div>
                     </div>
                     <!-- question editable canvas >> -->
-                    <div id="questionEditableCanvas" [hidden]="editableCanvas">
-                      <div class="col-xs-12 col-sm-12 _margin_top_5" id="_quesion">
-                        <label>Edit Question</label>
-                        <textarea class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis" style="height: 60px; resize: vertical;" [ngClass]="question_IOClass" ></textarea>
+                    <div id="questionEditableCanvas">
+                      <div class="col-xs-12 col-sm-12 _margin_top_5" id="quesion_{{x.q_id}}" [hidden]="!hideme[x.q_id]">
+                        <label>Edit Question{{x.question}} {{x.anskey}} {{x.opt1}}</label>
+                        <textarea class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis" style="height: 60px; resize: vertical;" [ngClass]="question_IOClass" [(ngModel)]="x.question" [value]="x.question" ></textarea>
                       </div>
                       <div class="col-xs-12 col-sm-12" id="options">
                         <div class="row">
                           <div class="col-xs-1 col-sm-1" style="margin-top: 15px;">
-                            <input id="radio-A" class="radio-custom" name="radio-group" type="radio" [(ngModel)]="x.anskey"/>
+                            <input id="radio-A-{{x.q_id}}" class="radio-custom" name="radio-group-{{x.q_id}" type="radio" [value]="x.opt1" [(ngModel)]="anskey" [checked]="isSelected(x.opt1, x.anskey)"/>
                             <label  class="radio-custom-label"></label>
                           </div>
                           <div class="col-xs-11 col-sm-11">
@@ -176,7 +176,7 @@
                         </div>
                         <div class="row">
                           <div class="col-xs-1 col-sm-1" style="margin-top: 15px;">
-                            <input id="radio-B" class="radio-custom" name="radio-group" type="radio" [(ngModel)]="x.anskey"/>
+                            <input id="radio-B-{{x.q_id}}" class="radio-custom" name="radio-group-{{x.q_id}" type="radio" [value]="x.opt2" [(ngModel)]="anskey" [checked]="x.opt2 == x.anskey"/>
                             <label  class="radio-custom-label"></label>
                           </div>
                           <div class="col-xs-11 col-sm-11">
@@ -185,7 +185,7 @@
                         </div>
                         <div class="row">
                           <div class="col-xs-1 col-sm-1" style="margin-top: 15px;">
-                            <input id="radio-C" class="radio-custom" name="radio-group" type="radio" [(ngModel)]="x.anskey">
+                            <input id="radio-C-{{x.q_id}}" class="radio-custom" name="radio-group-{{x.q_id}" type="radio" [value]="x.opt3" [(ngModel)]="anskey" [checked]="x.opt3 == x.anskey">
                             <label class="radio-custom-label"></label>
                           </div>
                           <div class="col-xs-11 col-sm-11">
@@ -194,7 +194,7 @@
                         </div>
                         <div class="row">
                           <div class="col-xs-1 col-sm-1" style="margin-top: 15px;">
-                            <input id="radio-D" class="radio-custom" name="radio-group" type="radio" [(ngModel)]="x.anskey"/>
+                            <input id="radio-D" class="radio-custom" name="radio-group-{{x.q_id}" type="radio" [value]="x.opt4" [(ngModel)]="anskey"  [checked]="x.opt4 == x.anskey"/>
                             <label class="radio-custom-label"></label>
                           </div>
                           <div class="col-xs-11 col-sm-11">
@@ -206,7 +206,7 @@
                     </div>
                     <!-- <</ question editable canvas -->
                     <div class="col-xs-12 col-sm-12 _margin_bottom_5" style="margin-bottom: 20px;">
-                      <div class="_g_button _blue col-xs-8 _no_right_border_radius" id="{{x.q_id}}" (click)="edit_question()">
+                      <div class="_g_button _blue col-xs-8 _no_right_border_radius" id="btn_{{x.q_id}}" (click)="edit_question(x, i, anskey)">
                         {{q_edit}}
                       </div>
                       <div class="_g_button _red col-xs-4 _no_left_border_radius" id="{{x.q_id}}" (click)="delete_question(x)">

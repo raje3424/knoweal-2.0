@@ -574,7 +574,7 @@ class library extends connector{
     $retVal = [];
     $query = "SELECT `question_id`, `anskey` FROM question_table WHERE package_id = ?";
     //$result = $this->query_db($query, $value[sizeof($value) - 1]['pkg_id']);
-    $result = $this->query_db($query, $value['theAnsList'][1]['pkg_id']);
+    $result = $this->query_db($query, $value['theAnsList'][0]['pkg_id']);
     while ($row = mysqli_fetch_array($result)) {
       array_push($checkAgainst, array(
         "q_id" => $row['question_id'],
