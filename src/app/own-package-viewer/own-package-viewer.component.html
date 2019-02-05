@@ -28,7 +28,7 @@
         <div class="row _content_back_button">
           <div class="col-xs-12">
             <span (click)="goBackFunction()" class="_content_back_button_canvas _default_back"><span class="_go_back_button glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back to library</span>
-            <span class="_warning_msg _content_options_button"  ng-disabled="editPackFlag" (click)="editSave_pack()"> {{edit_label}} </span>
+            <span class="_warning_msg _content_options_button" [Disabled]="editPackFlag" (click)="editSave_pack()"> {{edit_label}} </span>
           </div>
         </div>
 
@@ -161,9 +161,11 @@
                     <!-- question editable canvas >> -->
                     <div id="questionEditableCanvas">
                       <div class="col-xs-12 col-sm-12 _margin_top_5" id="quesion_{{x.q_id}}" [hidden]="!hideme[x.q_id]">
-                        <label>Edit Question{{x.question}} {{x.anskey}} {{x.opt1}}</label>
-                        <textarea class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis" style="height: 60px; resize: vertical;" [ngClass]="question_IOClass" [(ngModel)]="x.question" [value]="x.question" ></textarea>
-                      </div>
+                        <div>
+                          <label>Edit Question{{x.question}} {{x.anskey}} {{x.opt1}}</label>
+                          <textarea class="_g1_input _margin_top_5 _margin_bottom_5 _no_border_radis" style="height: 60px; resize: vertical;" [ngClass]="question_IOClass" [(ngModel)]="x.question" [value]="x.question" ></textarea>
+                        </div>
+
                       <div class="col-xs-12 col-sm-12" id="options">
                         <div class="row">
                           <div class="col-xs-1 col-sm-1" style="margin-top: 15px;">
@@ -202,6 +204,7 @@
                           </div>
                         </div>
                         <hr/>
+                      </div>
                       </div>
                     </div>
                     <!-- <</ question editable canvas -->

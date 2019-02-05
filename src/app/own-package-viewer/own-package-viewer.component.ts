@@ -10,9 +10,9 @@ declare var $: any;
 })
 
 export class OwnPackageViewerComponent implements OnInit {
-  theMainQCanvas = false;
+  theMainQCanvas = true;
   editableCanvas = true;
-  q_edit;
+  q_edit;JSONtheQestionList;
   pkg_edit_flag = true; theQestionList = [];
   packID;packDescription;author_name;packNotes;packName;
   edit_label;questionAddFlag;name_class;
@@ -22,13 +22,14 @@ export class OwnPackageViewerComponent implements OnInit {
   optionD_IO;optionD_IOClass;theRightOption;q_whichMsg;
   addQuestionMessage;
   opt1Class;opt2Class;opt3Class;opt4Class;
-  x;question;opt1;opt2;opt3;opt4;
-  info_Desc_class = "_tbloc_point_active";notes_class = "";
+  info_Desc_class = "_tbloc_point_active";
+  notes_class = "";
   questions_class = "";infod_hideFlag = false;
   notes_hideFlag = true;question_hideFlag = true;
   questionAddErrorMsg;
   hideme = {};
   queIdHolder;
+  past = "info_Desc_class";
 
   constructor(private route: ActivatedRoute,private _routes: Router,private _service: KnowelApiService) {
   this.hideme = {};
@@ -98,7 +99,7 @@ export class OwnPackageViewerComponent implements OnInit {
           this.notes_hideFlag = true;
           this.question_hideFlag = false;
           this.theMainQCanvas = false;
-          //this.editableCanvas = false;
+          this.editableCanvas = false;
           break;
         default:
           this.info_Desc_class = "_tbloc_point_active";
@@ -106,14 +107,6 @@ export class OwnPackageViewerComponent implements OnInit {
           this.questions_class = "";
       }
     };
-
-    isSelected(opt, anskey){
-      if(opt === anskey){
-        return true;
-      }else{
-        return false;
-      }
-    }
 
   cancel_pack(){
     // write code to clear / cancle the package making
@@ -267,7 +260,7 @@ export class OwnPackageViewerComponent implements OnInit {
 
   //save question
   saveQuestion(){
-    //this.questionAddErrorMsg = true;
+    this.questionAddErrorMsg = true;
     if(this.packID != "" || this.packID >= 0){
       var blanker = [];
       if(this.question_IO == ""){
