@@ -172,7 +172,7 @@ ngOnInit() {
         }
 
       viewPackages(id){
-        this._routes.navigate(['/purpack'],{ queryParams: {id:id}});
+        this._routes.navigate(['/packview'],{ queryParams: {id:id}});
       }
 
   logOut(){
