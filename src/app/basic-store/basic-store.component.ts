@@ -11,7 +11,7 @@ import { AppRoutingModule } from '../app-routing/app-routing.module';
 })
 export class BasicStoreComponent implements OnInit {
 profile_noti;pro_acriveClass;lib_activeClass;
-//boughtPackMsg= true;
+boughtPackMsg= true;
 pkgData:any=[];
 buyHide;packID;
 b_flag;viewPort= "12";viewIconF;viewMode;
@@ -59,8 +59,6 @@ ngOnInit() {
                       this.pkgData = res.result;
                       // console.log(this.pkgData[0].package_id);
                       // console.log(this.pkgData.length);
-                      // this.boughtPackMsg = true;
-                      // this.buyHide = true;
                       for(let i=0;i<this.pkgData.length;i++)
                       {
                         //console.log(this.pkgData[i].package_id);
@@ -77,19 +75,18 @@ ngOnInit() {
                            .subscribe( res => {
                              console.log(res);
                              console.log(res.result);
-
-                          if(res.response == "false"){
-                            this.viewMode = "6";
-                            this.buyHide = true;
-                            //this.boughtPackMsg = false;
+                          if(res.response == 'true'){
+                              if(this.arrayLength(res.result) != 0){
+                                this.boughtPackMsg = false;
+                                this.buyHide = false;
+                              }
+                              else{
+                                this.boughtPackMsg = true;
+                              }
                           }else{
-                            this.viewMode = "12";
-                            this.buyHide = false;
-                            //this.boughtPackMsg = false;
+                            alert(res.errMessage);
                           }
                         });
-                        // this.buyHide=true;
-                        //
                       }
                     }
                   });
