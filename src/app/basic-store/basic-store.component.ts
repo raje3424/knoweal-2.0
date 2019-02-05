@@ -85,6 +85,7 @@ ngOnInit() {
                               }
                           }else{
                             alert(res.errMessage);
+                              this.buyHide = true;
                           }
                         });
                       }
@@ -161,7 +162,7 @@ ngOnInit() {
             if(res.response == "true"){
               alert("Sorry Can't be Baught");
              console.log("cant be "+res.tans_id+ " ::");
-             this.buyHide= true;
+            // this.buyHide= true;
             }else{
                 //this.buyHide= true;
                 alert("Can be Baught ");
