@@ -89,9 +89,15 @@ present;content_view_switch;
     console.log(options);
     this._service.postRequestWithObservable(options)
        .subscribe(res => {
-         console.log(res);
-      this.theQestionList = res;
-      this.totalQuestions = this.theQestionList.length;
+      console.log(res);
+      if(res.response == 'true'){
+        if(this.arrayLength(res.result) != 0){
+          this.theQestionList = res.result;
+          this.totalQuestions = this.theQestionList.length;
+        }else {
+          alert(res.errMessage);
+        }
+      }
     });
   }
 
@@ -172,14 +178,17 @@ getAnsCount(){
     this._service.postRequestWithObservable(options)
        .subscribe(res => {
          console.log(res.result);
-         //console.log(res.result.packNotes);
-        // console.log(":: pack notes >>  "+res.result.packNotes);
-        // console.log(res.result['packName']);
-         this.packName = res.result.packName;
-         //console.log(this.packName);
-        this.packDescription = res.result.packDescription;
-        this.packNotes = res.result.packNotes;
-        this.author_name = res.result.author_name;
+         if(res.response == 'true'){;
+          if(this.arrayLength(res.result) != 0){
+            this.packName = res.result.packName;
+            this.packDescription = res.result.packDescription;
+            this.packNotes = res.result.packNotes;
+            this.author_name = res.result.author_name;
+          }else {
+            alert(res.errMessage);
+          }
+         }
+         
     });
   }
 
@@ -217,4 +226,12 @@ getAnsCount(){
     this.present ='notes_class';
     this.content_view_switch = 'content_notes';
   }
+
+  arrayLength = function(obj): any {
+    var len = 0, key;
+    for (key in obj) {
+      if (obj.hasOwnProperty(key)) len++;
+    }
+    return len;
+  };
 }
