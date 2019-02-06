@@ -19,7 +19,7 @@ theAnsList:any = [];
 theGlassFlag = true;
 author_name;notes_class;questions_class;
 info_Desc_class = "_tbloc_point_active";
-present;content_view_switch;
+content_view_switch;
 
   constructor(private route: ActivatedRoute,private _routes: Router,private _service: KnowelApiService){ }
 
@@ -35,7 +35,7 @@ present;content_view_switch;
     this.getAllPackInfo();
 
     if(this.packID){
-      //this.present = "questions_class";
+      
       let options ={
       "v_class": "library",
       "v_function": "getQuestionsToSolve",
@@ -51,7 +51,6 @@ present;content_view_switch;
          console.log(res.result);
          if (res.response == "true"){
            if(this.arrayLength(res.result) != 0){
-            this.present = "questions_class";
             this.content_view_switch = "content_questoin";
             this.theQestionList = res.result;
             this.totalQuestions = this.theQestionList.length;
@@ -61,7 +60,6 @@ present;content_view_switch;
              alert(res.errMessage);
            }
          }else{
-           this.present = "info_Desc_class";
            this.content_view_switch = "packDInfo";
            //this.content_view_switch = 'content_notes';
            this.toc_nav('info_Desc_class');
@@ -71,6 +69,10 @@ present;content_view_switch;
      this.toc_nav('info_Desc_class');
     // this.toc_nav('notes_class');
     // this.toc_nav('questions_class');
+  }
+  demo(){
+    console.log('in demo');
+    return true;
   }
 
   cancel_pack(){
@@ -201,7 +203,7 @@ getAnsCount(){
   }
 
   toc_nav(present){
-    switch (this.present) {
+    switch (present) {
       case 'info_Desc_class':
         this.info_Desc_class = "_tbloc_point_active";
         this.notes_class = "";
@@ -227,8 +229,20 @@ getAnsCount(){
 
   notes(){
     console.log("in notes");
-    this.present ='notes_class';
     this.content_view_switch = 'content_notes';
+    this.toc_nav('notes_class');
+  }
+
+  info(){
+    console.log("in info");
+    this.content_view_switch = 'packDInfo';
+    this.toc_nav('info_Desc_class');
+  }
+
+  question(){
+    console.log("in question");
+    this.content_view_switch = 'content_questoin';
+    this.toc_nav('questions_class');
   }
 
   arrayLength = function(obj): any {
