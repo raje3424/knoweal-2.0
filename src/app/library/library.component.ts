@@ -153,7 +153,7 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
   }
 
   viewPurPack(id){
-    this._routes.navigate(['/packview'],{queryParams: {id: id}});
+    this._routes.navigate(['/packview'],{queryParams: {id: id,req:'lib'}});
   }
 
   solveThePack(id){

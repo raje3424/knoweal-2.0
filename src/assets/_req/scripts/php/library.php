@@ -441,7 +441,7 @@ class library extends connector{
   private function getPackageInfoStore($value){
     $this->clearOldResponseData();
     // store function to browse the package in detail
-    $query = "SELECT `package_name`,`description`, `full_name` FROM packages a, user_profile b WHERE package_id = ? and a.package_author = b.user_id";
+    $query = "SELECT `package_name`,`description`, `full_name`,`pack_price` FROM packages a, user_profile b WHERE package_id = ? and a.package_author = b.user_id";
     $result = $this->query_db($query, $value);
     $result = mysqli_fetch_array($result);
     $this->db_close();
@@ -449,7 +449,8 @@ class library extends connector{
       $retVal = [
         "author_name" => $result['full_name'],
         "packName" => $result['package_name'],
-        "description" => $result['description']
+        "description" => $result['description'],
+        "price" => $result['pack_price']
       ];
       $response['response'] = "true";
       $response['errMessage'] = '';
@@ -592,6 +593,16 @@ class library extends connector{
               "q_id" => $value['theAnsList'][0]['q_id'],
               "rkie" => "true"
             ));
+            if(sizeof($retVal) > 0){
+              $response['response'] = "true";
+              $response['errMessage'] = '';
+              $response['result'] = $retVal;
+              return $response;
+            }else{
+              $response['response'] = "false";
+              $response['errMessage'] = 'Something is wrong';
+              return $response;
+            }
           }else{
             array_push($retVal, array(
               "q_id" => $value['theAnsList'][0]['q_id'],
@@ -605,16 +616,16 @@ class library extends connector{
       }
     }
 
-    if(sizeof($retVal) > 0){
-      $response['response'] = "true";
-      $response['errMessage'] = '';
-      $response['result'] = $retVal;
-      return $response;
-    }else{
-      $response['response'] = "false";
-      $response['errMessage'] = 'Something is wrong';
-      return $response;
-    }
+    // if(sizeof($retVal) > 0){
+    //   $response['response'] = "true";
+    //   $response['errMessage'] = '';
+    //   $response['result'] = $retVal;
+    //   return $response;
+    // }else{
+    //   $response['response'] = "false";
+    //   $response['errMessage'] = 'Something is wrong';
+    //   return $response;
+    // }
 
   }
 

@@ -13,18 +13,26 @@ export class PackageViewerComponent implements OnInit {
   b_flag;libButtonHF;lib_pur_title;
   pkg_id;packName;packDescription;packNotes;
   packID;
-  author_name;
+  author_name;price;req;orderObj:any=[];
+  backTo;
 
 constructor(private route: ActivatedRoute,private _routes: Router,private _service: KnowelApiService){ }
 
   ngOnInit() {
     this.route.queryParams
-      .filter(params => params.id)
+      // .filter(params => params.id)
       .subscribe(params => {
-        //console.log(params);
-        this.pkg_id = params.id;
+        this.orderObj ={...params.keys, ...params};
+        console.log(this.orderObj);
+         this.pkg_id = this.orderObj.id;
+         console.log(this.pkg_id);
+         this.req =this.orderObj.req;
       });
-
+      if(this.req=='lib'){
+        this.backTo ="Library";
+      }else{
+        this.backTo = "Stream";
+      }
       this.getPackInfo();
       //this.checkIfPur(this.pkg_id);
   }
@@ -41,20 +49,34 @@ constructor(private route: ActivatedRoute,private _routes: Router,private _servi
   this._service.postRequestWithObservable(options)
      .subscribe(res => {
        console.log(res);
-    if(res == false){
+    if(res.response == "false"){
       this.b_flag = true;
-      this.libButtonHF = false;
-      this.lib_pur_title = true;
-    }else{
-      this.b_flag = false;
+      if(this.req == 'lib'){
       this.libButtonHF = true;
       this.lib_pur_title = false;
+    }else{
+      this.libButtonHF = false;
+      this.lib_pur_title = false;
+    }
+    }else{
+      this.b_flag = false;
+      if(this.req == 'lib'){
+      this.libButtonHF = true;
+      this.lib_pur_title = false;
+    }else{
+      this.libButtonHF = true;
+      this.lib_pur_title = true;
+    }
     }
   });
  }
 
- goBackFunction(){
-   this._routes.navigate(['/library']);
+ goBackFunction(back){
+   if(back =='Library'){
+     this._routes.navigate(['/library']);
+   }else{
+     this._routes.navigate(['/basic']);
+   }
  }
 
  cancel_pack(){
@@ -73,10 +95,11 @@ constructor(private route: ActivatedRoute,private _routes: Router,private _servi
          "token": localStorage.getItem('token')
        }
      };
+     console.log(options);
      this._service.postRequestWithObservable(options)
         .subscribe(res => {
           console.log(res);
-       if(res == "true"){
+       if(res.response == "true"){
          alert("Content Added to Library");
          //this._routes.refresh();
        }else{
@@ -87,6 +110,7 @@ constructor(private route: ActivatedRoute,private _routes: Router,private _servi
  }
 
    getPackInfo(){
+       this.checkIfPur(this.pkg_id);
        let options = {
          "v_class": "library",
          "v_function": "getPackageInfoStore",
@@ -99,13 +123,15 @@ constructor(private route: ActivatedRoute,private _routes: Router,private _servi
           .subscribe(res => {
             console.log(res);
             if(res.response == 'true'){
+
               this.author_name = res.result.author_name;
               this.packName = res.result.packName;
               this.packDescription = res.result.description;
+              this.price = res.result.price ;
             }else {
               alert(res.errMessage);
             }
-         
+
        });
      }
 
