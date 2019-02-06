@@ -25,14 +25,14 @@
       <div class="col-xs-12 col-sm-9">
         <div class="row _content_back_button">
           <div class="col-xs-12">
-            <span (click)="goBackFunction()" class="_content_back_button_canvas _default_back"><span class="_go_back_button glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back to Stream</span>
+            <span (click)="goBackFunction()" class="_content_back_button_canvas _default_back"><span class="_go_back_button glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back to Library</span>
           </div>
         </div>
 
         <!-- info n description >> -->
         <div class="col-xs-12 _content_canvas">
           <div class="row _text_content">
-            <div class="col-xs-12" id="pkg_msg" ng-hide="lib_pur_title">
+            <div class="col-xs-12" id="pkg_msg" *ngIf="lib_pur_title">
               <div class="row _green_back_border _mst_title">
                 Content already in your Library :)
               </div>

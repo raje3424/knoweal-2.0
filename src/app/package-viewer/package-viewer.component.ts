@@ -26,6 +26,7 @@ constructor(private route: ActivatedRoute,private _routes: Router,private _servi
       });
 
       this.getPackInfo();
+      //this.checkIfPur(this.pkg_id);
   }
 
  checkIfPur(pkg_id){
@@ -33,7 +34,7 @@ constructor(private route: ActivatedRoute,private _routes: Router,private _servi
     "v_class": "library",
     "v_function": "checkIfPur",
     "value":{
-      "package_id": this.pkg_id,
+      "package_id": pkg_id,
       "token": localStorage.getItem('token')
     }
   };
@@ -97,9 +98,14 @@ constructor(private route: ActivatedRoute,private _routes: Router,private _servi
        this._service.postRequestWithObservable(options)
           .subscribe(res => {
             console.log(res);
-         this.author_name = res.result.author_name;
-         this.packName = res.result.packName;
-         this.packDescription = res.result.description;
+            if(res.response == 'true'){
+              this.author_name = res.result.author_name;
+              this.packName = res.result.packName;
+              this.packDescription = res.result.description;
+            }else {
+              alert(res.errMessage);
+            }
+         
        });
      }
 
