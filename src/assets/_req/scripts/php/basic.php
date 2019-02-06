@@ -46,17 +46,14 @@ class basic extends connector{
       $this->db_close();
       //return $result['info_flag'];
       $response['response'] = "true";
-      $response['errMessage'] = "";
+      $response['errMessage'] = "Got user instance";
       $response['infoFlag'] = $result['info_flag'];
-
       return $response;
     }else{
       $response['response'] = "false";
       $response['errMessage'] = "Token is empty";
       return $response;
     }
-
-
   }
 
   /* from here >> ! if want to cut ! << */
@@ -83,7 +80,7 @@ class basic extends connector{
       $result = $this->query_db($query, md5($jwt['data']['email']));
       $this->db_close();
       $response['response'] = "true";
-      $response['errMessage'] = "";
+      $response['errMessage'] = "User instance updated successfully";
       $response['result'] = 1;
       return $response;
     }else{
@@ -109,13 +106,13 @@ class basic extends connector{
   //  echo $jwt['data']['email'];
       if($jwt['data']['email']!="") {
         $response['response'] = "true";
-        $response['errMessage'] = "";
+        $response['errMessage'] = "Got email From Token";
         $response['email'] = $jwt['data']['email'];
         return $response;
       }
       else{
         $response['response'] = "false";
-        $response['errMessage'] = "email not found";
+        $response['errMessage'] = "Email not found";
         return $response;
       }
 

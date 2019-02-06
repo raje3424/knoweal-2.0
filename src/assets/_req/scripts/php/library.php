@@ -34,13 +34,13 @@ class library extends connector{
     $this->db_close();
     if($result == 1){
       $response['response'] = "true";
-      $response['errMessage'] = "";
+      $response['errMessage'] = "question added successfully";
       $response['lid']=$lID;
       return $response;
     //  return $lID;
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = "cant add questions";
+      $response['errMessage'] = "can't add question";
       return $response;
     }
   }
@@ -64,7 +64,7 @@ class library extends connector{
       $this->db_close();
       if($result == 1){
         $response['response'] = "true";
-        $response['errMessage'] = "";
+        $response['errMessage'] = "question updates successfully";
         return $response;
       }else{
         $response['response'] = "false";
@@ -83,13 +83,13 @@ class library extends connector{
     $this->db_close();
     if($result != ""){
       $response['response'] = "true";
-      $response['errMessage'] = "";
+      $response['errMessage'] = "got the question";
       $response['result'] = json_encode($result);
       return $response;
     //  return json_encode($result);
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = "cant get question";
+      $response['errMessage'] = "can't get question";
       return $response;
     }
   }
@@ -101,7 +101,7 @@ class library extends connector{
       $this->db_close();
       if($result){
         $response['response'] = "true";
-        $response['errMessage'] = "";
+        $response['errMessage'] = "question deleted successfully";
         return $response;
       }else{
         $response['response'] = "false";
@@ -147,11 +147,11 @@ class library extends connector{
     //echo $result;
     if($result == 1){
       $response['response'] = "true";
-      $response['errMessage'] = "";
+      $response['errMessage'] = "package added successfully";
       return $response;
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = "Something is wrong";
+      $response['errMessage'] = "package add failed";
       return $response;
     }
   }
@@ -168,11 +168,12 @@ class library extends connector{
     $this->db_close();
     if($result != ""){
     $response['response'] = "true";
+    $response['errMessage'] = "got recent packID";
     $response['packID'] =$result['package_id'];
     return $response;
   }else{
     $response['response'] = "false";
-    $response['errMessage'] = "Something is wrong";
+    $response['errMessage'] = "can't get recent pack ID";
     return $response;
   }
 }
@@ -192,11 +193,11 @@ class library extends connector{
       $this->db_close();
       if($result == 1){
         $response['response'] = "true";
-        $response['errMessage'] = "";
+        $response['errMessage'] = "package updated successfully";
         return $response;
       }else{
         $response['response'] = "false";
-        $response['errMessage'] = "package not updated";
+        $response['errMessage'] = "package update failed";
         return $response;
       }
     // }else{
@@ -211,11 +212,11 @@ class library extends connector{
     $this->db_close();
     if($result){
       $response['response'] = "true";
-      $response['errMessage'] = "";
+      $response['errMessage'] = "Package deleted successfully";
       return $response;
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = "Something is wrong";
+      $response['errMessage'] = "Package DELETE failed";
       return $response;
     }
   }
@@ -245,13 +246,12 @@ class library extends connector{
     $this->db_close();
     if($retVal != ""){
       $response['response'] = "true";
-      $response['errMessage'] = "";
-      //  $response['result'] = $retVal;
-     $response['result'] = $retVal;
-     return $response;
+      $response['errMessage'] = "Display package successful";
+      $response['result'] = $retVal;
+      return $response;
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = "Something is wrong";
+      $response['errMessage'] = "Cant display packages";
       return $response;
     }
   }
@@ -312,12 +312,12 @@ class library extends connector{
     $this->db_close();
     if($result != ""){
       $response['response'] = "true";
-      $response['errMessage'] = "";
+      $response['errMessage'] = "Display all Own Package";
       $response['result'] = $retVal;
       return $response;
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = "Something is wrong";
+      $response['errMessage'] = "Display all Own Package Failed ";
       return $response;
     }
   }
@@ -363,11 +363,11 @@ class library extends connector{
     //echo $result;
     if($result == 1){
       $response['response'] = "true";
-      $response['errMessage'] = '';
+      $response['errMessage'] = 'Add Purchased Packages Success';
       return $response;
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = 'Package purchase failed';
+      $response['errMessage'] = 'Add Purchase Package failed';
       return $response;
     }
   }
@@ -397,14 +397,14 @@ class library extends connector{
       $this->db_close();//
       if($retVal != ""){
         $response['response'] = "true";
-        $response['errMessage'] = '';
+        $response['errMessage'] = 'Displaying Purchase Package';
         //$response['result'] = $retVal;
         $response['result']= $retVal;
         return $response;
         //return json_encode($retVal);
       }else{
         $response['response'] = "false";
-        $response['errMessage'] = 'Something is wrong';
+        $response['errMessage'] = 'Diaplaying Purchase Package Failed';
         return $response;
       }
     // }else{
@@ -428,12 +428,12 @@ class library extends connector{
   //  print_r($result);
     if($result != ""){
       $response['response'] = "true";
-      $response['errMessage'] = '';
+      $response['errMessage'] = 'Package is Purchased';
       $response['result'] = $result['tans_id'];
       return $response;
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = 'package is not purchased';
+      $response['errMessage'] = 'Package is not purchased';
       return $response;
     }
   }
@@ -453,12 +453,12 @@ class library extends connector{
         "price" => $result['pack_price']
       ];
       $response['response'] = "true";
-      $response['errMessage'] = '';
+      $response['errMessage'] = 'getPackageInfoStore successful';
       $response['result'] = $retVal;
       return $response;
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = 'Something is wrong';
+      $response['errMessage'] = 'can not get Package information:(';
       return $response;
     }
   }
@@ -479,13 +479,13 @@ class library extends connector{
       //print_r(json_encode($result));
       //echo $result;
       $response['response'] = "true";
-      $response['errMessage'] = '';
+      $response['errMessage'] = 'Got Pur_PackageInfo';
       //$response['result'] = json_encode($retVal);
       $response['result'] = $retVal;
       return $response;
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = 'Something is wrong';
+      $response['errMessage'] = "Can't get Pur Pack Info";
       return $response;
     }
   }
@@ -498,12 +498,12 @@ class library extends connector{
     $this->db_close();
     if($result != ""){
       $response['response'] = "true";
-      $response['errMessage'] = '';
+      $response['errMessage'] = "Got Package Info successful";
       $response['result'] = json_encode($result);
       return $response;
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = 'Something is wrong';
+      $response['errMessage'] = 'Cant get Package info';
       return $response;
     }
   }
@@ -528,12 +528,12 @@ class library extends connector{
     $this->db_close();
     if($retVal != ""){
       $response['response'] = "true";
-      $response['errMessage'] = '';
+      $response['errMessage'] = 'Successfully got Question to solve';
       $response['result'] = $retVal;
       return $response;
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = 'Something is wrong';
+      $response['errMessage'] = 'Cant get question to solve';
       return $response;
     }
   }
@@ -557,12 +557,12 @@ class library extends connector{
     $this->db_close();
     if($retVal != ""){
       $response['response'] = "true";
-      $response['errMessage'] = '';
+      $response['errMessage'] = 'Package question got successfully';
       $response['result'] = $retVal;
       return $response;
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = 'Something is wrong';
+      $response['errMessage'] = 'Cant get package question';
       return $response;
     }
   }
@@ -595,12 +595,12 @@ class library extends connector{
             ));
             if(sizeof($retVal) > 0){
               $response['response'] = "true";
-              $response['errMessage'] = '';
+              $response['errMessage'] = 'Got result successful';
               $response['result'] = $retVal;
               return $response;
             }else{
               $response['response'] = "false";
-              $response['errMessage'] = 'Something is wrong';
+              $response['errMessage'] = 'Cant get result';
               return $response;
             }
           }else{
@@ -636,7 +636,7 @@ class library extends connector{
     $result = mysqli_fetch_array($result);
     $this->db_close();
     $response['response'] = "true";
-    $response['errMessage'] = '';
+    $response['errMessage'] = 'Got purchasePackageId Success';
     $response['result'] = $result['pack_id'];
     return $response;
     //return $result['pack_id'];

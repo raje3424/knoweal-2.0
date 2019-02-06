@@ -116,7 +116,7 @@ class palika extends connector {
         $jwtObj->DecodeToken($jwt);*/
         $this->db_close();
         $response['response'] = "true";
-        $response['errMessage'] = "";
+        $response['errMessage'] = "Login Success";
         $response['token'] = $jwt;
         //return $ans;
         return $response;

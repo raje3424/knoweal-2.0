@@ -11,9 +11,7 @@
 **
 */
 
-//include_once ("server.php");
 include_once ("serverConnector.php");
-//include_once ("sessionConn.php");
 include_once ("jwtGenerator.php");
 
 class profile extends connector{
@@ -28,6 +26,7 @@ class profile extends connector{
   }
 
   private function userProfileAdder($value){
+    $this->clearOldResponseData();
     $val = array('fullName' =>$value['fullName'] ,'email'=>$value['email'],'dob'=>$value['dob'],'sex'=>$value['gender'] );
     $this->clearOldResponseData();
     $query = "INSERT INTO user_profile (full_name, email, dob, sex) VALUES(?, ?, ?, ?)";
@@ -37,11 +36,11 @@ class profile extends connector{
     //echo "result : " .$result;
     if($result == 1){
       $response['response'] = "true";
-      $response['errMessage'] = "";
+      $response['errMessage'] = "Profile updated successfully";
       return $response;
     }else{
       $response['response'] = "false";
-      $response['errMessage'] = "";
+      $response['errMessage'] = "Cant update Profile";
       return $response;
     }
   }
@@ -61,16 +60,18 @@ class profile extends connector{
       $response['email']=$result[1];
       $response['sex']=$result[3];
       $response['dob']=$result[2];
+      $response['response'] = "true";
+      $response['errMessage'] = "Got User profile ";
       //return json_encode($result);
       return $response;
     }else{
       $response['response'] = "false";
+      $response['errMessage'] = "Cant get user profile";
       return $response;
     }
   }
 
   private function userProfileUpdater($value){
-
     $this->clearOldResponseData();
     $jwtObj = new jwtGenerator();
     $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
@@ -85,11 +86,11 @@ class profile extends connector{
 
     if($result == 1){
         $response['response']="true";
-        $response['errMessage'] = "";
+        $response['errMessage'] = "User profile Updated successfully";
         return $response;
     }else{
         $response['response']="false";
-        $response['errMessage'] = "update failed";
+        $response['errMessage'] = "User profile update failed";
         return $response;
     }
   }
