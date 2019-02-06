@@ -223,7 +223,6 @@ class library extends connector{
   private function viewAllPackages($value){
     // works for store >> ! <<
     $this->clearOldResponseData();
-
     // $getwhetherpurchased=$this->checkIfPur($value);
     // print_r($getwhetherpurchased);
     $retVal = [];
@@ -573,8 +572,11 @@ class library extends connector{
     $checkAgainst = [];
     $retVal = [];
     $query = "SELECT `question_id`, `anskey` FROM question_table WHERE package_id = ?";
-    //$result = $this->query_db($query, $value[sizeof($value) - 1]['pkg_id']);
-    $result = $this->query_db($query, $value['theAnsList'][0]['pkg_id']);
+    //print_r(sizeof($value['theAnsList']));
+    //print_r($value['theAnsList'][3]['pkg_id']);
+  //  print_r($value['theAnsList'][sizeof($value['theAnsList']) - 1]['pkg_id']);
+    $result = $this->query_db($query,$value['theAnsList'][sizeof($value['theAnsList']) - 1]['pkg_id']);
+    //$result = $this->query_db($query, $value['theAnsList'][0]['pkg_id']);
     while ($row = mysqli_fetch_array($result)) {
       array_push($checkAgainst, array(
         "q_id" => $row['question_id'],
@@ -682,6 +684,21 @@ class library extends connector{
     $response['errMessage'] = '';
     $response['result'] = $retVal;
     return $response;
+  }
+
+  private function updatenoofquestion($value){
+      $this->clearOldResponseData();
+      $query = "UPDATE `packages` SET no_of_questions= (SELECT count(*) from question_table where package_id = ?)";
+      $result = $this->query_db($query,$value);
+      if($result==1){
+        $response['response'] = "true";
+        $response['errMessage'] = 'no of questions updated ';
+        return $response;
+      }else{
+        $response['response'] = "false";
+        $response['errMessage'] = 'No of questions not updated';
+        return $response;
+      }
   }
 
   public function clearOldResponseData(){

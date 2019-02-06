@@ -309,7 +309,7 @@ export class OwnPackageViewerComponent implements OnInit {
           "v_class": "library",
           "v_function": "addQuestion",
           "value":{
-            "token": localStorage.getItem('token'),
+              "token": localStorage.getItem('token'),
               "question": this.question_IO,
               "opt1": this.optionA_IO,
               "opt2": this.optionB_IO,
@@ -348,6 +348,20 @@ export class OwnPackageViewerComponent implements OnInit {
             setTimeout(function(){
               $("#theQestionMessage").html("Add new Question :)");
             },1000)}
+            let options = {
+              "v_class": "library",
+              "v_function": "updatenoofquestion",
+              "value":{
+                "packID": this.packID,
+                "token": localStorage.getItem('token')
+                }
+              }
+              this._service.postRequestWithObservable(options)
+                 .subscribe(res => {
+                if(res.response == "true"){
+                  console.log(res.errMessage);
+                }
+              });
           }else{
             this.q_whichMsg = "_error_msg";
             this.addQuestionMessage = "Error in adding question, try again :(";
