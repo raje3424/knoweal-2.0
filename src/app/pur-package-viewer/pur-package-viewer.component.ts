@@ -49,13 +49,17 @@ present;content_view_switch;
        .subscribe(res => {
          console.log(res);
          console.log(res.result);
-         if (res.response == "true" && res.result !=""){
-           this.present = "questions_class";
-           this.content_view_switch = "content_questoin";
-           this.theQestionList = res.result;
-           this.totalQuestions = this.theQestionList.length;
-           this.submitFlag = true;
-           this.toc_nav('questions_class');
+         if (res.response == "true"){
+           if(this.arrayLength(res.result) != 0){
+            this.present = "questions_class";
+            this.content_view_switch = "content_questoin";
+            this.theQestionList = res.result;
+            this.totalQuestions = this.theQestionList.length;
+            this.submitFlag = true;
+            this.toc_nav('questions_class');
+           }else {
+             alert(res.errMessage);
+           }
          }else{
            this.present = "info_Desc_class";
            this.content_view_switch = "packDInfo";
@@ -82,8 +86,8 @@ present;content_view_switch;
       "v_class": "library",
       "v_function": "getQuestionsToSolve",
       "value": {
-          "token": localStorage.getItem('token'),
-          "packID":this.packID
+          "packID":this.packID,
+          "token": localStorage.getItem('token')
         }
     };
     console.log(options);
