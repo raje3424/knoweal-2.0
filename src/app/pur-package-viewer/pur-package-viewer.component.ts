@@ -38,7 +38,7 @@ queOptHolder;
     this.getAllPackInfo();
 
     if(this.packID){
-      
+
       let options ={
       "v_class": "library",
       "v_function": "getQuestionsToSolve",
@@ -81,7 +81,7 @@ queOptHolder;
         $("#"+this.queOptHolder).removeClass("_correct_ans");
       }
     }
-    
+
     // deselect prev option <<<
     $("#ansOpt_"+qId+"_"+whichOpt).addClass("_correct_ans");
 
@@ -124,10 +124,17 @@ queOptHolder;
   getTheResults(q_id, anskey){
     this.theAnsList = [];
     for(var i = 0; i < this.theQestionList.length; i++){
-      if(this.theQestionList[i].anskey != ""){
+      console.log("anskey",this.theQestionList[i].anskey)
+      if(this.theQestionList[i].anskey != "" && this.theQestionList[i].anskey!=undefined){
         this.theAnsList.push({
           'q_id': this.theQestionList[i].q_id,
           'anskey': this.theQestionList[i].anskey});
+          console.log("in if");
+      }else{
+        this.theAnsList.push({
+          'q_id': this.theQestionList[i].q_id,
+          'anskey': ""});
+          console.log("in else");
       }
     }
     this.theAnsList.push({
@@ -209,7 +216,7 @@ getAnsCount(){
             alert(res.errMessage);
           }
          }
-         
+
     });
   }
 

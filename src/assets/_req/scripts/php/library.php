@@ -588,16 +588,23 @@ class library extends connector{
     for($i = 0; $i < sizeof($value['theAnsList']) - 1; $i++){
       for($j = 0; $j < sizeof($checkAgainst); $j++){
         if($checkAgainst[$j]['q_id'] == $value['theAnsList'][$i]['q_id']){
-          if($value['theAnsList'][$i]['anskey'] == $checkAgainst[$j]['anskey']){
+          if($value['theAnsList'][$i]['anskey']==""){
             array_push($retVal, array(
               "q_id" => $value['theAnsList'][$i]['q_id'],
-              "rkie" => "true"
+              "rkie" => "Notsolved"
             ));
           }else{
-            array_push($retVal, array(
-              "q_id" => $value['theAnsList'][$i]['q_id'],
-              "rkie" => $checkAgainst[$j]['anskey']
-            ));
+            if($value['theAnsList'][$i]['anskey']== $checkAgainst[$j]['anskey']){
+              array_push($retVal, array(
+                "q_id" => $value['theAnsList'][$i]['q_id'],
+                "rkie" => "true"
+              ));
+            }else{
+              array_push($retVal, array(
+                "q_id" => $value['theAnsList'][$i]['q_id'],
+                "rkie" => $checkAgainst[$j]['anskey']
+              ));
+            }
           }
           break;
         }else{
