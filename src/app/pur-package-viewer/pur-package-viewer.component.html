@@ -72,7 +72,7 @@
                 <div class="col-xs-12 col-sm-12">
                   <!--question :{{theQestionList}}<<-->
                   <div class="row _given_question_canvas _margin_top_5 _margin_bottom_5" *ngFor="let x of theQestionList" id="question_{{x.q_id}}">
-                    <div id="questionListCanvas">
+                    <div id="questionListCanvas_{{x.q_id}}">
                       <div class="_question_content">
                         {{x.question}}
                       </div>

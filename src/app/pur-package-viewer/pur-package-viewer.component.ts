@@ -21,6 +21,7 @@ author_name;notes_class;questions_class;
 info_Desc_class = "_tbloc_point_active";
 content_view_switch;
 
+queIdHolder;
 queOptHolder;
 
   constructor(private route: ActivatedRoute,private _routes: Router,private _service: KnowelApiService){ }
@@ -73,13 +74,18 @@ queOptHolder;
     // this.toc_nav('questions_class');
   }
   demo(qId,whichOpt){
+    console.log(this.queIdHolder);
     // deselect prev option >>>
-    if(this.queOptHolder){
-      $("#"+this.queOptHolder).removeClass("_correct_ans");
+    if(this.queIdHolder == "questionListCanvas_"+qId){
+      if(this.queOptHolder){
+        $("#"+this.queOptHolder).removeClass("_correct_ans");
+      }
     }
+    
     // deselect prev option <<<
     $("#ansOpt_"+qId+"_"+whichOpt).addClass("_correct_ans");
 
+    this.queIdHolder = $("#questionListCanvas_"+qId).attr('id');
     this.queOptHolder = $("#ansOpt_"+qId+"_"+whichOpt).attr('id'); // hold prv opt class <<<
   }
 
