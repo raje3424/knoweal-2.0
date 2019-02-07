@@ -21,6 +21,8 @@ author_name;notes_class;questions_class;
 info_Desc_class = "_tbloc_point_active";
 content_view_switch;
 
+queOptHolder;
+
   constructor(private route: ActivatedRoute,private _routes: Router,private _service: KnowelApiService){ }
 
   ngOnInit() {
@@ -70,9 +72,15 @@ content_view_switch;
     // this.toc_nav('notes_class');
     // this.toc_nav('questions_class');
   }
-  demo(){
-    console.log('in demo');
-    return true;
+  demo(qId,whichOpt){
+    // deselect prev option >>>
+    if(this.queOptHolder){
+      $("#"+this.queOptHolder).removeClass("_correct_ans");
+    }
+    // deselect prev option <<<
+    $("#ansOpt_"+qId+"_"+whichOpt).addClass("_correct_ans");
+
+    this.queOptHolder = $("#ansOpt_"+qId+"_"+whichOpt).attr('id'); // hold prv opt class <<<
   }
 
   cancel_pack(){
