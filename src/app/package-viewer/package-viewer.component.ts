@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { KnowelApiService } from '../_service/knowel-api.service';
 import { Router,ActivatedRoute } from '@angular/router';
-import { AppRoutingModule } from '../app-routing/app-routing.module';
+
 
 @Component({
   selector: 'app-package-viewer',
