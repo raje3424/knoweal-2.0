@@ -47,11 +47,11 @@ queOptHolder;
         "token": localStorage.getItem('token')
       }
     };
-    console.log(options);
+    //console.log(options);
     this._service.postRequestWithObservable(options)
        .subscribe(res => {
-         console.log(res);
-         console.log(res.result);
+         //console.log(res);
+         //console.log(res.result);
          if (res.response == "true"){
            if(this.arrayLength(res.result) != 0){
             this.content_view_switch = "content_questoin";
@@ -109,7 +109,7 @@ queOptHolder;
     console.log(options);
     this._service.postRequestWithObservable(options)
        .subscribe(res => {
-      console.log(res);
+      //console.log(res);
       if(res.response == 'true'){
         if(this.arrayLength(res.result) != 0){
           this.theQestionList = res.result;
@@ -124,17 +124,17 @@ queOptHolder;
   getTheResults(q_id, anskey){
     this.theAnsList = [];
     for(var i = 0; i < this.theQestionList.length; i++){
-      console.log("anskey",this.theQestionList[i].anskey)
+      //console.log("anskey",this.theQestionList[i].anskey)
       if(this.theQestionList[i].anskey != "" && this.theQestionList[i].anskey!=undefined){
         this.theAnsList.push({
           'q_id': this.theQestionList[i].q_id,
           'anskey': this.theQestionList[i].anskey});
-          console.log("in if");
+          //console.log("in if");
       }else{
         this.theAnsList.push({
           'q_id': this.theQestionList[i].q_id,
           'anskey': ""});
-          console.log("in else");
+          //console.log("in else");
       }
     }
     this.theAnsList.push({
@@ -152,15 +152,15 @@ queOptHolder;
       };
       this._service.postRequestWithObservable(options)
          .subscribe(res => {
-           console.log(res);
+           //console.log(res);
         if(res.response != "false"){
           var lenArray = this.arrayLength(res.result);
           for (var i = 0; i < lenArray; i++) {
-            console.log(this.arrayLength(res.result),res.result[0].q_id, this.theQestionList[0]['q_id']);
+            //console.log(this.arrayLength(res.result),res.result[0].q_id, this.theQestionList[0]['q_id']);
             if(res.result[i].q_id == this.theQestionList[i]['q_id']){
-              console.log(res.result[i]['rkie']);
+              //console.log(res.result[i]['rkie']);
               if(res.result[i]['rkie'] != "true" && res.result[i]['rkie'] != "Notsolved"){
-                console.log(res.result[i]['rkie']);
+                //console.log(res.result[i]['rkie']);
                 this.theQestionList[i]['rkie'] = 'Correct answer is [   '+res.result[i]['rkie']+' ]';
                 $("#question_"+res.result[i]['q_id']).addClass("_solver_wrong");
               }else if(res.result[i]['rkie'] == "Notsolved"){
@@ -207,7 +207,7 @@ getAnsCount(){
     };
     this._service.postRequestWithObservable(options)
        .subscribe(res => {
-         console.log(res.result);
+         //console.log(res.result);
          if(res.response == 'true'){;
           if(this.arrayLength(res.result) != 0){
             this.packName = res.result.packName;
