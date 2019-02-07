@@ -132,9 +132,10 @@ content_view_switch;
       this._service.postRequestWithObservable(options)
          .subscribe(res => {
            console.log(res);
-           console.log(res.result.length,res.result[0].q_id, this.theQestionList[0]['q_id']);
         if(res.response != "false"){
-          for (var i = 0; i < res.result.length; i++) {
+          var lenArray = this.arrayLength(res.result);
+          for (var i = 0; i < lenArray; i++) {
+            console.log(this.arrayLength(res.result),res.result[0].q_id, this.theQestionList[0]['q_id']);
             if(res.result[i].q_id == this.theQestionList[i]['q_id']){
               console.log(res.result[i]['rkie']);
               if(res.result[i]['rkie'] != "true"){
