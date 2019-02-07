@@ -159,11 +159,13 @@ queOptHolder;
             console.log(this.arrayLength(res.result),res.result[0].q_id, this.theQestionList[0]['q_id']);
             if(res.result[i].q_id == this.theQestionList[i]['q_id']){
               console.log(res.result[i]['rkie']);
-              if(res.result[i]['rkie'] != "true"){
+              if(res.result[i]['rkie'] != "true" && res.result[i]['rkie'] != "Notsolved"){
                 console.log(res.result[i]['rkie']);
                 this.theQestionList[i]['rkie'] = 'Correct answer is [   '+res.result[i]['rkie']+' ]';
                 $("#question_"+res.result[i]['q_id']).addClass("_solver_wrong");
-              }else{
+              }else if(res.result[i]['rkie'] == "Notsolved"){
+                this.theQestionList[i]['rkie'] = "This question is not solved!";
+              }else {
                 $("#question_"+res.result[i]['q_id']).addClass("_solved_correct");
                 this.theQestionList[i]['rkie'] = "Correct";
               }
