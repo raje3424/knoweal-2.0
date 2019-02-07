@@ -584,7 +584,7 @@ class library extends connector{
         "anskey" => $row['anskey']
       ));
     }
-    print_r($checkAgainst);
+    //print_r($checkAgainst);
     for($i = 0; $i < sizeof($value['theAnsList']) - 1; $i++){
       for($j = 0; $j < sizeof($checkAgainst); $j++){
         if($checkAgainst[$j]['q_id'] == $value['theAnsList'][$i]['q_id']){
