@@ -593,16 +593,6 @@ class library extends connector{
               "q_id" => $value['theAnsList'][0]['q_id'],
               "rkie" => "true"
             ));
-            if(sizeof($retVal) > 0){
-              $response['response'] = "true";
-              $response['errMessage'] = 'Got result successful';
-              $response['result'] = $retVal;
-              return $response;
-            }else{
-              $response['response'] = "false";
-              $response['errMessage'] = 'Cant get result';
-              return $response;
-            }
           }else{
             array_push($retVal, array(
               "q_id" => $value['theAnsList'][0]['q_id'],
@@ -616,16 +606,16 @@ class library extends connector{
       }
     }
 
-    // if(sizeof($retVal) > 0){
-    //   $response['response'] = "true";
-    //   $response['errMessage'] = '';
-    //   $response['result'] = $retVal;
-    //   return $response;
-    // }else{
-    //   $response['response'] = "false";
-    //   $response['errMessage'] = 'Something is wrong';
-    //   return $response;
-    // }
+    if(sizeof($retVal) > 0){
+      $response['response'] = "true";
+      $response['errMessage'] = '';
+      $response['result'] = $retVal;
+      return $response;
+    }else{
+      $response['response'] = "false";
+      $response['errMessage'] = 'Something is wrong';
+      return $response;
+    }
 
   }
 
