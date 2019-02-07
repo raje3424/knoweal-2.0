@@ -53,6 +53,7 @@ class palika extends connector {
       //echo $value['password'];
       $unq = uniqid();
       $value['veri_id'] = $unq;
+      $unic= $value['veri_id'];
       if($value['email'] != "" && $value['password'] != ""){
         $query = "INSERT INTO user_instance (email, pass, veri_id) VALUES(?, ?, ?)";
         //echo vsprintf( str_replace("?","'%s'",$query),$value);
@@ -64,27 +65,24 @@ class palika extends connector {
           // echo $result;
           // $jwtObj = new jwtGenerator();
           // $jwt = $jwtObj->EncodeToken(array('email'=>$simple_email));
-          //$this->spark($simple_email);
+          //$this->spark($simple_email,$unic);
           $this->db_close();
           $response['response'] = "true";
           $response['errMessage'] = "new user added";
           // $response['token'] = $jwt;
-            return $response;
+          return $response;
         }else{
           //return "efalse";
           $response['response'] = "efalse";
           $response['errMessage'] = "Error inserting user.";
           return $response;
         }
-        ///$this->db_close();
       }else{
-        //return "bfalse";
         $response['response'] = "bfalse";
         $response['errMessage'] = "Blank Username or Password";
         return $response;
       }
     }else{
-      //return "rfalse";
       $response['response'] = "rfalse";
       $response['errMessage'] = "User already exist.";
       return $response;
@@ -139,12 +137,12 @@ class palika extends connector {
   }
 
 
-  public function spark($simple_email){
+  public function spark($simple_email,$unic){
   $httpClient = new GuzzleAdapter(new Client());
   $sparky = new SparkPost($httpClient, ['key'=>'c78d2fed5e21260e3007da448c7a5d0f14b03688']);
   $sparky->setOptions(['async' => false]);
   //$email= "$value['email']";
-  //echo $unq;
+  //echo $unic;
   $results = $sparky->transmissions->post([
     'options' => [
       'sandbox' => false
@@ -152,7 +150,7 @@ class palika extends connector {
     'content' => [
       'from' => 'newsletters@mail.vidaa.in',
       'subject' => 'Oh hey',
-      'html' => '<html><body><p>Testing SparkPost - the most awesomest email service!</p><p>Please verify your email using following link <a href="http://localhost:8888/conf_email.html?chavi=">link</a></p></body></html>'
+      'html' => '<html><body><p>Testing SparkPost - the most awesomest email service!</p><p>Please verify your email using following link <a href="http://localhost:8888/conf_email.html?chavi="$unic>link</a></p></body></html>'
     ],
     'recipients' => [
       ['address' => ['email'=>$simple_email]]
