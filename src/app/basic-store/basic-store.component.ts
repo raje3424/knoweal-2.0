@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { KnowelApiService } from '../_service/knowel-api.service';
-import { AppRoutingModule } from '../app-routing/app-routing.module';
+import { WindowService } from '../_service/window.service';
 
 
 @Component({
@@ -16,7 +16,24 @@ pkgData:any=[];
 buyHide;packID;
 b_flag;viewPort= "12";viewIconF;viewMode;
 
- constructor(private _routes: Router,private _service: KnowelApiService){ }
+private dataToSendToRazorPay = {
+  "key": "",
+  "amount": "",
+  "name": "",
+  "description": "",
+  "image": "/assets/_req/fonts_images/images/landin_page/vidaa_logo.PNG",
+  "prefill": {
+      "name": "",
+      "email": ""
+  },
+  "theme": {
+      "color": "#2AC671"
+  }
+};
+
+protected rzp1:any;
+
+ constructor(private _routes: Router,private _service: KnowelApiService, private windowRef: WindowService){ }
 
 ngOnInit() {
   var options = {
@@ -40,58 +57,58 @@ ngOnInit() {
   }
 
 
-      getAllPacks(){
-        var options = {
-          "v_class": "library",
-          //"v_function" : "viewAllunpurchasedPackages",
-          "v_function": "viewAllPackages",
-          "value" :{
-              "token": localStorage.getItem('token')
+getAllPacks(){
+  var options = {
+    "v_class": "library",
+    //"v_function" : "viewAllunpurchasedPackages",
+    "v_function": "viewAllPackages",
+    "value" :{
+        "token": localStorage.getItem('token')
+    }
+  };
+  console.log(options);
+  this._service.postRequestWithObservable(options)
+      .subscribe( res => {
+    //console.log(res.result);
+        if(res.response == "" || res.response == "false"){
+          this.boughtPackMsg = true;
+        }else{
+          this.pkgData = res.result;
+          // console.log(this.pkgData[0].package_id);
+          // console.log(this.pkgData.length);
+          for(let i=0;i<this.pkgData.length;i++)
+          {
+            //console.log(this.pkgData[i].package_id);
+            var options = {
+              "v_class": "library",
+              "v_function": "checkIfPur",
+              "value":{
+                "package_id": this.pkgData[i].package_id,
+                "token": localStorage.getItem('token')
+              }
+            };
+            console.log(options);
+            this._service.postRequestWithObservable(options)
+                .subscribe( res => {
+                  console.log(res);
+                  console.log(res.result);
+              if(res.response == 'true'){
+                  if(this.arrayLength(res.result) != 0){
+                    this.boughtPackMsg = false;
+                    this.buyHide = false;
+                  }
+                  else{
+                    this.boughtPackMsg = true;
+                  }
+              }else{
+                alert(res.errMessage);
+                  this.buyHide = true;
+              }
+            });
           }
-        };
-        console.log(options);
-        this._service.postRequestWithObservable(options)
-           .subscribe( res => {
-          //console.log(res.result);
-                    if(res.response == "" || res.response == "false"){
-                      this.boughtPackMsg = true;
-                    }else{
-                      this.pkgData = res.result;
-                      // console.log(this.pkgData[0].package_id);
-                      // console.log(this.pkgData.length);
-                      for(let i=0;i<this.pkgData.length;i++)
-                      {
-                        //console.log(this.pkgData[i].package_id);
-                        var options = {
-                          "v_class": "library",
-                          "v_function": "checkIfPur",
-                          "value":{
-                            "package_id": this.pkgData[i].package_id,
-                            "token": localStorage.getItem('token')
-                          }
-                        };
-                        console.log(options);
-                        this._service.postRequestWithObservable(options)
-                           .subscribe( res => {
-                             console.log(res);
-                             console.log(res.result);
-                          if(res.response == 'true'){
-                              if(this.arrayLength(res.result) != 0){
-                                this.boughtPackMsg = false;
-                                this.buyHide = false;
-                              }
-                              else{
-                                this.boughtPackMsg = true;
-                              }
-                          }else{
-                            alert(res.errMessage);
-                              this.buyHide = true;
-                          }
-                        });
-                      }
-                    }
-                  });
-                }
+        }
+      });
+    }
 
 
       goBackFunction(){
@@ -126,6 +143,35 @@ ngOnInit() {
           this.makePur(pack_id);
           this.ngOnInit();
       }
+
+    buyByRazorPay(){
+      this.dataToSendToRazorPay.key = "data['getSubsData'].key";
+      this.dataToSendToRazorPay.amount = "100";
+      this.dataToSendToRazorPay.name = "Demo";
+      this.dataToSendToRazorPay.description = "Demo purchase";
+      this.dataToSendToRazorPay.prefill.name = "Rdm";
+      this.dataToSendToRazorPay.prefill.email = "rdm@rdm.com";
+      this.payWithRazorPay(this.dataToSendToRazorPay);
+    }
+
+    payWithRazorPay(options){
+      options.handler = ((response) => {
+        let pay_id = response.razorpay_payment_id;
+        this.payemntHandler(pay_id)
+     });
+     
+      this.rzp1 = new this.windowRef.nativeWindow.Razorpay(options);
+      this.rzp1.open();
+    }
+  
+    payemntHandler(razorpay_payment_id){
+      //console.log('Payment... '+razorpay_payment_id);
+      if (typeof razorpay_payment_id == 'undefined' || razorpay_payment_id < 1) {
+        alert('Try after a while !');
+      }else{
+        alert('Success !');
+      }
+    }
 
       makePur(pack_id){
        console.log("into make pur");

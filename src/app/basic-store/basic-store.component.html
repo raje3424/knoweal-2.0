@@ -70,7 +70,7 @@
                 <div class="_pack_author" (click)="viewPackages(pkgs.package_id)">
                   by {{pkgs.author_name}}
                 </div>
-                <div class="col-xs-12 _success_msg _the_button" (click)="getPackage(pkgs.package_id)" *ngIf="buyHide">
+                <div class="col-xs-12 _success_msg _the_button" (click)="buyByRazorPay()" *ngIf="buyHide">
                 Buy
                 </div>
               </div>
@@ -82,3 +82,4 @@
   </div>
   <div class="col-xs-12 col-sm-1"></div>
 </div>
+<!--getPackage(pkgs.package_id)-->

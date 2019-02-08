@@ -17,6 +17,7 @@ import { PurPackageViewerComponent } from './pur-package-viewer/pur-package-view
 import { UserHomeComponent } from './user-home/user-home.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { KnowelApiService } from './_service/knowel-api.service';
+import { WindowService } from './_service/window.service';
 import { AuthGuard } from './_guards/index';
 import { TokenInterceptorService } from './_service/token-interceptor.service';
 
@@ -42,7 +43,7 @@ import { TokenInterceptorService } from './_service/token-interceptor.service';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [KnowelApiService, AuthGuard,
+  providers: [KnowelApiService, WindowService, AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
