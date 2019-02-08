@@ -8,6 +8,7 @@ include_once ("palika.php");
 include_once ("basic.php");
 include_once ("profile.php");
 include_once ("library.php");
+include_once("config.php");
 include_once ("jwtGenerator.php");
 
 class r_interface{
@@ -47,7 +48,8 @@ class r_interface{
      'basic' => new basic,
      'palika' => new palika,
      'jwt' => new jwtGenerator,
-     'library'=> new library
+     'library'=> new library,
+     'config'=> new config
    );
    return $objects;
  }

@@ -16,6 +16,8 @@ pkgData:any=[];
 buyHide;packID;
 b_flag;viewPort= "12";viewIconF;viewMode;
 
+
+
 private dataToSendToRazorPay = {
   "key": "",
   "amount": "",
@@ -145,13 +147,28 @@ getAllPacks(){
       }
 
     buyByRazorPay(){
-      this.dataToSendToRazorPay.key = "data['getSubsData'].key";
-      this.dataToSendToRazorPay.amount = "100";
-      this.dataToSendToRazorPay.name = "Demo";
-      this.dataToSendToRazorPay.description = "Demo purchase";
-      this.dataToSendToRazorPay.prefill.name = "Rdm";
-      this.dataToSendToRazorPay.prefill.email = "rdm@rdm.com";
-      this.payWithRazorPay(this.dataToSendToRazorPay);
+      //getting key of razorpay
+      let options={
+        "v_class":"config",
+        "v_function":"setkey",
+        "value" :{
+            "token": localStorage.getItem('token')
+        }
+      }
+      console.log(options);
+      this._service.postRequestWithObservable(options)
+          .subscribe( res => {
+            if(res.response == 'true'){
+              this.dataToSendToRazorPay.key = res.key;
+              this.dataToSendToRazorPay.amount = "100";
+              this.dataToSendToRazorPay.name = "Demo";
+              this.dataToSendToRazorPay.description = "Demo purchase";
+              this.dataToSendToRazorPay.prefill.name = "Rdm";
+              this.dataToSendToRazorPay.prefill.email = "rdm@rdm.com";
+              this.payWithRazorPay(this.dataToSendToRazorPay);
+            }
+          });
+
     }
 
     payWithRazorPay(options){
@@ -159,11 +176,11 @@ getAllPacks(){
         let pay_id = response.razorpay_payment_id;
         this.payemntHandler(pay_id)
      });
-     
+
       this.rzp1 = new this.windowRef.nativeWindow.Razorpay(options);
       this.rzp1.open();
     }
-  
+
     payemntHandler(razorpay_payment_id){
       //console.log('Payment... '+razorpay_payment_id);
       if (typeof razorpay_payment_id == 'undefined' || razorpay_payment_id < 1) {

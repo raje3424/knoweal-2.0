@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { KnowelApiService } from '../_service/knowel-api.service';
 import { Router,ActivatedRoute } from '@angular/router';
-
+import { WindowService } from '../_service/window.service';
 
 @Component({
   selector: 'app-package-viewer',
@@ -15,8 +15,24 @@ export class PackageViewerComponent implements OnInit {
   packID;
   author_name;price;req;orderObj:any=[];
   backTo;
+  private dataToSendToRazorPay = {
+    "key": "",
+    "amount": "",
+    "name": "",
+    "description": "",
+    "image": "/assets/_req/fonts_images/images/landin_page/vidaa_logo.PNG",
+    "prefill": {
+        "name": "",
+        "email": ""
+    },
+    "theme": {
+        "color": "#2AC671"
+    }
+  };
 
-constructor(private route: ActivatedRoute,private _routes: Router,private _service: KnowelApiService){ }
+  protected rzp1:any;
+
+constructor(private route: ActivatedRoute,private _routes: Router,private _service: KnowelApiService,private windowRef: WindowService){ }
 
   ngOnInit() {
     this.route.queryParams
@@ -91,7 +107,7 @@ constructor(private route: ActivatedRoute,private _routes: Router,private _servi
        "v_class": "library",
        "v_function": "addPurchasePackage",
        "value": {
-         "packID":this.pkg_id,
+         "package_id":this.pkg_id,
          "token": localStorage.getItem('token')
        }
      };
@@ -107,6 +123,50 @@ constructor(private route: ActivatedRoute,private _routes: Router,private _servi
        }
        console.log("data >> "+res);
      });
+ }
+
+ buyByRazorPay(){
+   //getting key of razorpay
+   let options={
+     "v_class":"config",
+     "v_function":"setkey",
+     "value" :{
+         "token": localStorage.getItem('token')
+     }
+   }
+   console.log(options);
+   this._service.postRequestWithObservable(options)
+       .subscribe( res => {
+         if(res.response == 'true'){
+           this.dataToSendToRazorPay.key = res.key;
+           this.dataToSendToRazorPay.amount = "100";
+           this.dataToSendToRazorPay.name = "Demo";
+           this.dataToSendToRazorPay.description = "Demo purchase";
+           this.dataToSendToRazorPay.prefill.name = "Rdm";
+           this.dataToSendToRazorPay.prefill.email = "rdm@rdm.com";
+           this.payWithRazorPay(this.dataToSendToRazorPay);
+         }
+       });
+
+ }
+
+ payWithRazorPay(options){
+   options.handler = ((response) => {
+     let pay_id = response.razorpay_payment_id;
+     this.payemntHandler(pay_id)
+  });
+
+   this.rzp1 = new this.windowRef.nativeWindow.Razorpay(options);
+   this.rzp1.open();
+ }
+
+ payemntHandler(razorpay_payment_id){
+   //console.log('Payment... '+razorpay_payment_id);
+   if (typeof razorpay_payment_id == 'undefined' || razorpay_payment_id < 1) {
+     alert('Try after a while !');
+   }else{
+     alert('Success !');
+   }
  }
 
    getPackInfo(){

@@ -34,8 +34,6 @@
 </nav>
 </div>
 
-
-
 <div class="_main_content_canvas">
   <div class="col-xs-12 col-sm-1"></div>
   <div class="col-xs-12 col-sm-10">
@@ -73,6 +71,21 @@
                 <div class="col-xs-12 _success_msg _the_button" (click)="buyByRazorPay()" *ngIf="buyHide">
                 Buy
                 </div>
+                <form action="/purchase" method="POST">
+                <script
+                    src="https://checkout.razorpay.com/v1/checkout.js"
+                    data-key="<YOUR_KEY_ID>"
+                    data-amount="5000"
+                    data-buttontext="Pay with Razorpay"
+                    data-name="Merchant Name"
+                    data-description="Purchase Description"
+                    data-image="https://your-awesome-site.com/your_logo.jpg"
+                    data-prefill.name="Gaurav Kumar"
+                    data-prefill.email="test@test.com"
+                    data-theme.color="#F37254"
+                ></script>
+                <input type="hidden" value="Hidden Element" name="hidden">
+                </form>
               </div>
             </div>
           </div>
