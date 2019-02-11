@@ -350,13 +350,13 @@ class library extends connector{
     $vals['user_id'] = $jwt['data']['userid'];
     //print_r( $jwt['data']['userid']) ;
     //echo $value['token'];
-    $va = array('user_id' => $vals['user_id'], 'pack_id' => $value['pkg_id']);
+    $va = array('user_id' => $vals['user_id'], 'pack_id' => $value['pkg_id'],'payment_id'=>$value['payment_id']);
     // $newAr = [
     //   'user_id' => $vals['user_id'],
     //   'pack_id' => $value['pkg_id']
     // ];
   //  print_r($va);
-    $query = "INSERT INTO purchase_table(user_id, pack_id)VALUES(?, ?)";
+    $query = "INSERT INTO purchase_table(user_id, pack_id,payment_id)VALUES(?, ?,?)";
     $result = $this->query_db($query, $va);
     // echo $result;
     $this->db_close();

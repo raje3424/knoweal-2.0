@@ -17,8 +17,8 @@ buyHide;packID;
 b_flag;viewPort= "12";viewIconF;viewMode;
 
 
-
 private dataToSendToRazorPay = {
+  "id":"",
   "key": "",
   "amount": "",
   "name": "",
@@ -140,13 +140,13 @@ getAllPacks(){
           }
         };
 
+      //  getPackage(pack_id){
+      //     this.makePur(pack_id);
+      //     this.ngOnInit();
+      // }
 
-       getPackage(pack_id){
-          this.makePur(pack_id);
-          this.ngOnInit();
-      }
-
-    buyByRazorPay(){
+    buyByRazorPay(pack_id,amt){
+      //amt = amt * 100;
       //getting key of razorpay
       let options={
         "v_class":"config",
@@ -159,8 +159,9 @@ getAllPacks(){
       this._service.postRequestWithObservable(options)
           .subscribe( res => {
             if(res.response == 'true'){
+              this.dataToSendToRazorPay.id = pack_id;
               this.dataToSendToRazorPay.key = res.key;
-              this.dataToSendToRazorPay.amount = "100";
+              this.dataToSendToRazorPay.amount = 100 ;
               this.dataToSendToRazorPay.name = "Demo";
               this.dataToSendToRazorPay.description = "Demo purchase";
               this.dataToSendToRazorPay.prefill.name = "Rdm";
@@ -174,29 +175,33 @@ getAllPacks(){
     payWithRazorPay(options){
       options.handler = ((response) => {
         let pay_id = response.razorpay_payment_id;
-        this.payemntHandler(pay_id)
+        let pack_id = response.pack_id;
+        console.log(pack_id);
+        console.log(pay_id);
+        this.payemntHandler(pay_id,pack_id);
      });
-
       this.rzp1 = new this.windowRef.nativeWindow.Razorpay(options);
       this.rzp1.open();
     }
 
-    payemntHandler(razorpay_payment_id){
-      //console.log('Payment... '+razorpay_payment_id);
+    payemntHandler(razorpay_payment_id,pack_id){
+      console.log('Payment... '+razorpay_payment_id);
       if (typeof razorpay_payment_id == 'undefined' || razorpay_payment_id < 1) {
         alert('Try after a while !');
       }else{
+        this.makePur(pack_id,razorpay_payment_id);
         alert('Success !');
       }
     }
 
-      makePur(pack_id){
+      makePur(pack_id,razorpay_payment_id){
        console.log("into make pur");
        let options = {
          "v_class": "library",
          "v_function": "addPurchasePackage",
          "value":{
            "pkg_id":pack_id,
+           "payment_id":razorpay_payment_id,
            "token": localStorage.getItem('token')
          }
        };
@@ -204,6 +209,8 @@ getAllPacks(){
           .subscribe( res => {
          if(res.response == "true"){
            alert("package baught");
+         }else{
+            alert("package baught failed");
          }
        });
      }
@@ -230,7 +237,7 @@ getAllPacks(){
                 //this.buyHide= true;
                 alert("Can be Baught ");
                 console.log("can be bought "+res.tans_id+" ::");
-                this.makePur(pack_id);
+                //this.makePur(pack_id);
             }
           });
         }
