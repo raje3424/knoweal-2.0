@@ -62,7 +62,6 @@ ngOnInit() {
 getAllPacks(){
   var options = {
     "v_class": "library",
-    //"v_function" : "viewAllunpurchasedPackages",
     "v_function": "viewAllPackages",
     "value" :{
         "token": localStorage.getItem('token')
@@ -145,13 +144,12 @@ getAllPacks(){
       //     this.ngOnInit();
       // }
 
-    buyByRazorPay(pack_id,amt){
-      //amt = amt * 100;
-      //getting key of razorpay
-      let options={
-        "v_class":"config",
-        "v_function":"setkey",
+    buyByRazorPay(pack_id){
+      let options = {
+        "v_class": "library",
+        "v_function": "getPackageInfo",
         "value" :{
+            "package_id" : pack_id,
             "token": localStorage.getItem('token')
         }
       }
@@ -159,17 +157,37 @@ getAllPacks(){
       this._service.postRequestWithObservable(options)
           .subscribe( res => {
             if(res.response == 'true'){
-              this.dataToSendToRazorPay.id = pack_id;
-              this.dataToSendToRazorPay.key = res.key;
-              this.dataToSendToRazorPay.amount = 100 ;
-              this.dataToSendToRazorPay.name = "Demo";
-              this.dataToSendToRazorPay.description = "Demo purchase";
-              this.dataToSendToRazorPay.prefill.name = "Rdm";
-              this.dataToSendToRazorPay.prefill.email = "rdm@rdm.com";
-              this.payWithRazorPay(this.dataToSendToRazorPay);
+              let amt = res.result['pack_price'];
+              let name = res.result['package_name'];
+              let desc = res.result['description'];
+              //console.log(amt);
+              //amt = amt * 100;
+              //getting key of razorpay
+              let options={
+                "v_class":"config",
+                "v_function":"setkey",
+                "value" :{
+                    "token": localStorage.getItem('token')
+                }
+              }
+              console.log(options);
+              this._service.postRequestWithObservable(options)
+                  .subscribe( res => {
+                    if(res.response == 'true'){
+                      this.dataToSendToRazorPay.id = pack_id;
+                      this.dataToSendToRazorPay.key = res.key;
+                      this.dataToSendToRazorPay.amount = amt;
+                      this.dataToSendToRazorPay.name = name;
+                      this.dataToSendToRazorPay.description = desc;
+                      this.dataToSendToRazorPay.prefill.name = "Rdm";
+                      this.dataToSendToRazorPay.prefill.email = "rdm@rdm.com";
+                      this.payWithRazorPay(this.dataToSendToRazorPay);
+                    }
+                  });
+            }else{
+              alert("didn't get package info");
             }
           });
-
     }
 
     payWithRazorPay(options){
@@ -178,8 +196,8 @@ getAllPacks(){
         console.log(options);
         let pay_id = response.razorpay_payment_id;
         let pack_id = options.id;
-        console.log(pack_id);
-        console.log(pay_id);
+        // console.log(pack_id);
+        // console.log(pay_id);
         this.payemntHandler(pay_id,pack_id);
      });
       this.rzp1 = new this.windowRef.nativeWindow.Razorpay(options);
@@ -197,8 +215,8 @@ getAllPacks(){
     }
 
       makePur(pack_id,razorpay_payment_id){
-       console.log("into make pur");
-       console.log(razorpay_payment_id);
+       // console.log("into make pur");
+       // console.log(razorpay_payment_id);
        let options = {
          "v_class": "library",
          "v_function": "addPurchasePackage",

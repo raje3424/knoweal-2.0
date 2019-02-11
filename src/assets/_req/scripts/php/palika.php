@@ -65,7 +65,7 @@ class palika extends connector {
           // echo $result;
           // $jwtObj = new jwtGenerator();
           // $jwt = $jwtObj->EncodeToken(array('email'=>$simple_email));
-          //$this->spark($simple_email,$unic);
+          $this->spark($simple_email,$unic);
           $this->db_close();
           $response['response'] = "true";
           $response['errMessage'] = "new user added";
@@ -138,6 +138,8 @@ class palika extends connector {
 
 
   public function spark($simple_email,$unic){
+    // echo $simple_email;
+    // echo $unic;
   $httpClient = new GuzzleAdapter(new Client());
   $sparky = new SparkPost($httpClient, ['key'=>'c78d2fed5e21260e3007da448c7a5d0f14b03688']);
   $sparky->setOptions(['async' => false]);
@@ -150,7 +152,7 @@ class palika extends connector {
     'content' => [
       'from' => 'newsletters@mail.vidaa.in',
       'subject' => 'Oh hey',
-      'html' => '<html><body><p>Testing SparkPost - the most awesomest email service!</p><p>Please verify your email using following link <a href="http://localhost:8888/conf_email.html?chavi="$unic>link</a></p></body></html>'
+      'html' => '<html><body><p>Testing SparkPost - the most awesomest email service!</p><p>Please verify your email using following link <a href="http://localhost:8888/conf_email.html?chavi="'+$unic+'"">link</a></p></body></html>'
     ],
     'recipients' => [
       ['address' => ['email'=>$simple_email]]

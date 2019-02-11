@@ -9,7 +9,7 @@ class email_Confi extends connector{
 
     echo"In conf mail";
 
-    if($theCha!=""){
+    if($theCha!= ""){
       echo "Email >> ".$_GET['email']." cha >> ".$theCha." ::";
       $query = "UPDATE user_instance SET veri_flag = 1 WHERE veri_id = $theCha";
       //$value['email'] = md5($_SESSION['email']);

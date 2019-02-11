@@ -492,14 +492,14 @@ class library extends connector{
 
   private function getPackageInfo($value){
     $this->clearOldResponseData();
-    $query = "SELECT `package_name`,`description`,`package_note` FROM packages WHERE package_id = ?";
+    $query = "SELECT `package_name`,`description`,`package_note`,`pack_price` FROM packages WHERE package_id = ?";
     $result = $this->query_db($query, $value);
     $result = mysqli_fetch_array($result);
     $this->db_close();
     if($result != ""){
       $response['response'] = "true";
       $response['errMessage'] = "Got Package Info successful";
-      $response['result'] = json_encode($result);
+      $response['result'] = $result;
       return $response;
     }else{
       $response['response'] = "false";
