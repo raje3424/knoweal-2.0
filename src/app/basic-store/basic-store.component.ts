@@ -174,8 +174,10 @@ getAllPacks(){
 
     payWithRazorPay(options){
       options.handler = ((response) => {
+        console.log(response);
+        console.log(options);
         let pay_id = response.razorpay_payment_id;
-        let pack_id = response.pack_id;
+        let pack_id = options.id;
         console.log(pack_id);
         console.log(pay_id);
         this.payemntHandler(pay_id,pack_id);
@@ -196,6 +198,7 @@ getAllPacks(){
 
       makePur(pack_id,razorpay_payment_id){
        console.log("into make pur");
+       console.log(razorpay_payment_id);
        let options = {
          "v_class": "library",
          "v_function": "addPurchasePackage",
