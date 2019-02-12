@@ -12,7 +12,6 @@
 */
 
  include_once ("serverConnector.php");
- //include_once ("sessionConn.php");
  include_once ("jwtGenerator.php");
 
  require 'vendor/autoload.php';
@@ -34,11 +33,6 @@ class palika extends connector {
       return $this->$operation($value);
     }
   }
-    public function hello($value){
-      echo "Hello from palika";
-      $result= $this->db_connection();
-      echo "result:".$result;
-    }
 
   public function signup($value){
     $this->clearOldResponseData();
@@ -90,28 +84,41 @@ class palika extends connector {
     $oBasic = new basic();
     $ifUser = $oBasic->userAdaptor('checkIfEmailExists', md5($value['email']));
     if($ifUser == "true"){
-      $query = "SELECT `pass` FROM `user_instance` WHERE `email` = ?";
+      //check whether Verification flag is set
+      $query = "SELECT `veri_flag` FROM `user_instance` WHERE `email` = ?";
       $email = md5($value['email']);
       $result = $this->query_db($query, $email);
       $result = mysqli_fetch_array($result);
-      if($result['pass'] == substr(md5($value['password']), 0, 50)){
-        //getting user id
-        $query = "SELECT `user_id` from `user_profile` WHERE `email` = ?";
-        $getid = $this->query_db($query,$value['email']);
-        $getid=mysqli_fetch_array($getid);
-        //print_r($getid);
-        //echo $getid;
-        $jwtObj = new jwtGenerator();
-        $jwt = $jwtObj->EncodeToken(array('email'=>$value['email'],'userid'=>$getid['user_id']));
-        $this->db_close();
-        $response['response'] = "true";
-        $response['errMessage'] = "Login Success";
-        $response['token'] = $jwt;
-        //return $ans;
-        return $response;
+      //print_r($result) ;
+      if($result['veri_flag'] == 1){
+        //check whether info flag is set
+        $query = "SELECT `pass` FROM `user_instance` WHERE `email` = ?";
+        $email = md5($value['email']);
+        $result = $this->query_db($query, $email);
+        $result = mysqli_fetch_array($result);
+        if($result['pass'] == substr(md5($value['password']), 0, 50)){
+          //getting user id
+          $query = "SELECT `user_id` from `user_profile` WHERE `email` = ?";
+          $getid = $this->query_db($query,$value['email']);
+          $getid=mysqli_fetch_array($getid);
+          //print_r($getid);
+          //echo $getid;
+          $jwtObj = new jwtGenerator();
+          $jwt = $jwtObj->EncodeToken(array('email'=>$value['email'],'userid'=>$getid['user_id']));
+          $this->db_close();
+          $response['response'] = "true";
+          $response['errMessage'] = "Login Success";
+          $response['token'] = $jwt;
+          //return $ans;
+          return $response;
+        }else{
+          $response['response'] = "pfalse";
+          $response['errMessage'] = "Password mismatch.";
+          return $response;
+        }
       }else{
-        $response['response'] = "pfalse";
-        $response['errMessage'] = "Password mismatch.";
+        $response['response'] = "vfalse";
+        $response['errMessage'] = "Please verify your email!";
         return $response;
       }
     }else {
@@ -120,6 +127,7 @@ class palika extends connector {
       $response['errMessage'] = "Invalid Username !!!";
       return $response;
     }
+
   }
 
   public function clearOldResponseData(){

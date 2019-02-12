@@ -21,7 +21,7 @@ export class PackageViewerComponent implements OnInit {
     "amount": "",
     "name": "",
     "description": "",
-    "image": "/assets/_req/fonts_images/images/landin_page/vidaa_logo.PNG",
+    "image": "/assets/_req/fonts_images/images/knoweal.JPG",
     "prefill": {
         "name": "",
         "email": ""
@@ -215,6 +215,8 @@ constructor(private route: ActivatedRoute,private _routes: Router,private _servi
         }
       });
     }
+
+
    getPackInfo(){
        this.checkIfPur(this.pkg_id);
        let options = {

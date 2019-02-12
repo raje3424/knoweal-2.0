@@ -89,6 +89,9 @@ response:any;
               }else if(res.response == 'pfalse'){
                 this.loginMsg = res.errMessage;
                 this.logInmsg_class = "_error_msg";
+              }else if(res.response == 'vfalse'){
+                this.loginMsg = res.errMessage;
+                this.logInmsg_class = "_error_msg";
               }else if(res.response == 'true'){
                   localStorage.setItem('token', JSON.stringify(res.token));
                   this.loginMsg = "Loading profile...";
@@ -137,7 +140,8 @@ response:any;
                 this.siCoPass = "";
                 // this.loginMsg = "Preparing profile...";
                 this.signmsg_class = "_success_msg";
-                alert('Registration successfull, Login now!!!');
+                alert('Registration Success, Please verify Email');
+                //alert('Registration successful, Login now!!!');
                 this.logSiFunc("login");
               }else{
                 if(res.response == "rfalse"){

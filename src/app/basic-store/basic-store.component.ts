@@ -23,7 +23,7 @@ private dataToSendToRazorPay = {
   "amount": "",
   "name": "",
   "description": "",
-  "image": "/assets/_req/fonts_images/images/landin_page/vidaa_logo.PNG",
+  "image": "/assets/_req/fonts_images/images/knoweal.JPG",
   "prefill": {
       "name": "",
       "email": ""
