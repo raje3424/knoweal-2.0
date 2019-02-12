@@ -103,7 +103,7 @@ constructor(private route: ActivatedRoute,private _routes: Router,private _servi
     this._routes.navigate(['/basic']);
  }
 
- getPackage(pkg_id){
+ getPackage(){
    let options = {
        "v_class": "library",
        "v_function": "addPurchasePackage",
@@ -126,12 +126,12 @@ constructor(private route: ActivatedRoute,private _routes: Router,private _servi
      });
  }
 
- buyByRazorPay(pack_id){
+ buyByRazorPay(){
    let options = {
      "v_class": "library",
      "v_function": "getPackageInfo",
      "value" :{
-         "package_id" : pack_id,
+         "package_id" : this.pkg_id,
          "token": localStorage.getItem('token')
      }
    }
@@ -156,7 +156,7 @@ constructor(private route: ActivatedRoute,private _routes: Router,private _servi
            this._service.postRequestWithObservable(options)
                .subscribe( res => {
                  if(res.response == 'true'){
-                   this.dataToSendToRazorPay.id = pack_id;
+                   this.dataToSendToRazorPay.id = this.pkg_id;
                    this.dataToSendToRazorPay.key = res.key;
                    this.dataToSendToRazorPay.amount = amt;
                    this.dataToSendToRazorPay.name = name;

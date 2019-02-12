@@ -14,7 +14,7 @@
               <span class="_tbloc_point_active" [ngClass]="info_Desc_class" (click)="content_view_switch = 'packDInfo';">by {{author_name}}</span>
             </div>
             <div class="_tbloc_point_canvas">
-              <div class="_g_button _green_back" (click)="buyByRazorPay(pkgs.package_id)" *ngIf="!libButtonHF">
+              <div class="_g_button _green_back" (click)="buyByRazorPay()" *ngIf="!libButtonHF">
                 Buy for {{price}}
               </div>
               <!-- <div class="_g_button _green_back" (click)="getPackage(package_id)" *ngIf="!libButtonHF">
