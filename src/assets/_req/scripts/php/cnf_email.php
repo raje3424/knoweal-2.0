@@ -1,31 +1,30 @@
 <?php
-include("sessionConn.php");
+//include("sessionConn.php");
 include("serverConnector.php");
 
 class email_Confi extends connector{
 
   public function confermEmail($theCha){
-    $value;
-
-    echo"In conf mail";
-
+    //$value;
+    //echo"In conf mail";
     if($theCha!= ""){
-      echo "Email >> ".$_GET['email']." cha >> ".$theCha." ::";
-      $query = "UPDATE user_instance SET veri_flag = 1 WHERE veri_id = $theCha";
-      //$value['email'] = md5($_SESSION['email']);
-      //$value['veri_id'] = $theCha;
-      $result = $this->query_db($query, $value);
-      echo "Result : ".$result;
+      echo  "cha >> ".$theCha." ::";
+      $query = "UPDATE user_instance SET veri_flag = 1 WHERE veri_id = ?";
+      $result = $this->query_db($query,  $theCha);
+      //echo "Result : ".$result;
       $this->db_close();
-      if ($result == 1)
-        return "true";
+      if ($result == 1){
+          return "true";
+          alert("Verification Success please login");
+      }
     }else{
      echo " the cha >> ".$theCha." ::";
     }
   }
 
   public function redir(){
-    header('Location: http://www.knoweal.com/');
+    header('Location:localhost:4200');
+    //header('Location: http://www.knoweal.com/');
     exit;
   }
 }
@@ -33,7 +32,7 @@ class email_Confi extends connector{
 $theCha = $_GET['chavi'];
 $oE = new email_Confi();
 $retVal =  $oE->confermEmail($theCha);
-echo $retVal;
+//echo $retVal;
 if($retVal == "true"){
   $oE->redir();
 }else{

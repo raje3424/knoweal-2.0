@@ -55,16 +55,11 @@ class palika extends connector {
       $value['veri_id'] = $unq;
       $unic= $value['veri_id'];
       if($value['email'] != "" && $value['password'] != ""){
+        $this->spark($simple_email,$unic);
         $query = "INSERT INTO user_instance (email, pass, veri_id) VALUES(?, ?, ?)";
         //echo vsprintf( str_replace("?","'%s'",$query),$value);
         $result = $this->query_db($query, $value);
         if($result == 1){
-          //getting user id
-          // $query="SELECT user_id from user_profile WHERE email= $simple_email";
-          // $result = $this->query_db($query);
-          // echo $result;
-          // $jwtObj = new jwtGenerator();
-          // $jwt = $jwtObj->EncodeToken(array('email'=>$simple_email));
           $this->spark($simple_email,$unic);
           $this->db_close();
           $response['response'] = "true";
@@ -108,10 +103,6 @@ class palika extends connector {
         //echo $getid;
         $jwtObj = new jwtGenerator();
         $jwt = $jwtObj->EncodeToken(array('email'=>$value['email'],'userid'=>$getid['user_id']));
-        //print_r($jwtObj.jwttoken);
-        //print_r($jwt);
-        /*echo "\nToken is : ".$jwtObj->IsTokenValid($jwt)."\n";
-        $jwtObj->DecodeToken($jwt);*/
         $this->db_close();
         $response['response'] = "true";
         $response['errMessage'] = "Login Success";
@@ -143,8 +134,6 @@ class palika extends connector {
   $httpClient = new GuzzleAdapter(new Client());
   $sparky = new SparkPost($httpClient, ['key'=>'c78d2fed5e21260e3007da448c7a5d0f14b03688']);
   $sparky->setOptions(['async' => false]);
-  //$email= "$value['email']";
-  //echo $unic;
   $results = $sparky->transmissions->post([
     'options' => [
       'sandbox' => false
@@ -152,7 +141,7 @@ class palika extends connector {
     'content' => [
       'from' => 'newsletters@mail.vidaa.in',
       'subject' => 'Oh hey',
-      'html' => '<html><body><p>Testing SparkPost - the most awesomest email service!</p><p>Please verify your email using following link <a href="http://localhost:8888/conf_email.html?chavi="'+$unic+'"">link</a></p></body></html>'
+      'html' => '<html><body><p>Testing SparkPost - the most awesomest email service!</p><p>Please verify your email using following link <a href="http://localhost:8888/cnf_email.php?chavi='.$unic.'">link</a></p></body></html>'
     ],
     'recipients' => [
       ['address' => ['email'=>$simple_email]]
@@ -162,5 +151,5 @@ class palika extends connector {
 
 }
 
-  error_reporting( E_ALL );
+error_reporting( E_ALL );
 ?>

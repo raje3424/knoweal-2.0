@@ -16,6 +16,7 @@ export class PackageViewerComponent implements OnInit {
   author_name;price;req;orderObj:any=[];
   backTo;
   private dataToSendToRazorPay = {
+    "id":"",
     "key": "",
     "amount": "",
     "name": "",
@@ -125,12 +126,12 @@ constructor(private route: ActivatedRoute,private _routes: Router,private _servi
      });
  }
 
- buyByRazorPay(){
-   //getting key of razorpay
-   let options={
-     "v_class":"config",
-     "v_function":"setkey",
+ buyByRazorPay(pack_id){
+   let options = {
+     "v_class": "library",
+     "v_function": "getPackageInfo",
      "value" :{
+         "package_id" : pack_id,
          "token": localStorage.getItem('token')
      }
    }
@@ -138,37 +139,82 @@ constructor(private route: ActivatedRoute,private _routes: Router,private _servi
    this._service.postRequestWithObservable(options)
        .subscribe( res => {
          if(res.response == 'true'){
-           this.dataToSendToRazorPay.key = res.key;
-           this.dataToSendToRazorPay.amount = "100";
-           this.dataToSendToRazorPay.name = "Demo";
-           this.dataToSendToRazorPay.description = "Demo purchase";
-           this.dataToSendToRazorPay.prefill.name = "Rdm";
-           this.dataToSendToRazorPay.prefill.email = "rdm@rdm.com";
-           this.payWithRazorPay(this.dataToSendToRazorPay);
+           let amt = res.result['pack_price'];
+           let name = res.result['package_name'];
+           let desc = res.result['description'];
+           //console.log(amt);
+           amt = amt * 100;
+           //getting key of razorpay
+           let options={
+             "v_class":"config",
+             "v_function":"setkey",
+             "value" :{
+                 "token": localStorage.getItem('token')
+             }
+           }
+           console.log(options);
+           this._service.postRequestWithObservable(options)
+               .subscribe( res => {
+                 if(res.response == 'true'){
+                   this.dataToSendToRazorPay.id = pack_id;
+                   this.dataToSendToRazorPay.key = res.key;
+                   this.dataToSendToRazorPay.amount = amt;
+                   this.dataToSendToRazorPay.name = name;
+                   this.dataToSendToRazorPay.description = desc;
+                   this.dataToSendToRazorPay.prefill.name = "Rdm";
+                   this.dataToSendToRazorPay.prefill.email = "rdm@rdm.com";
+                   this.payWithRazorPay(this.dataToSendToRazorPay);
+                 }
+               });
+         }else{
+           alert("didn't get package info");
          }
        });
-
  }
 
  payWithRazorPay(options){
    options.handler = ((response) => {
      let pay_id = response.razorpay_payment_id;
-     this.payemntHandler(pay_id)
+     let pack_id = options.id;
+     this.payemntHandler(pay_id,pack_id)
   });
 
    this.rzp1 = new this.windowRef.nativeWindow.Razorpay(options);
    this.rzp1.open();
  }
 
- payemntHandler(razorpay_payment_id){
+ payemntHandler(razorpay_payment_id,pack_id){
    //console.log('Payment... '+razorpay_payment_id);
    if (typeof razorpay_payment_id == 'undefined' || razorpay_payment_id < 1) {
      alert('Try after a while !');
    }else{
+     this.makePur(pack_id,razorpay_payment_id);
      alert('Success !');
    }
  }
 
+    //purchase package function
+     makePur(pack_id,razorpay_payment_id){
+      // console.log("into make pur");
+      // console.log(razorpay_payment_id);
+      let options = {
+        "v_class": "library",
+        "v_function": "addPurchasePackage",
+        "value":{
+          "pkg_id":pack_id,
+          "payment_id":razorpay_payment_id,
+          "token": localStorage.getItem('token')
+        }
+      };
+      this._service.postRequestWithObservable(options)
+         .subscribe( res => {
+        if(res.response == "true"){
+          alert("package baught");
+        }else{
+           alert("package baught failed");
+        }
+      });
+    }
    getPackInfo(){
        this.checkIfPur(this.pkg_id);
        let options = {
