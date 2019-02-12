@@ -1,14 +1,10 @@
 <?php
-//include("sessionConn.php");
 include("serverConnector.php");
-
 class email_Confi extends connector{
 
   public function confermEmail($theCha){
-    //$value;
-    //echo"In conf mail";
     if($theCha!= ""){
-      echo  "cha >> ".$theCha." ::";
+    //  echo  "cha >> ".$theCha." ::";
       $query = "UPDATE user_instance SET veri_flag = 1 WHERE veri_id = ?";
       $result = $this->query_db($query,  $theCha);
       //echo "Result : ".$result;
@@ -18,13 +14,12 @@ class email_Confi extends connector{
           alert("Verification Success please login");
       }
     }else{
-     echo " the cha >> ".$theCha." ::";
+     //echo " the cha >> ".$theCha." ::";
     }
   }
 
   public function redir(){
-    header('Location:localhost:4200');
-    //header('Location: http://www.knoweal.com/');
+    header('Location: http://localhost:4200');
     exit;
   }
 }
