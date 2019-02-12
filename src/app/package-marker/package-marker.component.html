@@ -20,7 +20,7 @@
             <label> Package Name </label>
             <input type="text" name="packName" [ngClass]="name_class" class="_g1_input ¸ _no_border_radis" placeholder="Package Name" [(ngModel)]="packName" [disabled]="pkg_edit_flag"/>
             <label> Package Price </label>
-            <input type="number" name="packPrice" [ngClass]="name_class" class="_g1_input ¸ _no_border_radis" placeholder="Package Price" [(ngModel)]="packPrice" [disabled]="pkg_edit_flag"/>
+            <input (keypress)="numberOnly($event)" name="packPrice" [ngClass]="name_class" class="_g1_input ¸ _no_border_radis" placeholder="Package Price" [(ngModel)]="packPrice" [disabled]="pkg_edit_flag"/>
           </div>
           <div class="col-xs-12 col-sm-8">
             <label> Package Description </label>
