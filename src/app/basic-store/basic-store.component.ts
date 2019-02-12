@@ -160,8 +160,8 @@ getAllPacks(){
               let amt = res.result['pack_price'];
               let name = res.result['package_name'];
               let desc = res.result['description'];
-              //console.log(amt);
-              //amt = amt * 100;
+              console.log(amt);
+              amt = amt * 100;
               //getting key of razorpay
               let options={
                 "v_class":"config",
