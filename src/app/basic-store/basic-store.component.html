@@ -8,15 +8,15 @@
       </div>
       <div class="col-xs-12 col-sm-9 col-md-8 col-lg-6">
         <div class="col-xs-3 _margin_top_5">
-          <a><span class="_nav_tile" [ngClass]="lib_activeClass" (click)="navlib();">Library</span></a>
+          <a><span class="_nav_tile" (click)="navlib();">Library</span></a>
         </div>
         <div class="col-xs-3 _margin_top_5">
-          <a><span class="_nav_tile" [ngClass]="store_activeClass" (click)="navstream()">Stream</span></a>
+          <a><span class="_nav_tile {{store_activeClass}}" (click)="navstream()">Stream</span></a>
         </div>
         <div class="col-xs-3 _margin_top_5">
           <a>
             <span class="_profile_ec_noti" ng-show="profile_ec_noti_flag">{{profile_noti}}</span>
-            <span class="_nav_tile" [ngClass]="pro_acriveClass" (click)="navpro();">Profile </span>
+            <span class="_nav_tile" (click)="navpro();">Profile </span>
           </a>
         </div>
         <div class="col-xs-3 hidden-sm hidden-md hidden-lg _nav_tile_logout _error_msg">

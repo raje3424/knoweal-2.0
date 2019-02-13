@@ -10,7 +10,10 @@ import { WindowService } from '../_service/window.service';
   styleUrls: ['./basic-store.component.css']
 })
 export class BasicStoreComponent implements OnInit {
-profile_noti;pro_acriveClass;lib_activeClass;
+profile_noti;
+pro_acriveClass:any;
+lib_activeClass:any;
+store_activeClass:any;
 boughtPackMsg= true;
 pkgData:any=[];
 buyHide;packID;
@@ -55,6 +58,8 @@ ngOnInit() {
         this.getAllPacks();
       }
     });
+
+    this.store_activeClass = '_nav_tile_selected';
   }
 
   getAllPacks(){
@@ -93,6 +98,30 @@ ngOnInit() {
 
       navstream(){
         this._routes.navigate(['/basic']);
+      }
+
+      nav(present){
+        switch (present) {
+              case 'lib_activeClass':
+                  this.pro_acriveClass = "";
+                  this.lib_activeClass = "_nav_tile_selected";
+                  this.store_activeClass = "";
+                break;
+              case 'pro_acriveClass':
+                this.pro_acriveClass = "_nav_tile_selected";
+                this.lib_activeClass = "";
+                this.store_activeClass = "";
+                break;
+              case 'store_activeClass':
+                this.pro_acriveClass = "";
+                this.lib_activeClass = "";
+                this.store_activeClass = "_nav_tile_selected";
+                break;
+              default:
+                this.pro_acriveClass = "";
+                this.lib_activeClass = "_nav_tile_selected";
+                this.store_activeClass = "";
+            }
       }
 
       viewChanger(){

@@ -113,6 +113,8 @@ export class UserProfileComponent implements OnInit {
             });
           }
       });
+
+      this.pro_acriveClass = '_nav_tile_selected'
   }
 
   //logout function

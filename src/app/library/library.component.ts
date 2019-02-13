@@ -10,12 +10,15 @@ import { KnowelApiService } from '../_service/knowel-api.service';
 
 export class LibraryComponent implements OnInit {
 
+pro_acriveClass:any;
+lib_activeClass:any;
+store_activeClass:any;
 pur_conSelect = '_contentSwitchPanel';
 purGFlag = false;
 ownGFlag = false;
 poFlag:any;create_ovp_flag:any;
 own_conSelect:string;
-profile_noti:string;pro_acriveClass:string;lib_activeClass:string;
+profile_noti:string;
 boughtPackMsg=true;
 pur_pkgData:any = [];
 createPackMsg= true;
@@ -42,6 +45,7 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
             this.nav('pur');
         }
       //this.idAsEmail = this._service.canActivate();
+      this.lib_activeClass = '_nav_tile_selected';
   });
 }
 
@@ -175,6 +179,30 @@ constructor(private _routes: Router,private _service: KnowelApiService){ }
 
   navstream(){
     this._routes.navigate(['/basic']);
+  }
+
+  navMain(present){
+    switch (present) {
+          case 'lib_activeClass':
+              this.pro_acriveClass = "";
+              this.lib_activeClass = "_nav_tile_selected";
+              this.store_activeClass = "";
+            break;
+          case 'pro_acriveClass':
+            this.pro_acriveClass = "_nav_tile_selected";
+            this.lib_activeClass = "";
+            this.store_activeClass = "";
+            break;
+          case 'store_activeClass':
+            this.pro_acriveClass = "";
+            this.lib_activeClass = "";
+            this.store_activeClass = "_nav_tile_selected";
+            break;
+          default:
+            this.pro_acriveClass = "";
+            this.lib_activeClass = "_nav_tile_selected";
+            this.store_activeClass = "";
+        }
   }
 
   //logout function
