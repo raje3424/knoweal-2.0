@@ -142,20 +142,20 @@
                   <div class="row _given_question_canvas _margin_top_5 _margin_bottom_5"  *ngFor="let x of theQestionList;let i = index">
                     <div id="questionListCanvas_{{x.q_id}}" [hidden]="hideme[x.q_id]">
                       <div class="_question_content">
-                        {{x.question}}
+                        Q.{{x.question}}?
                       </div>
                       <div class="col-xs-12 col-sm-12 _margin_bottom_5">
                         <div class="row _answer_content_v _margin_top_5 _margin_bottom_5"  [ngClass]="{'_correct_ans': x.opt1 == x.anskey}">
-                        {{x.opt1}}
+                        1. {{x.opt1}}.
                         </div>
                         <div class="row _answer_content_v _margin_top_5 _margin_bottom_5"  [ngClass]="{'_correct_ans': x.opt2 == x.anskey}">
-                          {{x.opt2}}
+                          2. {{x.opt2}}.
                         </div>
                         <div class="row _answer_content_v _margin_top_5 _margin_bottom_5" [ngClass]="{'_correct_ans': x.opt3 == x.anskey}">
-                          {{x.opt3}}
+                          3. {{x.opt3}}.
                         </div>
                         <div class="row _answer_content_v _margin_top_5 _margin_bottom_5" [ngClass]="{'_correct_ans': x.opt4 == x.anskey}">
-                          {{x.opt4}}
+                          4. {{x.opt4}}.
                         </div>
                         <hr/>
                       </div>

@@ -1,5 +1,4 @@
-<div class="container-fluid" style="margin-top:5%;">
-  </div>
+
 <div class="container-fluid">
 <nav class="navbar navbar-fixed-top" ngOnInit="start_check();">
   <div class="col-xs-12">
@@ -59,7 +58,7 @@
 
         <div class="col-xs-12 col-sm-12" *ngIf="boughtPackMsg">
           <p class="lead">
-            You have not bought/ subscribed any package yet, <a style="cursor: pointer;">Lets Explore the package store now... :)</a>
+            You have not bought/ subscribed any package yet, <a [routerLink]="['/basic']" style="cursor: pointer;">Lets Explore the package store now... :)</a>
           </p>
         </div>
 
@@ -74,7 +73,7 @@
                   by {{pkgs.package_author}}
                 </div>
                 <div class="col-xs-12 _success_msg _the_button" (click)="solveThePack(pkgs.package_id)" *ngIf="pkgs.no_of_questions!=0">
-                  Solve 
+                  Solve
                 </div>
               </div>
             </div>
