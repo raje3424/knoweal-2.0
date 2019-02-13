@@ -510,7 +510,7 @@ class library extends connector{
 
   private function getPur_PackageInfo($value){
     $this->clearOldResponseData();
-    $query = "SELECT `package_name`,`description`, `package_note`, `full_name`,'pack_price' FROM packages a, user_profile b WHERE package_id = ? and a.package_author = b.user_id";
+    $query = "SELECT `package_name`,`description`, `package_note`, `full_name`,`pack_price` FROM packages a, user_profile b WHERE package_id = ? and a.package_author = b.user_id";
     $result = $this->query_db($query, $value);
     $result = mysqli_fetch_array($result);
     $this->db_close();
@@ -526,7 +526,6 @@ class library extends connector{
       //echo $result;
       $response['response'] = "true";
       $response['errMessage'] = 'Got PackageInfo';
-      //$response['result'] = json_encode($retVal);
       $response['result'] = $retVal;
       return $response;
     }else{
