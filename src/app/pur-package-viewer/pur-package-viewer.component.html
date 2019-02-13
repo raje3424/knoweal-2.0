@@ -74,21 +74,21 @@
                   <div class="row _given_question_canvas _margin_top_5 _margin_bottom_5" *ngFor="let x of theQestionList" id="question_{{x.q_id}}">
                     <div id="questionListCanvas_{{x.q_id}}">
                       <div class="_question_content">
-                        {{x.question}}
+                        Q. {{x.question}} ?
                       </div>
 
                       <div class="col-xs-12 col-sm-12  _margin_bottom_5">
                         <div id="ansOpt_{{x.q_id}}_1" class="row _answer_content _margin_top_5 _margin_bottom_5" [ngClass]="opt1Class"  (click)="demo(x.q_id, '1'); x.anskey = x.opt1; getAnsCount()">
-                          {{x.opt1}}
+                          1. {{x.opt1}}.
                         </div>
                         <div id="ansOpt_{{x.q_id}}_2" class="row _answer_content _margin_top_5 _margin_bottom_5" [ngClass]="opt2Class"  (click)="demo(x.q_id, '2'); x.anskey = x.opt2; getAnsCount()">
-                          {{x.opt2}}
+                          2. {{x.opt2}}.
                         </div>
                         <div id="ansOpt_{{x.q_id}}_3" class="row _answer_content _margin_top_5 _margin_bottom_5" [ngClass]="opt3Class"  (click)="demo(x.q_id, '3'); x.anskey = x.opt3; getAnsCount()">
-                          {{x.opt3}}
+                          3. {{x.opt3}}.
                         </div>
                         <div id="ansOpt_{{x.q_id}}_4" class="row _answer_content _margin_top_5 _margin_bottom_5" [ngClass]="opt4Class"  (click)="demo(x.q_id, '4'); x.anskey = x.opt4; getAnsCount()">
-                          {{x.opt4}}
+                          4. {{x.opt4}}.
                         </div>
                         <div class="_the_ans_stat">
                           {{x.rkie}}
