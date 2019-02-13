@@ -262,25 +262,56 @@ class library extends connector{
    $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
    $vals['user_id'] = $jwt['data']['userid'];
    //print_r($vals['user_id']);
-   $retVal = [];
-   $query ="SELECT DISTINCT `package_id`, `package_name`, `full_name`, `description`,`pack_price`,`tans_id` FROM packages a, user_profile b, purchase_table c WHERE `package_author` != ? and c.user_id != b.user_id";
-   // $query="SELECT `package_id`, `package_name`, `full_name`, `description`, `pack_price`,`tans_id` FROM packages a, user_profile b, purchase_table c WHERE `package_author` != ? and a.package_author = b.user_id and c.user_id != b.user_id";
-   $result = $this->query_db($query, $vals['user_id']);
-   $i = 0;
+   $purch = $this->purchasePackageId($vals['user_id']);
+   //print_r($purch);
+   //print_r($purch['result']);
+   //$vals['purchase_id'] = $purch['result'];
+   //print_r($vals);
+   $retVal = array();
+   $newret = array();
+   $reqResult = array();
+
+   $query = "SELECT `a`.`package_id`, `a`.`package_name`, `b`.`full_name`, `a`.`description`, `a`.`pack_price` FROM packages a, user_profile b WHERE a.package_author != ? and a.package_author = b.user_id GROUP BY a.package_id ";
+
+   $result = $this->query_db($query, $vals);
+   //echo "Result :".$result;
+   //print_r($result);
    while($row = mysqli_fetch_array($result)){
-     array_push($retVal, array(
-       "package_id" => $row['package_id'],
-       "package_name" => $row['package_name'],
-       "description" => $row['description'],
-       "author"=>$row['full_name']
-     ));
-   }
+      array_push($retVal, array(
+        "package_id" => $row['package_id'],
+        "package_name" => $row['package_name'],
+        "author_name" => $row['full_name'],
+        "description" => $row['description'],
+        "packPrice" => $row['pack_price'],
+        "author" => $row['full_name']
+      ));
+    }
+    $newret = $this->getUnpurchasedPackages($retVal,$purch);
+    //print_r($retVal);
+    /*for($i = 0; $i < sizeof($retVal); $i++){
+      for($j = 0; $j < sizeof($purch['result']); $j++){
+        // echo "\nfirst : ".$retVal[$i]['package_id']." second : ".$purch['result'][$j]['package_id'];
+
+          if( $purch['result'][$j]['package_id'] == $retVal[$i]['package_id']){
+            array_push($newret, array(
+                "package_id" => $retVal[$i]['package_id'],
+                "package_name" => $retVal[$i]['package_name'],
+                "author_name" => $retVal[$i]['author_name'],
+                "description" => $retVal[$i]['description'],
+                "packPrice" => $retVal[$i]['packPrice'],
+                "author" => $retVal[$i]['author']
+            ));
+          }
+      }
+    }
+    print_r($newret);*/
+    //print_r($reqResult);
    $this->db_close();
-   if($result != ""){
+
+   if(sizeof($newret) > 0){
      $response['response'] = "true";
      $response['errMessage'] = "";
-     $response['result'] = $retVal;
-   //  $response['result'] = json_encode($retVal);
+     $response['result'] = $newret;
      return $response;
    }else{
      $response['response'] = "false";
@@ -289,6 +320,36 @@ class library extends connector{
    }
  }
 
+  private function getUnpurchasedPackages($retVal,$purch){
+    //print_r($retVal);
+    //print_r($purch);
+    $newret = array();
+    for ($i=0; $i < sizeof($retVal); $i++) {
+      $isMatched = true;
+      for ($j=0; $j < sizeof($purch['result']); $j++) {
+        if ($purch['result'][$j]['package_id'] != $retVal[$i]['package_id']) {
+          $isMatched = false;
+        }else if ($purch['result'][$j]['package_id'] == $retVal[$i]['package_id']){
+          $isMatched = true;
+          $j = sizeof($purch['result']);
+        }
+      }
+      if (!$isMatched) {
+        array_push($newret, array(
+            "package_id" => $retVal[$i]['package_id'],
+            "package_name" => $retVal[$i]['package_name'],
+            "author_name" => $retVal[$i]['author_name'],
+            "description" => $retVal[$i]['description'],
+            "packPrice" => $retVal[$i]['packPrice'],
+            "author" => $retVal[$i]['author']
+        ));
+      }
+
+    }
+    //print_r($newret);
+    return $newret;
+  }
+
   private function viewOwnPackages($value){
     $this->clearOldResponseData();
     $jwtObj = new jwtGenerator();
@@ -296,7 +357,7 @@ class library extends connector{
     $vals['user_id'] = $jwt['data']['userid'];
     //print_r($vals['user_id']);
     $retVal = [];
-    $query = "SELECT `package_id`, `package_name`, `description` FROM `packages` WHERE `package_author` = ?";
+    $query = "SELECT `package_id`, `package_name`, `description`,`pack_price` FROM `packages` WHERE `package_author` = ?";
     $result = $this->query_db($query, $vals['user_id']);
     $i = 0;
     // print_r ($result);
@@ -306,7 +367,8 @@ class library extends connector{
       array_push($retVal, array(
         "package_id" => $row['package_id'],
         "package_name" => $row['package_name'],
-        "description" => $row['description']
+        "description" => $row['description'],
+        "packPrice" =>$row['pack_price']
       ));
     }
     $this->db_close();
@@ -329,17 +391,9 @@ class library extends connector{
     $result = mysqli_fetch_array($result);
     //$this->db_close();
       if($result != ""){
-    // $response['response'] = "true";
-    // $response['errMessage'] = "";
-    //$response['result'] = $result['package_version'];
-    return $result['package_version'];
-  }
-  // else{
-  //   $response['response'] = "false";
-  //   $response['errMessage'] = "Something is wrong";
-  //   return $response;
-  // }
-}
+        return $result['package_version'];
+      }
+    }
 
 //Add,Delete,Update,Select and related dependencies of Store
 
@@ -379,11 +433,8 @@ class library extends connector{
     $jwt = json_decode(json_encode($jwtObj->DecodeToken(json_decode($value['token']))),true);
     $vals['user_id'] = $jwt['data']['userid'];
     $retVal = [];
-  //  $res = $this->db_connection();
-    //if($res){
       $query = "SELECT `package_id`, `package_name`, `full_name`, `description` ,`no_of_questions` from packages pkt, user_profile upt, purchase_table put WHERE put.user_id = ? and pkt.package_id = put.pack_id and pkt.package_author = upt.user_id";
       $result = $this->query_db($query, $vals['user_id']);
-      // if($result == 1){
       while ($row = mysqli_fetch_array($result)) {
         array_push($retVal, array(
           "package_id" => $row['package_id'],
@@ -393,23 +444,17 @@ class library extends connector{
           "no_of_questions" => $row['no_of_questions']
         ));
      }
-   //}
-      $this->db_close();//
+      $this->db_close();
       if($retVal != ""){
         $response['response'] = "true";
         $response['errMessage'] = 'Displaying Purchase Package';
-        //$response['result'] = $retVal;
         $response['result']= $retVal;
         return $response;
-        //return json_encode($retVal);
       }else{
         $response['response'] = "false";
         $response['errMessage'] = 'Diaplaying Purchase Package Failed';
         return $response;
       }
-    // }else{
-    //   echo "Db Connection lost";
-    // }
   }
 
   private function checkIfPur($value){
@@ -465,7 +510,7 @@ class library extends connector{
 
   private function getPur_PackageInfo($value){
     $this->clearOldResponseData();
-    $query = "SELECT `package_name`,`description`, `package_note`, `full_name` FROM packages a, user_profile b WHERE package_id = ? and a.package_author = b.user_id";
+    $query = "SELECT `package_name`,`description`, `package_note`, `full_name`,'pack_price' FROM packages a, user_profile b WHERE package_id = ? and a.package_author = b.user_id";
     $result = $this->query_db($query, $value);
     $result = mysqli_fetch_array($result);
     $this->db_close();
@@ -474,12 +519,13 @@ class library extends connector{
         "author_name" => $result['full_name'],
         "packName" => $result['package_name'],
         "packDescription" => $result['description'],
-        "packNotes" => $result['package_note']
+        "packNotes" => $result['package_note'],
+        "packPrice" => $result['pack_price']
       ];
       //print_r(json_encode($result));
       //echo $result;
       $response['response'] = "true";
-      $response['errMessage'] = 'Got Pur_PackageInfo';
+      $response['errMessage'] = 'Got PackageInfo';
       //$response['result'] = json_encode($retVal);
       $response['result'] = $retVal;
       return $response;
@@ -630,11 +676,19 @@ class library extends connector{
     $this->clearOldResponseData();
     $query = "SELECT `pack_id` FROM purchase_table WHERE user_id = ?";
     $result = $this->query_db($query,$value);
-    $result = mysqli_fetch_array($result);
-    $this->db_close();
-    $response['response'] = "true";
-    $response['errMessage'] = 'Got purchasePackageId Success';
-    $response['result'] = $result['pack_id'];
+    //print_r($result);
+    //$result = mysqli_fetch_array($result);
+    //print_r($result);
+    $retVal=array();
+    while($row = mysqli_fetch_array($result)){
+        array_push($retVal, array(
+            "package_id" => $row['pack_id']
+        ));
+      }
+    //$this->db_close();
+    // $response['response'] = "true";
+    // $response['errMessage'] = 'Got purchasePackageId Success';
+    $response['result'] = $retVal;
     return $response;
     //return $result['pack_id'];
   }

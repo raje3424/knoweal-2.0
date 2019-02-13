@@ -46,6 +46,7 @@ class connector implements dbx_connection{
             $args[$index] = mysqli_real_escape_string($this->conn, $value);
           }
           $query = vsprintf( str_replace("?","'%s'",$query),$args);
+          //echo $query;
           $result = mysqli_query($this->conn, $query);
         }else{ // if it's a single argument and not an array
           $query = vsprintf( str_replace("?","'%s'",$query),$args);

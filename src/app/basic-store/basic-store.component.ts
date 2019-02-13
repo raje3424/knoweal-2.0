@@ -53,63 +53,30 @@ ngOnInit() {
         this._routes.navigate(['/userpro']);
       }else{
         this.getAllPacks();
-        //console.log(this.pkgData);
       }
     });
   }
 
-
-getAllPacks(){
-  var options = {
-    "v_class": "library",
-    "v_function": "viewAllPackages",
-    "value" :{
-        "token": localStorage.getItem('token')
-    }
-  };
-  console.log(options);
-  this._service.postRequestWithObservable(options)
-      .subscribe( res => {
-    //console.log(res.result);
-        if(res.response == "" || res.response == "false"){
-          this.boughtPackMsg = true;
-        }else{
-          this.pkgData = res.result;
-          // console.log(this.pkgData[0].package_id);
-          // console.log(this.pkgData.length);
-          for(let i=0;i<this.pkgData.length;i++)
-          {
-            //console.log(this.pkgData[i].package_id);
-            var options = {
-              "v_class": "library",
-              "v_function": "checkIfPur",
-              "value":{
-                "package_id": this.pkgData[i].package_id,
-                "token": localStorage.getItem('token')
-              }
-            };
-            console.log(options);
-            this._service.postRequestWithObservable(options)
-                .subscribe( res => {
-                  console.log(res);
-                  console.log(res.result);
-              if(res.response == 'true'){
-                  if(this.arrayLength(res.result) != 0){
-                    this.boughtPackMsg = false;
-                    this.buyHide = false;
-                  }
-                  else{
-                    this.boughtPackMsg = true;
-                  }
-              }else{
-                alert(res.errMessage);
-                  this.buyHide = true;
-              }
-            });
+  getAllPacks(){
+    var options = {
+      "v_class": "library",
+      "v_function": "viewAllunpurchasedPackages",
+      "value" :{
+          "token": localStorage.getItem('token')
+      }
+    };
+    console.log(options);
+    this._service.postRequestWithObservable(options)
+        .subscribe( res => {
+          if(res.response == "" || res.response == "false"){
+            this.boughtPackMsg = true;
+          }else{
+            this.boughtPackMsg = false;
+            this.pkgData = res.result;
+            this.buyHide = true;
           }
-        }
-      });
-    }
+        });
+      }
 
 
       goBackFunction(){
@@ -139,10 +106,6 @@ getAllPacks(){
           }
         };
 
-      //  getPackage(pack_id){
-      //     this.makePur(pack_id);
-      //     this.ngOnInit();
-      // }
 
     buyByRazorPay(pack_id){
       let options = {
@@ -196,8 +159,6 @@ getAllPacks(){
         console.log(options);
         let pay_id = response.razorpay_payment_id;
         let pack_id = options.id;
-        // console.log(pack_id);
-        // console.log(pay_id);
         this.payemntHandler(pay_id,pack_id);
      });
       this.rzp1 = new this.windowRef.nativeWindow.Razorpay(options);
@@ -215,8 +176,6 @@ getAllPacks(){
     }
 
       makePur(pack_id,razorpay_payment_id){
-       // console.log("into make pur");
-       // console.log(razorpay_payment_id);
        let options = {
          "v_class": "library",
          "v_function": "addPurchasePackage",
