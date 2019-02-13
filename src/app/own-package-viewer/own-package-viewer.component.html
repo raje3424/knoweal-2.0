@@ -38,6 +38,8 @@
             <div class="col-xs-12 col-sm-4 _margin_top_5">
               <label >Package Name</label>
               <input type="text" name="packName" [ngClass]="name_class" class="_g1_input _margin_bottom_5 _margin_top_5 _no_border_radis" placeholder="Package Name" [(ngModel)]="packName" [disabled]="pkg_edit_flag"/>
+              <label> Package Price </label>
+              <input (keypress)="numberOnly($event)" name="packPrice" [ngClass]="name_class" class="_g1_input ¸ _no_border_radis" placeholder="Package Price" [(ngModel)]="packPrice" [disabled]="pkg_edit_flag"/>
             </div>
             <div class="col-xs-12 col-sm-8 _margin_top_5">
               <label >Package Description</label>

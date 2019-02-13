@@ -14,7 +14,7 @@ export class OwnPackageViewerComponent implements OnInit {
   editableCanvas = true;
   q_edit;JSONtheQestionList;
   pkg_edit_flag = true; theQestionList = [];
-  packID;packDescription;author_name;packNotes;packName;
+  packID;packDescription;author_name;packNotes;packName;packPrice;
   edit_label;questionAddFlag;name_class;
   messages;whichMsg;des_class;
   question_IO;question_IOClass;optionA_IO;optionA_IOClass;
@@ -69,6 +69,7 @@ export class OwnPackageViewerComponent implements OnInit {
          this.packName = res.result.packName;
         this.packDescription = res.result.packDescription;
         this.packNotes = res.result.packNotes;
+        this.packPrice = res.result.packPrice;
         this.author_name = res.result.author_name;
     });
   }
@@ -209,6 +210,10 @@ export class OwnPackageViewerComponent implements OnInit {
         this.notes_class = "_error_input";
         blanker.push("Package Notes");
       }
+      if(this.packPrice == ""){
+        this.notes_class = "_error_input";
+        blanker.push("Package Price");
+      }
 
       if(blanker.length > 0){
         this.whichMsg = "_error_msg";
@@ -231,6 +236,7 @@ export class OwnPackageViewerComponent implements OnInit {
           "v_function": "updatePackage",
           "value":{
             "packName": this.packName,
+            "packPrice": this.packPrice,
             "packNotes": this.packNotes,
             "packDescription": this.packDescription,
             "package_id": this.packID,
@@ -484,6 +490,14 @@ isSelected(opt, anskey){
   }else{
     return false;
   }
+}
+
+numberOnly(event): boolean {
+  const charCode = (event.which) ? event.which : event.keyCode;
+  if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+    return false;
+  }
+  return true;
 }
 
   cancelQuestion(){
