@@ -28,7 +28,7 @@ export class OwnPackageViewerComponent implements OnInit {
   notes_hideFlag = true;question_hideFlag = true;
   questionAddErrorMsg;
   hideme = {};
-  queIdHolder;editPackFlag;
+  queIdHolder;editPackFlag = true;
   //past = "info_Desc_class";
 
   constructor(private route: ActivatedRoute,private _routes: Router,private _service: KnowelApiService) {
