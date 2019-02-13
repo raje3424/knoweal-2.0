@@ -20,6 +20,7 @@ import { KnowelApiService } from './_service/knowel-api.service';
 import { WindowService } from './_service/window.service';
 import { AuthGuard } from './_guards/index';
 import { TokenInterceptorService } from './_service/token-interceptor.service';
+import { FilterPipe } from './filter.pipe';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { TokenInterceptorService } from './_service/token-interceptor.service';
     PackageViewerComponent,
     PurPackageViewerComponent,
     UserHomeComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    FilterPipe
   ],
   imports: [
     CommonModule,

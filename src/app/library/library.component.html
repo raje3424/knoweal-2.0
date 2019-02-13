@@ -47,7 +47,7 @@
           </span>
         </div>
         <div class="col-xs-12 col-sm-6">
-          <input type="text" class="_g1_input" placeholder="Search" [(ngModel)]="searchThing"/>
+          <input type="text" class="_g1_input" placeholder="Search" [(ngModel)]="searchText"/>
         </div>
       </div>
     </div> <!-- <</ nav -->
@@ -62,7 +62,7 @@
           </p>
         </div>
 
-        <div class="col-xs-12 col-sm-3" *ngFor="let pkgs of pur_pkgData">
+        <div class="col-xs-12 col-sm-3" *ngFor="let pkgs of pur_pkgData | filter : searchText">
           <div class="col-xs-12 _lib_panel">
             <div class="row">
               <div class="_pack_details">
@@ -91,7 +91,7 @@
           </p>
         </div>
 
-        <div class="col-xs-12 col-sm-3" *ngFor="let pkgs of own_pkgData">
+        <div class="col-xs-12 col-sm-3" *ngFor="let pkgs of own_pkgData | filter : searchText">
           <div class="col-xs-12 _lib_panel">
             <div class="row">
               <div class="_pack_details">

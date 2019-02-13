@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { KnowelApiService } from '../_service/knowel-api.service';
-import { AppRoutingModule } from '../app-routing/app-routing.module';
 
 @Component({
   selector: 'app-library',
