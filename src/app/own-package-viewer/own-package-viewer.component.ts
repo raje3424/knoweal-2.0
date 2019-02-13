@@ -390,13 +390,6 @@ edit_question(queData, i, anskey){
   }else if($.trim(document.getElementById("btn_"+queData.q_id).innerHTML) == "Update"){
 
     console.log('In Update block....!');
-
-    // console.log("Question >> "+queData.question);
-    // console.log("Option 1 >> "+queData.opt1);
-    // console.log("Option 2 >> "+queData.opt2);
-    // console.log("Option 3 >> "+queData.opt3);
-    // console.log("Option 4 >> "+queData.opt4);
-    // console.log("anskey : >> "+queData.anskey);
     this.opt1Class = "";
     this.opt2Class = "";
     this.opt3Class = "";

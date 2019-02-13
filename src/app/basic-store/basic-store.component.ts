@@ -110,7 +110,7 @@ ngOnInit() {
     buyByRazorPay(pack_id){
       let options = {
         "v_class": "library",
-        "v_function": "getPackageInfo",
+        "v_function": "getPackageInfoStore",
         "value" :{
             "package_id" : pack_id,
             "token": localStorage.getItem('token')
@@ -119,10 +119,13 @@ ngOnInit() {
       console.log(options);
       this._service.postRequestWithObservable(options)
           .subscribe( res => {
+            console.log(res);
             if(res.response == 'true'){
-              let amt = res.result['pack_price'];
+              let amt = res.result['price'];
               let name = res.result['package_name'];
               let desc = res.result['description'];
+              let username = res.result['author_name'];
+              let email = res.result['email'];
               console.log(amt);
               amt = amt * 100;
               //getting key of razorpay
@@ -142,8 +145,8 @@ ngOnInit() {
                       this.dataToSendToRazorPay.amount = amt;
                       this.dataToSendToRazorPay.name = name;
                       this.dataToSendToRazorPay.description = desc;
-                      this.dataToSendToRazorPay.prefill.name = "Rdm";
-                      this.dataToSendToRazorPay.prefill.email = "rdm@rdm.com";
+                      this.dataToSendToRazorPay.prefill.name = username;
+                      this.dataToSendToRazorPay.prefill.email = email;
                       this.payWithRazorPay(this.dataToSendToRazorPay);
                     }
                   });

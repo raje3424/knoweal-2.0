@@ -263,19 +263,12 @@ class library extends connector{
    $vals['user_id'] = $jwt['data']['userid'];
    //print_r($vals['user_id']);
    $purch = $this->purchasePackageId($vals['user_id']);
-   //print_r($purch);
-   //print_r($purch['result']);
-   //$vals['purchase_id'] = $purch['result'];
-   //print_r($vals);
    $retVal = array();
    $newret = array();
    $reqResult = array();
 
    $query = "SELECT `a`.`package_id`, `a`.`package_name`, `b`.`full_name`, `a`.`description`, `a`.`pack_price` FROM packages a, user_profile b WHERE a.package_author != ? and a.package_author = b.user_id GROUP BY a.package_id ";
-
    $result = $this->query_db($query, $vals);
-   //echo "Result :".$result;
-   //print_r($result);
    while($row = mysqli_fetch_array($result)){
       array_push($retVal, array(
         "package_id" => $row['package_id'],
@@ -287,25 +280,6 @@ class library extends connector{
       ));
     }
     $newret = $this->getUnpurchasedPackages($retVal,$purch);
-    //print_r($retVal);
-    /*for($i = 0; $i < sizeof($retVal); $i++){
-      for($j = 0; $j < sizeof($purch['result']); $j++){
-        // echo "\nfirst : ".$retVal[$i]['package_id']." second : ".$purch['result'][$j]['package_id'];
-
-          if( $purch['result'][$j]['package_id'] == $retVal[$i]['package_id']){
-            array_push($newret, array(
-                "package_id" => $retVal[$i]['package_id'],
-                "package_name" => $retVal[$i]['package_name'],
-                "author_name" => $retVal[$i]['author_name'],
-                "description" => $retVal[$i]['description'],
-                "packPrice" => $retVal[$i]['packPrice'],
-                "author" => $retVal[$i]['author']
-            ));
-          }
-      }
-    }
-    print_r($newret);*/
-    //print_r($reqResult);
    $this->db_close();
 
    if(sizeof($newret) > 0){
@@ -486,17 +460,20 @@ class library extends connector{
   private function getPackageInfoStore($value){
     $this->clearOldResponseData();
     // store function to browse the package in detail
-    $query = "SELECT `package_name`,`description`, `full_name`,`pack_price` FROM packages a, user_profile b WHERE package_id = ? and a.package_author = b.user_id";
+    $query = "SELECT `package_name`,`description`, `full_name`,`pack_price`,`package_note`,`email` FROM packages a, user_profile b WHERE package_id = ? and a.package_author = b.user_id";
     $result = $this->query_db($query, $value);
     $result = mysqli_fetch_array($result);
+    $retVal = array();
+    $retVal = [
+      "author_name" => $result['full_name'],
+      "packName" => $result['package_name'],
+      "description" => $result['description'],
+      "packNotes" => $result['package_note'],
+      "price" => $result['pack_price'],
+      "email" => $result['email']
+    ];
     $this->db_close();
     if($result != ""){
-      $retVal = [
-        "author_name" => $result['full_name'],
-        "packName" => $result['package_name'],
-        "description" => $result['description'],
-        "price" => $result['pack_price']
-      ];
       $response['response'] = "true";
       $response['errMessage'] = 'getPackageInfoStore successful';
       $response['result'] = $retVal;
@@ -510,7 +487,7 @@ class library extends connector{
 
   private function getPur_PackageInfo($value){
     $this->clearOldResponseData();
-    $query = "SELECT `package_name`,`description`, `package_note`, `full_name`,`pack_price` FROM packages a, user_profile b WHERE package_id = ? and a.package_author = b.user_id";
+    $query = "SELECT `package_name`,`description`, `package_note`, `full_name`,`pack_price`,`email` FROM packages a, user_profile b WHERE package_id = ? and a.package_author = b.user_id";
     $result = $this->query_db($query, $value);
     $result = mysqli_fetch_array($result);
     $this->db_close();
@@ -520,7 +497,8 @@ class library extends connector{
         "packName" => $result['package_name'],
         "packDescription" => $result['description'],
         "packNotes" => $result['package_note'],
-        "packPrice" => $result['pack_price']
+        "packPrice" => $result['pack_price'],
+        "email" => $result['email']
       ];
       //print_r(json_encode($result));
       //echo $result;
