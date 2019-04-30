@@ -30,7 +30,7 @@ class connector implements dbx_connection{
   function db_connection(){
     $this->conn = mysqli_connect(dbx_connection::host, dbx_connection::manus, dbx_connection::nibai, dbx_connection::dbnav);
     if($this->conn)
-    //  echo "yes dbconnected \n";
+     // echo "yes dbconnected \n";
       return "true";
     else
       //echo "nop not connected<br/> \n";

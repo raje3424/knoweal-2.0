@@ -144,7 +144,8 @@ class library extends connector{
     $query = "INSERT INTO packages (package_name,package_author,pack_price ,valid_till,package_note, description) VALUES (?,?,?,?,?,?)";
     $result = $this->query_db($query, $retVal);
     $this->db_close();
-    //echo $result;
+    // echo $result;
+    // echo 'added with echo';
     if($result == 1){
       $response['response'] = "true";
       $response['errMessage'] = "package added successfully";
@@ -589,7 +590,15 @@ class library extends connector{
       return $response;
     }
   }
-
+/*
+  public function FinalResult($value){
+    $this->clearOldResponseData();
+    // $query = "SELECT `correct_count` ,COUNT(*)FROM actual_test_result GROUP BY correct_count";
+    // $result = $this-> query_db($query,$value);
+    $var_dump = getTheResults($dummy);
+    echo $var_dump;
+   }
+   */
   private function getTheResults($value){
     $this->clearOldResponseData();
     //print_r($value['theAnsList'][1]['pkg_id']);
